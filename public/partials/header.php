@@ -6,7 +6,7 @@
             <button onclick="window.location.href='register.php'">Register</button>
         </div>
         <button onclick="window.location.href='cart.php'">
-            <img src="public/assets/images/cart.png" alt="Cart">
+            <img src="assets/images/cart.png" alt="Cart">
         </button>
         <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
     </nav>
