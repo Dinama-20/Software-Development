@@ -107,7 +107,7 @@ session_start();
 
     <section id="products">
         <h1>Available Products</h1>
-        <!-- Los productos se mostrarán aquí después de aplicar los filtros -->
+        <!-- Products will show here after filter applications -->
     </section>
 </main>
 
