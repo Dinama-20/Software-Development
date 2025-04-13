@@ -38,22 +38,18 @@ session_start();
             const selectedCategory = document.getElementById('filterCategory').value;
             const selectedPriceSort = document.getElementById('sortPrice').value;
 
-            // Filtrar los productos según los criterios
             let filteredProducts = products.filter(product => {
                 const matchesSearch = product.name.toLowerCase().includes(searchInput);
                 const matchesCategory = selectedCategory ? product.category === selectedCategory : true;
-
                 return matchesSearch && matchesCategory;
             });
 
-            // Ordenar productos por precio
             if (selectedPriceSort === 'asc') {
                 filteredProducts.sort((a, b) => a.price - b.price);
             } else if (selectedPriceSort === 'desc') {
                 filteredProducts.sort((a, b) => b.price - a.price);
             }
 
-            // Mostrar los productos filtrados
             const productsContainer = document.getElementById('products');
             productsContainer.innerHTML = '<h1>Available Products</h1>';
 
