@@ -51,7 +51,7 @@ class User
     public function login($credentials)
     {
         // Search for the user in the database by email
-        $query = 'SELECT id, username, password FROM users WHERE email = :email';
+        $query = 'SELECT id, username, email, password FROM users WHERE email = :email';
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':email', $credentials['email']);
         $stmt->execute();
@@ -59,14 +59,14 @@ class User
         // Check if the user exists in the database
         if ($stmt->rowCount() > 0) {
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
-            // Verify if the entered password matches the hashed password in the database
+            // Verify if the entered password matches the stored hashed password
             if (password_verify($credentials['password'], $user['password'])) {
                 return $user; // User authenticated successfully
             } else {
-                return 'Incorrect password.'; // Password mismatch
+                return false; // Incorrect password
             }
         } else {
-            return 'User does not exist.'; // User not found in the database
+            return false; // User not found
         }
     }
 

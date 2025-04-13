@@ -10,14 +10,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Collect the credentials from the form
     $credentials = [
-        'username' => $_POST['username'],
+        'email' => $_POST['email'],
         'password' => $_POST['password']
     ];
 
     // Call the login method from the User class
-    if ($user->login($credentials)) {
+    $userData = $user->login($credentials);
+
+    if ($userData !== false) {
         $_SESSION['login_success'] = "Login successful!";
-        header("Location: index.php");
+        $_SESSION['user'] = $userData;  // Store the user data (ID, username, etc.)
+        header("Location: index.php");  // Redirect to the homepage
         exit;
     } else {
         $error_message = "Invalid username or password.";
@@ -30,9 +33,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <main>
     <h2>Login</h2>
 
-    <?php if (isset($_SESSION['success_message'])): ?>
-        <p class="success"><?= $_SESSION['success_message']; ?></p>
-        <?php unset($_SESSION['success_message']); ?>
+    <?php if (isset($_SESSION['login_success'])): ?>
+        <p class="success"><?= $_SESSION['login_success']; ?></p>
+        <?php unset($_SESSION['login_success']); ?>
     <?php endif; ?>
 
     <?php if (!empty($error_message)): ?>
@@ -41,8 +44,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <form action="login.php" method="POST">
         <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" required>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
         </div>
         <div class="form-group">
             <label for="password">Password</label>
