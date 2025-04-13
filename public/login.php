@@ -1,7 +1,8 @@
 <?php 
-require_once '../vendor/autoload.php'; // Include the Composer autoloader to automatically load classes
+session_start();
+require_once '../vendor/autoload.php'; // Include the Composer autoloader
 
-use Models\User;  // Use the correct namespace for the User class
+use Models\User;
 
 // Login logic
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -15,12 +16,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Call the login method from the User class
     if ($user->login($credentials)) {
-        echo "Login successful!";
-        // Redirect to the homepage or a protected area after successful login
+        $_SESSION['login_success'] = "Login successful!";
         header("Location: index.php");
         exit;
     } else {
-        echo "Invalid username or password."; // Error message if credentials are incorrect
+        $error_message = "Invalid username or password.";
     }
 }
 ?>
@@ -29,6 +29,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <main>
     <h2>Login</h2>
+
+    <?php if (isset($_SESSION['success_message'])): ?>
+        <p class="success"><?= $_SESSION['success_message']; ?></p>
+        <?php unset($_SESSION['success_message']); ?>
+    <?php endif; ?>
+
+    <?php if (!empty($error_message)): ?>
+        <p class="error"><?= $error_message; ?></p>
+    <?php endif; ?>
+
     <form action="login.php" method="POST">
         <div class="form-group">
             <label for="username">Username</label>

@@ -304,3 +304,15 @@ body.dark-mode footer {
     background-color: #f0f0f0;
     transform: scale(1.05);
 }
+
+.success {
+    color: green;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.error {
+    color: red;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}

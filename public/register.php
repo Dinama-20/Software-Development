@@ -1,4 +1,5 @@
 <?php 
+session_start();
 require_once '../vendor/autoload.php'; // Composer autoloader to automatically load classes
 
 use Models\User;
@@ -16,12 +17,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Call the register method from the User class
     if ($user->register($data)) {
-        echo "Registration successful!";
-        // Redirect to the login page or the homepage after successful registration
+        $_SESSION['success_message'] = "User registered successfully!";
         header("Location: login.php");
         exit;
     } else {
-        echo "Registration failed. Please try again."; // Error message if registration fails
+        $_SESSION['error_message'] = "Registration failed. Please try again.";
+        header("Location: register.php");
+        exit;
     }
 }
 ?>
@@ -30,6 +32,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <main>
     <h2>Register</h2>
+
+    <?php if (isset($_SESSION['error_message'])): ?>
+        <p class="error"><?= $_SESSION['error_message'] ?></p>
+        <?php unset($_SESSION['error_message']); ?>
+    <?php endif; ?>
+
     <form action="register.php" method="POST">
         <div class="form-group">
             <label for="username">Username</label>
