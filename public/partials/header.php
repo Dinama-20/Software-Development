@@ -1,3 +1,8 @@
+<?php
+echo '<link rel="stylesheet" href="assets/css/style.css">';
+echo '<script src="assets/js/script.js" defer></script>';
+?>
+
 <header>
     <h1>Oñate Watch and Jewelry</h1>
     <nav>
