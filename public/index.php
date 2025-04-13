@@ -38,7 +38,7 @@
     </script>
 </head>
 <body>
-    <?php include 'includes/header.php'; ?>
+<?php include '../includes/header.php'; ?>
 
     <main id="content">
         <section id="product-controls">
@@ -109,7 +109,7 @@
         </section>
     </main>
 
-    <?php include 'includes/footer.php'; ?>
+    <?php include '../includes/footer.php'; ?>
 
     <div id="modalOverlay" class="modal-overlay">
         <div class="modal-content">
