@@ -1,7 +1,14 @@
 {
+    "name": "abraham/software-development-final-project",
+    "description": "Frontend and backend for Relojería Oñate project",
+    "type": "project",
     "autoload": {
-        "psr-4": {
-            "App\\": "src/"
-        }
+      "psr-4": {
+        "Models\\": "models/"
+      }
+    },
+    "require": {
+      "php": ">=7.4"
     }
-}
+  }
+  
