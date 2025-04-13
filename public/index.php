@@ -82,12 +82,12 @@ session_start();
     <?php if (isset($_SESSION['user'])): ?>
         <!-- If the user is logged in, show their username -->
         <p class="welcome-message">
-            Welcome back, <?= isset($_SESSION['user']['username']) ? htmlspecialchars($_SESSION['user']['username']) : 'Guest'; ?>!
+        Welcome back, <?= htmlspecialchars($_SESSION['user']['username']); ?>!
         </p>
     <?php else: ?>
         <!-- If the user is not logged in, show the login prompt -->
         <p class="welcome-message">
-            Welcome to Oñate Watch and Jewelry! Please <a href="login.php">log in</a> to access your account.
+        Welcome to Oñate Watch and Jewelry! Please <a href="login.php">log in</a> to access your account.
         </p>
     <?php endif; ?>
 
