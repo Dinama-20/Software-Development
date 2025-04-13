@@ -18,6 +18,9 @@ class User
     // Register a new user
     public function register($data)
     {
+        // Generate a username by concatenating first and last name (lowercase)
+        $username = strtolower($data['first_name'] . '.' . $data['last_name']);
+
         // Check if the email is already registered
         if (!$this->isEmailAvailable($data['email'])) {
             return 'The email is already registered.';
@@ -27,10 +30,12 @@ class User
         $hashedPassword = password_hash($data['password'], PASSWORD_DEFAULT);
 
         // Prepare the query to insert the new user data
-        $query = 'INSERT INTO users (first_name, last_name, email, password) VALUES (:first_name, :last_name, :email, :password)';
+        $query = 'INSERT INTO users (username, first_name, last_name, email, password) 
+                  VALUES (:username, :first_name, :last_name, :email, :password)';
         $stmt = $this->db->prepare($query);
 
         // Bind the parameters to the query
+        $stmt->bindParam(':username', $username);
         $stmt->bindParam(':first_name', $data['first_name']);
         $stmt->bindParam(':last_name', $data['last_name']);
         $stmt->bindParam(':email', $data['email']);
@@ -52,7 +57,7 @@ class User
     public function login($credentials)
     {
         // Search for the user in the database by email
-        $query = 'SELECT id, first_name, last_name, email, password FROM users WHERE email = :email';
+        $query = 'SELECT id, username, first_name, last_name, email, password FROM users WHERE email = :email';
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':email', $credentials['email']);
         $stmt->execute();
