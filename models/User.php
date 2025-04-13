@@ -11,6 +11,7 @@ class User
     // Constructor to initialize the database connection
     public function __construct()
     {
+        // Get the database connection
         $this->db = (new Database())->getConnection();
     }
 
@@ -35,10 +36,14 @@ class User
         $stmt->bindParam(':password', $hashedPassword);
 
         // Execute the query and insert the user into the database
-        if ($stmt->execute()) {
-            return true; // Registration successful
-        } else {
-            return 'There was an error registering the user.';
+        try {
+            if ($stmt->execute()) {
+                return true; // Registration successful
+            } else {
+                return 'There was an error registering the user.'; // If the execution fails
+            }
+        } catch (\PDOException $e) {
+            return 'Database error: ' . $e->getMessage(); // If a database error occurs
         }
     }
 
@@ -54,7 +59,7 @@ class User
         // Check if the user exists in the database
         if ($stmt->rowCount() > 0) {
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
-            // Verify the password entered by the user with the stored hashed password
+            // Verify if the entered password matches the hashed password in the database
             if (password_verify($credentials['password'], $user['password'])) {
                 return $user; // User authenticated successfully
             } else {
