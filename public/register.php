@@ -10,7 +10,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Collect the registration data from the form
     $data = [
-        'username' => $_POST['username'],
+        'first_name' => $_POST['first_name'],
+        'last_name' => $_POST['last_name'],
         'email' => $_POST['email'],
         'password' => $_POST['password']
     ];
@@ -40,8 +41,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <form action="register.php" method="POST">
         <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" required>
+            <label for="first_name">First Name</label>
+            <input type="text" id="first_name" name="first_name" required>
+        </div>
+        <div class="form-group">
+            <label for="last_name">Last Name</label>
+            <input type="text" id="last_name" name="last_name" required>
         </div>
         <div class="form-group">
             <label for="email">Email</label>

@@ -27,11 +27,12 @@ class User
         $hashedPassword = password_hash($data['password'], PASSWORD_DEFAULT);
 
         // Prepare the query to insert the new user data
-        $query = 'INSERT INTO users (username, email, password) VALUES (:username, :email, :password)';
+        $query = 'INSERT INTO users (first_name, last_name, email, password) VALUES (:first_name, :last_name, :email, :password)';
         $stmt = $this->db->prepare($query);
 
         // Bind the parameters to the query
-        $stmt->bindParam(':username', $data['username']);
+        $stmt->bindParam(':first_name', $data['first_name']);
+        $stmt->bindParam(':last_name', $data['last_name']);
         $stmt->bindParam(':email', $data['email']);
         $stmt->bindParam(':password', $hashedPassword);
 
@@ -51,7 +52,7 @@ class User
     public function login($credentials)
     {
         // Search for the user in the database by email
-        $query = 'SELECT id, username, email, password FROM users WHERE email = :email';
+        $query = 'SELECT id, first_name, last_name, email, password FROM users WHERE email = :email';
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':email', $credentials['email']);
         $stmt->execute();
