@@ -3,24 +3,29 @@
 namespace Models;
 
 use PDO;
+use PDOException;
 
 class Database {
     private $host = 'localhost';
-    private $dbname = 'your_database_name'; // Make sure this name is correct
-    private $username = 'root'; // Or your database username
-    private $password = ''; // Or your password if you have one
+    private $db_name = 'onate_store'; // Reemplaza por el nombre real de tu base de datos
+    private $username = 'root';
+    private $password = '';
     private $conn;
 
-    // Get the database connection
     public function getConnection() {
-        if ($this->conn === null) {
-            try {
-                $this->conn = new PDO("mysql:host={$this->host};dbname={$this->dbname}", $this->username, $this->password);
-                $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            } catch (PDOException $e) {
-                die("Connection error: " . $e->getMessage());
-            }
+        $this->conn = null;
+
+        try {
+            $this->conn = new PDO(
+                "mysql:host={$this->host};dbname={$this->db_name}",
+                $this->username,
+                $this->password
+            );
+            $this->conn->exec("set names utf8");
+        } catch (PDOException $exception) {
+            echo "Connection error: " . $exception->getMessage();
         }
+
         return $this->conn;
     }
 }
