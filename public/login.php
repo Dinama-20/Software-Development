@@ -1,12 +1,12 @@
-<?php 
+<?php
 session_start();
 require_once '../vendor/autoload.php'; // Composer autoloader
 
 use Models\User;
 
-// Check if user is already logged in
+// Check if the user is already logged in
 if (isset($_SESSION['user'])) {
-    header("Location: index.php");
+    header("Location: index.php");  // Redirect to the homepage if the user is already logged in
     exit;
 }
 
@@ -14,14 +14,14 @@ if (isset($_SESSION['user'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user = new User();
 
-    // Collect and sanitize login credentials
+    // Sanitize and collect login credentials
     $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
     $password = $_POST['password'];
 
-    // Check if email is valid
+    // Validate the email
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $_SESSION['error_message'] = "Please enter a valid email address.";
-        header("Location: login.php");
+        header("Location: login.php"); // Redirect back to login page with error message
         exit;
     }
 
@@ -34,15 +34,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Call the login method from the User class
     $loggedUser = $user->login($credentials);
 
-    // Debugging - Log login attempt
+    // Check if login failed
     if ($loggedUser === false) {
-        $_SESSION['error_message'] = "Invalid email or password.";
-        header("Location: login.php"); // Redirection if login fails
+        $_SESSION['error_message'] = "Invalid email or password."; // Error message for invalid credentials
+        header("Location: login.php"); // Redirect back to login page
         exit;
     } else {
-        // If login is successful
+        // Successful login, store user information in session
         $_SESSION['user'] = $loggedUser;
-        header("Location: index.php"); // Redirect to home page
+        header("Location: index.php"); // Redirect to the homepage upon successful login
         exit;
     }
 }
@@ -53,11 +53,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <main>
     <h2>Login</h2>
 
+    <!-- Display error message if login failed -->
     <?php if (isset($_SESSION['error_message'])): ?>
         <p class="error"><?= $_SESSION['error_message'] ?></p>
-        <?php unset($_SESSION['error_message']); ?>
+        <?php unset($_SESSION['error_message']); ?> <!-- Clear the error message after displaying -->
     <?php endif; ?>
 
+    <!-- Login form -->
     <form action="login.php" method="POST">
         <div class="form-group">
             <label for="email">Email</label>

@@ -51,7 +51,7 @@ class User
             if ($stmt->execute()) {
                 return true; // Registration successful
             } else {
-                return 'There was an error registering the user.'; // If the execution fails
+                return 'There was an error registering the user.'; // If execution fails
             }
         } catch (\PDOException $e) {
             return 'Database error: ' . $e->getMessage(); // If a database error occurs
@@ -59,7 +59,7 @@ class User
     }
 
     // Check if email is available
-    private function isEmailAvailable($email)
+    public function isEmailAvailable($email)
     {
         $query = 'SELECT COUNT(*) FROM users WHERE email = :email';
         $stmt = $this->db->prepare($query);
@@ -70,7 +70,7 @@ class User
     }
 
     // Check if username is available
-    private function isUsernameAvailable($username)
+    public function isUsernameAvailable($username)
     {
         $query = 'SELECT COUNT(*) FROM users WHERE username = :username';
         $stmt = $this->db->prepare($query);
@@ -93,24 +93,15 @@ class User
         if ($stmt->rowCount() > 0) {
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            // Debugging - Show fetched data
-            error_log("User found: " . print_r($user, true));  // Log the user data for verification
-
-            // Debugging: Check if password_verify is working correctly
-            $passwordMatch = password_verify($credentials['password'], $user['password']);
-            error_log("Password check for email: " . $credentials['email'] . " - " . ($passwordMatch ? "Success" : "Failure"));
-
             // Verify if the entered password matches the stored hashed password
+            $passwordMatch = password_verify($credentials['password'], $user['password']);
+            
             if ($passwordMatch) {
                 return $user; // User authenticated successfully
             } else {
-                // Debugging: Password mismatch
-                error_log("Password mismatch for email: " . $credentials['email']);  // Log password mismatch
                 return false; // Password mismatch
             }
         } else {
-            // Debugging: User not found
-            error_log("User not found for email: " . $credentials['email']);  // Log that user was not found
             return false; // User not found
         }
     }
