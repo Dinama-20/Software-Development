@@ -87,19 +87,26 @@ class User
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':email', $credentials['email']);
         $stmt->execute();
-
+    
         // Check if the user exists in the database
         if ($stmt->rowCount() > 0) {
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
+    
+            // Debugging - Show fetched data
+            error_log("User data: " . print_r($user, true));  // Log user data
+    
             // Verify if the entered password matches the stored hashed password
             if (password_verify($credentials['password'], $user['password'])) {
                 return $user; // User authenticated successfully
             } else {
+                // Debugging - Password did not match
+                error_log("Password mismatch for email: " . $credentials['email']);  // Log mismatch
                 return false; // Password mismatch
             }
         } else {
+            // Debugging - User not found
+            error_log("User not found for email: " . $credentials['email']);  // Log user not found
             return false; // User not found
         }
-    }
+    }    
 }
