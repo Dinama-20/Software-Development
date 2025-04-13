@@ -1,6 +1,7 @@
-<?php
+<?php 
 session_start();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,6 +10,16 @@ session_start();
     <title>Oñate Watch and Jewelry</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script>
+        let products = [
+            {name: 'Aquarius Nurburgring', price: 240, category: 'smartwatch', image: 'assets/images/duward-watch1.png', details: 'assets/images/characteristics1.png'},
+            {name: 'Aquastar Race', price: 189, category: 'smartwatch', image: 'assets/images/duward-watch2.png', details: 'assets/images/characteristics2.png'},
+            {name: 'Smartwatch Style', price: 98.90, category: 'smartwatch', image: 'assets/images/duward-watch3.png', details: 'assets/images/characteristics3.png'},
+            {name: 'Lady Woman', price: 89, category: 'woman', image: 'assets/images/duward-watch4.png', details: 'assets/images/characteristics4.png'},
+            {name: 'Lady Babaye', price: 95, category: 'woman', image: 'assets/images/duward-watch5.png', details: 'assets/images/characteristics5.png'},
+            {name: 'Junior Divka', price: 39.90, category: 'junior', image: 'assets/images/duward-watch6.png', details: 'assets/images/characteristics6.png'},
+            {name: 'Junior Dreng', price: 49.90, category: 'junior', image: 'assets/images/duward-watch7.png', details: 'assets/images/characteristics7.png'}
+        ];
+
         function showModal(imageSrc) {
             document.getElementById("modalImage").src = imageSrc;
             document.getElementById("modalOverlay").style.display = "flex";
@@ -16,6 +27,47 @@ session_start();
 
         function closeModal() {
             document.getElementById("modalOverlay").style.display = "none";
+        }
+
+        function addToCart(productName, price) {
+            alert(`${productName} added to cart! Price: ${price}€`);
+        }
+
+        function applyFilters() {
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+            const selectedCategory = document.getElementById('filterCategory').value;
+            const selectedPriceSort = document.getElementById('sortPrice').value;
+
+            // Filtrar los productos según los criterios
+            let filteredProducts = products.filter(product => {
+                const matchesSearch = product.name.toLowerCase().includes(searchInput);
+                const matchesCategory = selectedCategory ? product.category === selectedCategory : true;
+
+                return matchesSearch && matchesCategory;
+            });
+
+            // Ordenar productos por precio
+            if (selectedPriceSort === 'asc') {
+                filteredProducts.sort((a, b) => a.price - b.price);
+            } else if (selectedPriceSort === 'desc') {
+                filteredProducts.sort((a, b) => b.price - a.price);
+            }
+
+            // Mostrar los productos filtrados
+            const productsContainer = document.getElementById('products');
+            productsContainer.innerHTML = '<h1>Available Products</h1>';
+
+            filteredProducts.forEach(product => {
+                const productElement = document.createElement('div');
+                productElement.classList.add('product');
+                productElement.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}" onclick="showModal('${product.details}')">
+                    <h2>${product.name}</h2>
+                    <p>Price: ${product.price}€</p>
+                    <button onclick="addToCart('${product.name}', ${product.price})">Add to Cart</button>
+                `;
+                productsContainer.appendChild(productElement);
+            });
         }
     </script>
 </head>
@@ -55,55 +107,7 @@ session_start();
 
     <section id="products">
         <h1>Available Products</h1>
-        
-        <div class="product" onclick="showModal('assets/images/characteristics1.png')">
-            <img src="assets/images/duward-watch1.png" alt="Aquarius Nurburgring">
-            <h2>Aquarius Nurburgring</h2>
-            <p>Price: 240€</p>
-            <button onclick="addToCart('Aquarius Nurburgring', 240.00)">Add to Cart</button>
-        </div>
-
-        <div class="product" onclick="showModal('assets/images/characteristics2.png')">
-            <img src="assets/images/duward-watch2.png" alt="Aquastar Race">
-            <h2>Aquastar Race</h2>
-            <p>Price: 189€</p>
-            <button onclick="addToCart('Aquastar Race', 189.00)">Add to Cart</button>
-        </div>
-
-        <div class="product" onclick="showModal('assets/images/characteristics3.png')">
-            <img src="assets/images/duward-watch3.png" alt="Smartwatch Style">
-            <h2>Smartwatch Style</h2>
-            <p>Price: 98.90€</p>
-            <button onclick="addToCart('Smartwatch Style', 98.90)">Add to Cart</button>
-        </div>
-
-        <div class="product" onclick="showModal('assets/images/characteristics4.png')">
-            <img src="assets/images/duward-watch4.png" alt="Lady Woman">
-            <h2>Lady Woman</h2>
-            <p>Price: 89€</p>
-            <button onclick="addToCart('Lady Woman', 89.00)">Add to Cart</button>
-        </div>
-
-        <div class="product" onclick="showModal('assets/images/characteristics5.png')">
-            <img src="assets/images/duward-watch5.png" alt="Lady Babaye">
-            <h2>Lady Babaye</h2>
-            <p>Price: 95€</p>
-            <button onclick="addToCart('Lady Babaye', 95.00)">Add to Cart</button>
-        </div>
-
-        <div class="product" onclick="showModal('assets/images/characteristics6.png')">
-            <img src="assets/images/duward-watch6.png" alt="Junior Divka">
-            <h2>Junior Divka</h2>
-            <p>Price: $39.90</p>
-            <button onclick="addToCart('Junior Divka', 39.90)">Add toCart</button>
-        </div>
-
-        <div class="product" onclick="showModal('assets/images/characteristics7.png')">
-            <img src="assets/images/duward-watch7.png" alt="Junior Dreng">
-            <h2>Junior Dreng</h2>
-            <p>Price: $49.90</p>
-            <button onclick="addToCart('Junior Dreng', 49.90)">Add toCart</button>
-        </div>
+        <!-- Los productos se mostrarán aquí después de aplicar los filtros -->
     </section>
 </main>
 

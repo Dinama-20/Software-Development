@@ -1,6 +1,6 @@
 <?php 
 session_start();
-require_once '../vendor/autoload.php'; // Include the Composer autoloader
+require_once '../vendor/autoload.php'; // Composer autoloader
 
 use Models\User;
 
@@ -8,22 +8,26 @@ use Models\User;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user = new User();
 
-    // Collect the credentials from the form
+    // Collect login credentials
     $credentials = [
         'email' => $_POST['email'],
         'password' => $_POST['password']
     ];
 
     // Call the login method from the User class
-    $userData = $user->login($credentials);
+    $loggedUser = $user->login($credentials);
 
-    if ($userData !== false) {
-        $_SESSION['login_success'] = "Login successful!";
-        $_SESSION['user'] = $userData;  // Store the user data (ID, username, etc.)
-        header("Location: index.php");  // Redirect to the homepage
+    if ($loggedUser) {
+        // Store user information in session
+        $_SESSION['user'] = $loggedUser;
+
+        // Redirect to index or dashboard
+        header("Location: index.php");
         exit;
     } else {
-        $error_message = "Invalid username or password.";
+        $_SESSION['error_message'] = "Invalid email or password.";
+        header("Location: login.php");
+        exit;
     }
 }
 ?>
@@ -33,13 +37,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <main>
     <h2>Login</h2>
 
-    <?php if (isset($_SESSION['login_success'])): ?>
-        <p class="success"><?= $_SESSION['login_success']; ?></p>
-        <?php unset($_SESSION['login_success']); ?>
-    <?php endif; ?>
-
-    <?php if (!empty($error_message)): ?>
-        <p class="error"><?= $error_message; ?></p>
+    <?php if (isset($_SESSION['error_message'])): ?>
+        <p class="error"><?= $_SESSION['error_message'] ?></p>
+        <?php unset($_SESSION['error_message']); ?>
     <?php endif; ?>
 
     <form action="login.php" method="POST">
@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label for="password">Password</label>
             <input type="password" id="password" name="password" required>
         </div>
-        <button type="submit">Login</button>
+        <button type="submit">Log in</button>
     </form>
 </main>
 
