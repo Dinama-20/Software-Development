@@ -9,7 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 </head>
 <body>
-    <?php include 'header.php'; ?>
+    <?php include 'partials/header.php'; ?>
 
     <main id="content">
         <h1>Your Cart</h1>
@@ -20,7 +20,7 @@
         </div>
     </main>
 
-    <?php include 'footer.php'; ?>
+    <?php include 'partials/footer.php'; ?>
 
     <script>
         window.onload = function() {

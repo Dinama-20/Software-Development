@@ -1,4 +1,4 @@
-<?php include 'header.php'; ?>
+<?php include 'partials/header.php'; ?>
 
 <main>
     <h2>Register</h2>
@@ -19,4 +19,4 @@
     </form>
 </main>
 
-<?php include 'footer.php'; ?>
+<?php include 'partials/footer.php'; ?>
