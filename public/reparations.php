@@ -1,4 +1,4 @@
-<?php include 'includes/header.php'; ?>
+<?php include '../includes/header.php'; ?>
 
 <main>
     <h2>Repair Services</h2>
@@ -21,4 +21,4 @@
     </form>
 </main>
 
-<?php include 'includes/footer.php'; ?>
+<?php include '../includes/footer.php'; ?>
