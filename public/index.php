@@ -20,36 +20,44 @@ session_start();
             {name: 'Junior Dreng', price: 49.90, category: 'junior', image: 'assets/images/duward-watch7.png', details: 'assets/images/characteristics7.png'}
         ];
 
+        // Function to show the modal with product details
         function showModal(imageSrc) {
             document.getElementById("modalImage").src = imageSrc;
             document.getElementById("modalOverlay").style.display = "flex";
         }
 
+        // Function to close the modal
         function closeModal() {
             document.getElementById("modalOverlay").style.display = "none";
         }
 
+        // Function to add product to the cart
         function addToCart(productName, price) {
             alert(`${productName} added to cart! Price: ${price}€`);
         }
 
+        // Function to apply filters to the product list
         function applyFilters() {
             const searchInput = document.getElementById('searchInput').value.toLowerCase();
             const selectedCategory = document.getElementById('filterCategory').value;
             const selectedPriceSort = document.getElementById('sortPrice').value;
 
+            // Filter products based on the criteria
             let filteredProducts = products.filter(product => {
                 const matchesSearch = product.name.toLowerCase().includes(searchInput);
                 const matchesCategory = selectedCategory ? product.category === selectedCategory : true;
+
                 return matchesSearch && matchesCategory;
             });
 
+            // Sort products by price
             if (selectedPriceSort === 'asc') {
                 filteredProducts.sort((a, b) => a.price - b.price);
             } else if (selectedPriceSort === 'desc') {
                 filteredProducts.sort((a, b) => b.price - a.price);
             }
 
+            // Display the filtered products
             const productsContainer = document.getElementById('products');
             productsContainer.innerHTML = '<h1>Available Products</h1>';
 
@@ -71,13 +79,10 @@ session_start();
 <?php include '../includes/header.php'; ?>
 
 <main id="content">
-    <?php if (isset($_SESSION['first_name']) && isset($_SESSION['last_name'])): ?>
+    <!-- Check if the user is logged in -->
+    <?php if (isset($_SESSION['user'])): ?>
         <p class="welcome-message">
-            Welcome back, <?= htmlspecialchars($_SESSION['first_name']) . ' ' . htmlspecialchars($_SESSION['last_name']); ?>!
-        </p>
-    <?php elseif (isset($_SESSION['username'])): ?>
-        <p class="welcome-message">
-            Welcome back, <?= htmlspecialchars($_SESSION['username']); ?>!
+            Welcome back, <?= htmlspecialchars($_SESSION['user']['username']); ?>!
         </p>
     <?php else: ?>
         <p class="welcome-message">
@@ -86,6 +91,7 @@ session_start();
     <?php endif; ?>
 
     <section id="product-controls">
+        <!-- Search and filter controls -->
         <input type="text" id="searchInput" placeholder="Search products by name">
         <select id="filterCategory">
             <option value="">All Categories</option>
@@ -111,7 +117,7 @@ session_start();
 
 <div id="modalOverlay" class="modal-overlay">
     <div class="modal-content">
-        <img id="modalImage" src="" alt="Características del producto">
+        <img id="modalImage" src="" alt="Product Details">
         <button class="close-button" onclick="closeModal()">X</button>
     </div>
 </div>
