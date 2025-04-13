@@ -1,7 +1,7 @@
 <?php 
 require_once '../vendor/autoload.php'; // Include the Composer autoloader to automatically load classes
 
-use App\Models\User;  // Use the correct namespace for the User class
+use Models\User;  // Use the correct namespace for the User class
 
 // Login logic
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
