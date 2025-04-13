@@ -4,14 +4,31 @@ require_once '../vendor/autoload.php'; // Composer autoloader
 
 use Models\User;
 
+// Check if user is already logged in
+if (isset($_SESSION['user'])) {
+    header("Location: index.php");
+    exit;
+}
+
 // Login logic
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user = new User();
 
-    // Collect login credentials
+    // Collect and sanitize login credentials
+    $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+    $password = $_POST['password'];
+
+    // Check if email is valid
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $_SESSION['error_message'] = "Please enter a valid email address.";
+        header("Location: login.php");
+        exit;
+    }
+
+    // Create credentials array
     $credentials = [
-        'email' => $_POST['email'],
-        'password' => $_POST['password']
+        'email' => $email,
+        'password' => $password
     ];
 
     // Call the login method from the User class
@@ -21,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Store user information in session
         $_SESSION['user'] = $loggedUser;
 
-        // Redirect to index or dashboard
+        // Redirect to the dashboard or homepage
         header("Location: index.php");
         exit;
     } else {
