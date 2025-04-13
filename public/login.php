@@ -34,18 +34,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Call the login method from the User class
     $loggedUser = $user->login($credentials);
 
-    if ($loggedUser) {
-        // Store user information in session
+    // Debugging - Log login attempt
+    if ($loggedUser === false) {
+        $_SESSION['error_message'] = "Invalid email or password.";
+    } else {
+        // If login is successful
         $_SESSION['user'] = $loggedUser;
-
-        // Redirect to the dashboard or homepage
         header("Location: index.php");
         exit;
-    } else {
-        $_SESSION['error_message'] = "Invalid email or password.";
-        header("Location: login.php");
-        exit;
     }
+    header("Location: login.php");
+    exit;
 }
 ?>
 
