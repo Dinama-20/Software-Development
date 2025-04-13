@@ -15,28 +15,6 @@ class User
         $this->db = (new Database())->getConnection();
     }
 
-    // Check if the email is available (not registered)
-    public function isEmailAvailable($email)
-    {
-        $query = 'SELECT COUNT(*) FROM users WHERE email = :email';
-        $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':email', $email);
-        $stmt->execute();
-
-        return $stmt->fetchColumn() == 0;
-    }
-
-    // Check if the username is available (not taken)
-    public function isUsernameAvailable($username)
-    {
-        $query = 'SELECT COUNT(*) FROM users WHERE username = :username';
-        $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':username', $username);
-        $stmt->execute();
-
-        return $stmt->fetchColumn() == 0;
-    }
-
     // Register a new user
     public function register($data)
     {
@@ -80,6 +58,29 @@ class User
         }
     }
 
+    // Check if email is available
+    private function isEmailAvailable($email)
+    {
+        $query = 'SELECT COUNT(*) FROM users WHERE email = :email';
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+        
+        return $stmt->fetchColumn() == 0;
+    }
+
+    // Check if username is available
+    private function isUsernameAvailable($username)
+    {
+        $query = 'SELECT COUNT(*) FROM users WHERE username = :username';
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':username', $username);
+        $stmt->execute();
+        
+        return $stmt->fetchColumn() == 0;
+    }
+
+    // Login the user
     public function login($credentials)
     {
         // Search for the user in the database by email
@@ -87,16 +88,20 @@ class User
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':email', $credentials['email']);
         $stmt->execute();
-    
+
         // Check if the user exists in the database
         if ($stmt->rowCount() > 0) {
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
-    
+
             // Debugging - Show fetched data
             error_log("User found: " . print_r($user, true));  // Log the user data for verification
-    
+
+            // Debugging: Check if password_verify is working correctly
+            $passwordMatch = password_verify($credentials['password'], $user['password']);
+            error_log("Password check for email: " . $credentials['email'] . " - " . ($passwordMatch ? "Success" : "Failure"));
+
             // Verify if the entered password matches the stored hashed password
-            if (password_verify($credentials['password'], $user['password'])) {
+            if ($passwordMatch) {
                 return $user; // User authenticated successfully
             } else {
                 // Debugging: Password mismatch
@@ -108,5 +113,5 @@ class User
             error_log("User not found for email: " . $credentials['email']);  // Log that user was not found
             return false; // User not found
         }
-    }    
+    }
 }
