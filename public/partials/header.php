@@ -4,7 +4,7 @@ echo '<script src="assets/js/script.js" defer></script>';
 ?>
 
 <header>
-    <h1>Oñate Watch and Jewelry</h1>
+    <h1><a href="index.php" style="text-decoration: none; color: white;">Oñate Watch and Jewelry</a></h1>
     <nav>
         <div id="user-menu">
             <button onclick="window.location.href='login.php'">Login</button>
