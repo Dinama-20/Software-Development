@@ -79,19 +79,20 @@ session_start();
 <?php include '../includes/header.php'; ?>
 
 <main id="content">
-    <!-- Check if the user is logged in -->
     <?php if (isset($_SESSION['user'])): ?>
+        <!-- If the user is logged in, show their username -->
         <p class="welcome-message">
-            Welcome back, <?= htmlspecialchars($_SESSION['user']['username']); ?>!
+            Welcome back, <?= isset($_SESSION['user']['username']) ? htmlspecialchars($_SESSION['user']['username']) : 'Guest'; ?>!
         </p>
     <?php else: ?>
+        <!-- If the user is not logged in, show the login prompt -->
         <p class="welcome-message">
             Welcome to Oñate Watch and Jewelry! Please <a href="login.php">log in</a> to access your account.
         </p>
     <?php endif; ?>
 
+    <!-- Filters and products section -->
     <section id="product-controls">
-        <!-- Search and filter controls -->
         <input type="text" id="searchInput" placeholder="Search products by name">
         <select id="filterCategory">
             <option value="">All Categories</option>
