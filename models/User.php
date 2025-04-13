@@ -93,19 +93,19 @@ class User
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
     
             // Debugging - Show fetched data
-            error_log("User data: " . print_r($user, true));  // Log user data
+            error_log("User found: " . print_r($user, true));  // Log the user data for verification
     
             // Verify if the entered password matches the stored hashed password
             if (password_verify($credentials['password'], $user['password'])) {
                 return $user; // User authenticated successfully
             } else {
-                // Debugging - Password did not match
-                error_log("Password mismatch for email: " . $credentials['email']);  // Log mismatch
+                // Debugging: Password mismatch
+                error_log("Password mismatch for email: " . $credentials['email']);  // Log password mismatch
                 return false; // Password mismatch
             }
         } else {
-            // Debugging - User not found
-            error_log("User not found for email: " . $credentials['email']);  // Log user not found
+            // Debugging: User not found
+            error_log("User not found for email: " . $credentials['email']);  // Log that user was not found
             return false; // User not found
         }
     }    
