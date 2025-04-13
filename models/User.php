@@ -15,6 +15,28 @@ class User
         $this->db = (new Database())->getConnection();
     }
 
+    // Check if the email is available (not registered)
+    public function isEmailAvailable($email)
+    {
+        $query = 'SELECT COUNT(*) FROM users WHERE email = :email';
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+
+        return $stmt->fetchColumn() == 0;
+    }
+
+    // Check if the username is available (not taken)
+    public function isUsernameAvailable($username)
+    {
+        $query = 'SELECT COUNT(*) FROM users WHERE username = :username';
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':username', $username);
+        $stmt->execute();
+
+        return $stmt->fetchColumn() == 0;
+    }
+
     // Register a new user
     public function register($data)
     {
@@ -57,6 +79,7 @@ class User
             return 'Database error: ' . $e->getMessage(); // If a database error occurs
         }
     }
+
     public function login($credentials)
     {
         // Search for the user in the database by email
@@ -64,21 +87,19 @@ class User
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':email', $credentials['email']);
         $stmt->execute();
-    
+
         // Check if the user exists in the database
         if ($stmt->rowCount() > 0) {
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
-    
+
             // Verify if the entered password matches the stored hashed password
             if (password_verify($credentials['password'], $user['password'])) {
-                return $user; // Return the user data if authenticated successfully
+                return $user; // User authenticated successfully
             } else {
-                // Password mismatch, return false
-                return false;
+                return false; // Password mismatch
             }
         } else {
-            // User not found, return false
-            return false;
+            return false; // User not found
         }
-    }    
+    }
 }
