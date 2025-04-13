@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart</title>
+    <link rel="stylesheet" href="public/assets/css/style.css">
+    <script src="public/assets/js/script.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <button onclick="window.location.href='index.html'">Back to Home</button>
+        </nav>
+    </header>
+    <main id="content">
+        <h1>Your Cart</h1>
+        <div id="cart-container"></div>
+        <div id="cart-actions">
+            <div id="cart-actions">
+                <button class="custom-btn" onclick="clearCart()">Clear Cart</button>
+                <button class="custom-btn" onclick="checkout()">Buy</button>
+            </div>            
+        </div>
+    </main>
+    <footer>
+        <button onclick="window.open('https://www.facebook.com/profile.php?id=100004656649059')">
+            <img src="public/assets/images/facebook.png" alt="Facebook">
+        </button>
+        <button onclick="window.open('https://www.instagram.com/relojero1303?igsh=MXFvNXVjbm9kbmY3Mw==')">
+            <img src="public/assets/images/instagram.jpeg" alt="Instagram">
+        </button>
+        <button onclick="window.location.href='reparations.html'">Repair Service</button>
+    </footer>
+
+    <script>
+        window.onload = function() {
+            displayCart(); 
+        };
+    </script>
+</body>
+</html>

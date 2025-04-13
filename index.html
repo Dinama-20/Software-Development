@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oñate Watch and Jewelry</title>
+    <link rel="stylesheet" href="public/assets/css/style.css">
+    <script src="public/assets/js/script.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const userMenu = document.getElementById('user-menu');
+
+            const firstName = localStorage.getItem('userFirstName');
+            const lastName = localStorage.getItem('userLastName');
+            const email = localStorage.getItem('userEmail');
+
+            if (firstName && lastName && email) {
+                userMenu.innerHTML = `
+                    <p>Welcome, ${firstName} ${lastName}</p>
+                    <button onclick="logout()">Logout</button>
+                `;
+            }
+        });
+
+        function logout() {
+            localStorage.removeItem('userFirstName');
+            localStorage.removeItem('userLastName');
+            localStorage.removeItem('userEmail');
+            location.reload();
+        }
+
+        function showModal(imageSrc) {
+            const modalOverlay = document.getElementById("modalOverlay");
+            const modalImage = document.getElementById("modalImage");
+
+            modalImage.src = imageSrc;
+            modalOverlay.style.display = "flex";
+        }
+
+        function closeModal() {
+            const modalOverlay = document.getElementById("modalOverlay");
+            modalOverlay.style.display = "none";
+        }
+    </script>
+    <style>
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            position: relative;
+            background-color: white;
+            border: 5px solid #8c0000;
+            padding: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+            max-width: 80%;
+            max-height: 80%;
+            overflow: hidden;
+        }
+
+        .modal-content img {
+            display: block;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .close-button {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background-color: #8c0000;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 3px;
+            transition: background-color 0.3s ease;
+        }
+
+        .close-button:hover {
+            background-color: #a10000;
+        }
+    </style>
+</head>
+<body>
+    <div id="products"></div>
+    <header>
+        <h1>Oñate Watch and Jewelry</h1>
+        <nav>
+            <div id="user-menu">
+                <button onclick="window.location.href='login.html'">Login</button>
+                <button onclick="window.location.href='register.html'">Register</button>
+            </div>
+            <button onclick="window.location.href='cart.html'">
+                <img src="public/assets/images/cart.png" alt="Cart">
+            </button>
+            <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
+        </nav>
+    </header>
+    <main id="content">
+        <section id="product-controls">
+            <input type="text" id="searchInput" placeholder="Search products by name">
+            <select id="filterCategory">
+                <option value="">All Categories</option>
+                <option value="smartwatch">Smartwatch</option>
+                <option value="woman">Woman</option>
+                <option value="junior">Junior</option>
+            </select>
+            <select id="sortPrice">
+                <option value="">Sort by Price</option>
+                <option value="asc">Low to High</option>
+                <option value="desc">High to Low</option>
+            </select>
+            <button onclick="applyFilters()">Apply</button>
+        </section>
+        <section id="products">
+            <h1>Available Products</h1>
+            <div class="product" onclick="showModal('public/assets/images/characteristics1.png')">
+                <img src="public/assets/images/duward-watch1.png" alt="Aquarius Nurburgring">
+                <h2>Aquarius Nurburgring</h2>
+                <p>Price: 240€</p>
+                <button onclick="addToCart('Aquarius Nurburgring', 240.00)">Add to Cart</button>
+            </div>
+
+            <div class="product" onclick="showModal('public/assets/images/characteristics2.png')">
+                <img src="public/assets/images/duward-watch2.png" alt="Aquastar Race">
+                <h2>Aquastar Race</h2>
+                <p>Price: 189€</p>
+                <button onclick="addToCart('Aquastar Race', 189.00)">Add to Cart</button>
+            </div>
+
+            <div class="product" onclick="showModal('public/assets/images/characteristics3.png')">
+                <img src="public/assets/images/duward-watch3.png" alt="Smartwatch Style">
+                <h2>Smartwatch Style</h2>
+                <p>Price: 98.90€</p>
+                <button onclick="addToCart('Smartwatch Style', 98.90)">Add to Cart</button>
+            </div>
+
+            <div class="product" onclick="showModal('public/assets/images/characteristics4.png')">
+                <img src="public/assets/images/duward-watch4.png" alt="Lady Woman">
+                <h2>Lady Woman</h2>
+                <p>Price: 89€</p>
+                <button onclick="addToCart('Lady Woman', 89.00)">Add to Cart</button>
+            </div>
+
+            <div class="product" onclick="showModal('public/assets/images/characteristics5.png')">
+                <img src="public/assets/images/duward-watch5.png" alt="Lady Babaye">
+                <h2>Lady Babaye</h2>
+                <p>Price: 95€</p>
+                <button onclick="addToCart('Lady Babaye', 95.00)">Add to Cart</button>
+            </div>
+
+            <div class="product" onclick="showModal('public/assets/images/characteristics6.png')">
+                <img src="public/assets/images/duward-watch6.png" alt="Junior Divka">
+                <h2>Junior Divka</h2>
+                <p>Price: $39.90</p>
+                <button onclick="addToCart('Junior Divka', 39.90)">Add to Cart</button>
+            </div>
+
+            <div class="product" onclick="showModal('public/assets/images/characteristics7.png')">
+                <img src="public/assets/images/duward-watch7.png" alt="Junior Dreng">
+                <h2>Junior Dreng</h2>
+                <p>Price: $49.90</p>
+                <button onclick="addToCart('Junior Dreng', 49.90)">Add to Cart</button>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <button onclick="window.open('https://www.facebook.com/profile.php?id=100004656649059')">
+            <img src="public/assets/images/facebook.png" alt="Facebook">
+        </button>
+        <button onclick="window.open('https://www.instagram.com/relojero1303?igsh=MXFvNXVjbm9kbmY3Mw==')">
+            <img src="public/assets/images/instagram.jpeg" alt="Instagram">
+        </button>
+        <button onclick="window.location.href='reparations.html'">Repair Service</button>
+    </footer>
+
+    <div id="modalOverlay" class="modal-overlay">
+        <div class="modal-content">
+            <img id="modalImage" src="" alt="Características del producto">
+            <button class="close-button" onclick="closeModal()">X</button>
+        </div>
+    </div>
+</body>
+</html>

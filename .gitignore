@@ -1,0 +1,37 @@
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore IDE/editor config files
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Ignore Composer dependencies and vendor folder
+/vendor/
+
+# Ignore PHPUnit result logs
+.phpunit.result.cache
+
+# Ignore environment and sensitive files
+.env
+.env.local
+
+# Ignore log files
+*.log
+
+# Ignore node modules (in case you use frontend build tools)
+node_modules/
+
+# Ignore compiled assets (optional)
+dist/
+build/
+
+# Ignore XAMPP temporary/cache files
+xampp/
+
+# Ignore database backups or SQLite DBs if present
+*.sql
+*.sqlite
+*.sqlite3
