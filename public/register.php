@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-<?php include 'partials/header.php'; ?>
+<?php include 'includes/header.php'; ?>
 
 <main>
     <h2>Register</h2>
@@ -47,4 +47,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </form>
 </main>
 
-<?php include 'partials/footer.php'; ?>
+<?php include 'includes/footer.php'; ?>

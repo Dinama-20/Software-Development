@@ -1,0 +1,29 @@
+# Normalize line endings between operating systems
+* text=auto
+
+# Treat code files as text for proper diff and merge
+*.html text
+*.css text
+*.js text
+*.php text
+*.json text
+*.xml text
+*.md text
+
+# Treat images and other binaries properly
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.gif binary
+*.svg binary
+*.ico binary
+*.webp binary
+*.pdf binary
+
+# Treat font files as binary
+*.ttf binary
+*.woff binary
+*.woff2 binary
+
+# Make sure shell scripts are treated as text
+*.sh text
