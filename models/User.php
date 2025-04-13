@@ -57,7 +57,6 @@ class User
             return 'Database error: ' . $e->getMessage(); // If a database error occurs
         }
     }
-
     public function login($credentials)
     {
         // Search for the user in the database by email
@@ -72,14 +71,14 @@ class User
     
             // Verify if the entered password matches the stored hashed password
             if (password_verify($credentials['password'], $user['password'])) {
-                return $user; // User authenticated successfully
+                return $user; // Return the user data if authenticated successfully
             } else {
-                // Debugging: Password did not match
-                return 'Password mismatch'; 
+                // Password mismatch, return false
+                return false;
             }
         } else {
-            // Debugging: User not found
-            return 'User not found';
+            // User not found, return false
+            return false;
         }
     }    
 }

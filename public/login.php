@@ -37,14 +37,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Debugging - Log login attempt
     if ($loggedUser === false) {
         $_SESSION['error_message'] = "Invalid email or password.";
+        header("Location: login.php"); // Redirection if login fails
+        exit;
     } else {
         // If login is successful
         $_SESSION['user'] = $loggedUser;
-        header("Location: index.php");
+        header("Location: index.php"); // Redirect to home page
         exit;
     }
-    header("Location: login.php");
-    exit;
 }
 ?>
 
