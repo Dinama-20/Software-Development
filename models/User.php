@@ -18,12 +18,17 @@ class User
     // Register a new user
     public function register($data)
     {
-        // Generate a username by concatenating first and last name (lowercase)
-        $username = strtolower($data['first_name'] . '.' . $data['last_name']);
+        // If no username is provided, generate one automatically
+        $username = isset($data['username']) && !empty($data['username']) ? $data['username'] : strtolower($data['first_name'] . '.' . $data['last_name']);
 
         // Check if the email is already registered
         if (!$this->isEmailAvailable($data['email'])) {
             return 'The email is already registered.';
+        }
+
+        // Check if the username is already taken
+        if (!$this->isUsernameAvailable($username)) {
+            return 'The username is already taken. Please choose another one.';
         }
 
         // Hash the password for secure storage
@@ -86,6 +91,19 @@ class User
         $stmt->execute();
 
         // Return true if the email is available (not in the database), false if it already exists
+        return $stmt->rowCount() === 0;
+    }
+
+    // Check if the username is available (not already taken)
+    public function isUsernameAvailable($username)
+    {
+        // Query the database to check if the username is already taken
+        $query = 'SELECT id FROM users WHERE username = :username';
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':username', $username);
+        $stmt->execute();
+
+        // Return true if the username is available (not in the database), false if it already exists
         return $stmt->rowCount() === 0;
     }
 }

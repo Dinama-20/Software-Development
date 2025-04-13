@@ -8,14 +8,21 @@ use Models\User;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user = new User();
 
-    // Collect user input (First Name, Last Name, Email, Password)
+    // Collect user input (First Name, Last Name, Email, Password, and optionally Username)
     $firstName = $_POST['first_name'];
     $lastName = $_POST['last_name'];
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    // Automatically generate the username
-    $username = strtolower($firstName . '.' . $lastName);
+    // Check if a username is provided or generate one automatically
+    $username = isset($_POST['username']) && !empty($_POST['username']) ? $_POST['username'] : strtolower($firstName . '.' . $lastName);
+
+    // Ensure username is unique
+    if (!$user->isUsernameAvailable($username)) {
+        $_SESSION['error_message'] = "The username is already taken. Please choose another one.";
+        header("Location: register.php");
+        exit;
+    }
 
     // Create a new user object
     $userData = [
@@ -63,6 +70,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="form-group">
             <label for="last_name">Last Name</label>
             <input type="text" id="last_name" name="last_name" required>
+        </div>
+        <div class="form-group">
+            <label for="username">Username (Optional)</label>
+            <input type="text" id="username" name="username" placeholder="Leave blank for auto-generated username">
         </div>
         <div class="form-group">
             <label for="email">Email</label>
