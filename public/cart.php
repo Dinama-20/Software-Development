@@ -17,7 +17,7 @@ session_start();
         <ul id="cart-items">
             <!-- Los elementos del carrito se cargarán dinámicamente aquí -->
         </ul>
-        <div id="cart-actions">
+        <div id="cart-actions" style="display: none;">
             <button class="cart-action-btn" data-action="buy">Buy</button>
             <button class="cart-action-btn" data-action="clear">Clear Cart</button>
         </div>

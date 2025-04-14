@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const cartContainer = document.getElementById("cart-container");
     const cartItems = document.getElementById("cart-items");
+    const cartActions = document.getElementById("cart-actions");
 
     // Cargar los elementos del carrito dinámicamente
     function loadCart() {
@@ -17,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         `;
                         cartItems.appendChild(listItem);
                     });
-                    document.getElementById("cart-actions").style.display = "flex"; // Mostrar los botones
+                    cartActions.style.display = "flex"; // Mostrar los botones
                 } else {
                     cartContainer.innerHTML = "<p>Your cart is empty.</p>";
                 }
