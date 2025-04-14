@@ -23,7 +23,8 @@ session_start();
                     </li>
                 <?php endforeach; ?>
             </ul>
-            <div id="cart-actions">
+            <!-- Render buttons dynamically -->
+            <div id="cart-actions" style="display: flex; justify-content: center; gap: 1rem; margin-top: 1rem;">
                 <button id="buy-btn" class="cart-action-btn">Buy</button>
                 <button id="clear-cart-btn" class="cart-action-btn">Clear Cart</button>
             </div>

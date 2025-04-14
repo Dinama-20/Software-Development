@@ -351,7 +351,7 @@ footer button:hover {
 
 /* Asegurarse de que los botones del carrito sean visibles */
 #cart-actions {
-    display: flex; /* Asegura que los botones sean visibles */
+    display: flex !important; /* Forzar que los botones sean visibles */
     justify-content: center;
     gap: 1rem;
     margin-top: 1rem;
