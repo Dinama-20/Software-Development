@@ -98,9 +98,9 @@ function clearCart() {
 // Checkout functionality to generate a PDF
 function checkout() {
     console.log("Checkout process started..."); // Depuración
+
     fetch("get_cart.php")
         .then(response => {
-            console.log("Fetching cart data..."); // Depuración
             if (!response.ok) {
                 throw new Error("Failed to fetch cart data");
             }
@@ -113,15 +113,14 @@ function checkout() {
                 return;
             }
 
-            // Genera el PDF con los detalles del pedido
-            generarPDF(cart);
+            // Redirige al archivo PHP que genera el PDF
+            window.location.href = "generate_pdf.php";
 
             // Vacía el carrito después de la compra
             fetch("clear_cart.php", { method: "POST" })
                 .then(() => {
                     console.log("Cart cleared successfully."); // Depuración
                     displayCart(); // Actualiza la vista del carrito
-                    alert("Checkout completed successfully! Your order details have been saved as a PDF.");
                 })
                 .catch(error => {
                     console.error("Error clearing cart:", error);
@@ -134,7 +133,6 @@ function checkout() {
         });
 }
 
-// Generate a PDF with order details
 function generarPDF(cart) {
     console.log("Generating PDF..."); // Depuración
     const { jsPDF } = window.jspdf;
