@@ -1,11 +1,15 @@
+/* General body styling */
 body {
+    /* Sets the font family and background color */
     font-family: 'Goudy Old Style', serif;
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
 }
 
+/* Header styling */
 header {
+    /* Styles the header with a background color, padding, and alignment */
     background-color: #8c0000;
     padding: 1rem 2rem;
     display: flex;
@@ -14,19 +18,23 @@ header {
 }
 
 header h1 {
+    /* Styles the site title */
     font-family: 'Algerian', serif;
     font-size: 2.5rem;
     color: white;
     margin: 0;
 }
 
+/* Navigation buttons in the header */
 header nav {
+    /* Aligns navigation buttons horizontally */
     display: flex;
-    align-items: center; /* Alinea los botones verticalmente */
+    align-items: center; /* Aligns buttons vertically */
     gap: 1rem;
 }
 
 header nav button {
+    /* Styles buttons in the navigation */
     padding: 0.5rem 1rem;
     background-color: white;
     color: black;
@@ -38,26 +46,32 @@ header nav button {
 }
 
 header nav button img {
+    /* Styles images inside navigation buttons */
     width: 20px;
     height: 20px;
 }
 
 header nav button:hover {
+    /* Adds hover effect to navigation buttons */
     background-color: #f0f0f0;
 }
 
 #welcome-message {
+    /* Styles the welcome message */
     color: white; 
     font-size: 1.5rem;
     font-weight: bold;
 }
 
+/* Dropdown menu styling */
 .dropdown {
+    /* Positions dropdown menus */
     position: relative;
     display: inline-block;
 }
 
 .dropbtn {
+    /* Styles dropdown buttons */
     padding: 0.5rem 1rem;
     background-color: white;
     color: black;
@@ -68,6 +82,7 @@ header nav button:hover {
 }
 
 .dropdown-content {
+    /* Hides dropdown content by default */
     display: none;
     position: absolute;
     background-color: white;
@@ -77,6 +92,7 @@ header nav button:hover {
 }
 
 .dropdown-content a {
+    /* Styles links inside dropdown content */
     color: black;
     padding: 12px 16px;
     text-decoration: none;
@@ -84,23 +100,29 @@ header nav button:hover {
 }
 
 .dropdown-content a:hover {
+    /* Adds hover effect to dropdown links */
     background-color: #f1f1f1;
 }
 
 .dropdown.show .dropdown-content {
+    /* Shows dropdown content when active */
     display: block;
 }
 
+/* Main content styling */
 main {
+    /* Adds padding to the main content */
     padding: 2rem;
 }
 
 #content {
+    /* Centers the content and sets a max width */
     max-width: 1200px;
     margin: 0 auto;
 }
 
 #products {
+    /* Styles the product grid */
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 1rem;
@@ -108,6 +130,7 @@ main {
 }
 
 .product {
+    /* Styles individual product cards */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -120,12 +143,14 @@ main {
 }
 
 .product img {
+    /* Styles product images */
     width: 100%;
     height: auto;
     border-radius: 10px;
 }
 
 .product button {
+    /* Styles buttons inside product cards */
     padding: 0.5rem 1rem;
     background-color: white;
     color: black;
@@ -136,10 +161,12 @@ main {
 }
 
 .product button:hover {
+    /* Adds hover effect to product buttons */
     background-color: #f0f0f0;
 }
 
 .product-image {
+    /* Styles product images with fixed dimensions */
     width: 200px;
     height: 200px;
     object-fit: cover;
@@ -147,13 +174,15 @@ main {
 }
 
 .product-actions {
+    /* Styles the container for product action buttons */
     display: flex;
-    justify-content: center; /* Centra los botones */
-    gap: 1rem; /* Espaciado uniforme entre botones */
+    justify-content: center; /* Centers buttons */
+    gap: 1rem; /* Adds uniform spacing between buttons */
     margin-top: 1rem;
 }
 
 .product-actions button {
+    /* Styles individual action buttons */
     flex: 1;
     margin: 0 0.5rem;
     padding: 0.5rem 1rem;
@@ -166,10 +195,12 @@ main {
 }
 
 .product-actions button:hover {
+    /* Adds hover effect to action buttons */
     background-color: #f0f0f0;
 }
 
 .product-actions button.details-btn {
+    /* Styles the details button */
     background-color: #8c0000;
     color: white;
     border: none;
@@ -180,10 +211,12 @@ main {
 }
 
 .product-actions button.details-btn:hover {
+    /* Adds hover effect to the details button */
     background-color: #a00000;
 }
 
 #product-controls {
+    /* Styles the product controls section */
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
@@ -194,6 +227,7 @@ main {
 #product-controls input,
 #product-controls select,
 #product-controls button {
+    /* Styles inputs, selects, and buttons in product controls */
     padding: 0.5rem;
     font-size: 1rem;
     border: 1px solid #ccc;
@@ -201,6 +235,7 @@ main {
 }
 
 #product-controls button {
+    /* Styles buttons in product controls */
     background-color: #8c0000;
     color: white;
     cursor: pointer;
@@ -208,10 +243,12 @@ main {
 }
 
 #product-controls button:hover {
+    /* Adds hover effect to product control buttons */
     background-color: #a00000;
 }
 
 .reparations-form {
+    /* Styles the reparations form */
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -220,10 +257,12 @@ main {
 }
 
 .reparations-form label {
+    /* Styles labels in the reparations form */
     font-weight: bold;
 }
 
 .reparations-form textarea {
+    /* Styles textareas in the reparations form */
     resize: none;
     border-radius: 5px;
     border: 1px solid #ccc;
@@ -231,47 +270,56 @@ main {
 }
 
 #cart-container {
+    /* Styles the cart container */
     margin-top: 2rem;
-    color: black; /* Texto visible en modo claro */
+    color: black; /* Visible text in light mode */
 }
 
 body.dark-mode #cart-container {
+    /* Adjusts cart container styling for dark mode */
     background-color: #1e1e1e;
     color: white;
 }
 
 body.dark-mode #cart-container ul {
+    /* Adjusts cart list styling for dark mode */
     background-color: #1e1e1e;
     color: white;
 }
 
 body.dark-mode #cart-container li {
+    /* Adjusts cart list items styling for dark mode */
     background-color: #333;
     color: white;
     border: 1px solid #555;
 }
 
 body.dark-mode #cart-container li strong {
-    color: black; /* Mantener el color negro para los nombres de los productos */
+    /* Maintains black color for product names */
+    color: black;
 }
 
 body.dark-mode #cart-actions button {
+    /* Adjusts cart action buttons styling for dark mode */
     background-color: #444;
     color: white;
 }
 
 body.dark-mode #cart-actions button:hover {
+    /* Adds hover effect to cart action buttons in dark mode */
     background-color: #555;
 }
 
 #cart-container ul {
+    /* Styles the cart list */
     list-style: none;
     padding: 0;
 }
 
 #cart-container li {
-    background-color: black; /* Fondo negro */
-    color: white; /* Texto blanco */
+    /* Styles individual cart items */
+    background-color: black; /* Black background */
+    color: white; /* White text */
     padding: 1rem;
     margin-bottom: 1rem;
     border-radius: 5px;
@@ -281,6 +329,7 @@ body.dark-mode #cart-actions button:hover {
 }
 
 #cart-container li button {
+    /* Styles buttons inside cart items */
     background-color: white;
     color: black;
     border: 2px solid #8c0000;
@@ -291,10 +340,12 @@ body.dark-mode #cart-actions button:hover {
 }
 
 #cart-container li button:hover {
+    /* Adds hover effect to cart item buttons */
     background-color: #f0f0f0;
 }
 
 #cart-count {
+    /* Styles the cart count badge */
     background-color: red;
     color: white;
     border-radius: 50%;
@@ -306,6 +357,7 @@ body.dark-mode #cart-actions button:hover {
 }
 
 .cart-product {
+    /* Styles individual products in the cart */
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -317,19 +369,23 @@ body.dark-mode #cart-actions button:hover {
 }
 
 .cart-total {
+    /* Styles the total price in the cart */
     font-size: 1.5rem;
     font-weight: bold;
     color: #8c0000;
     margin-top: 20px;
 }
 
+/* Footer styling */
 footer {
+    /* Styles the footer with a background color and centered text */
     background-color: #8c0000;
     padding: 1rem;
     text-align: center;
 }
 
 footer button {
+    /* Styles buttons in the footer */
     background-color: white;
     color: black;
     border: none;
@@ -341,23 +397,27 @@ footer button {
 }
 
 footer button img {
+    /* Styles images inside footer buttons */
     width: 20px;
     height: 20px;
 }
 
 footer button:hover {
+    /* Adds hover effect to footer buttons */
     background-color: #f0f0f0;
 }
 
-/* Asegurarse de que los botones del carrito sean visibles */
+/* Ensures cart buttons are visible */
 #cart-actions {
-    display: flex !important; /* Forzar que los botones sean visibles */
+    /* Forces visibility of cart buttons */
+    display: flex !important;
     justify-content: center;
     gap: 1rem;
     margin-top: 1rem;
 }
 
 #cart-actions .cart-action-btn {
+    /* Styles cart action buttons */
     padding: 0.5rem 1rem;
     background-color: #8c0000;
     color: white;
@@ -368,10 +428,12 @@ footer button:hover {
 }
 
 #cart-actions .cart-action-btn:hover {
+    /* Adds hover effect to cart action buttons */
     background-color: #a00000;
 }
 
 #dark-mode-toggle {
+    /* Styles the dark mode toggle button */
     padding: 0.5rem 1rem;
     background-color: #8c0000;
     color: white;
@@ -382,65 +444,78 @@ footer button:hover {
 }
 
 #dark-mode-toggle:hover {
+    /* Adds hover effect to the dark mode toggle button */
     background-color: #a00000;
 }
 
-/* Modo oscuro general */
+/* Dark mode styling */
 body.dark-mode {
+    /* Changes background and text colors for dark mode */
     background-color: #121212;
     color: #ffffff;
 }
 
 body.dark-mode header {
+    /* Adjusts header styling for dark mode */
     background-color: #1e1e1e;
 }
 
 body.dark-mode footer {
+    /* Adjusts footer styling for dark mode */
     background-color: #1e1e1e;
 }
 
 body.dark-mode button {
+    /* Adjusts button styling for dark mode */
     background-color: #333;
     color: white;
 }
 
-/* Excluir las letras de los productos del modo oscuro */
+/* Excludes product text from dark mode */
 body.dark-mode .product h2,
 body.dark-mode .product p {
-    color: black; /* Mantener el color negro para las letras de los productos */
+    /* Maintains black color for product text */
+    color: black;
 }
 
-/* Modo oscuro para el carrito */
+/* Dark mode for the cart */
 body.dark-mode #cart-container {
+    /* Adjusts cart container styling for dark mode */
     background-color: #1e1e1e;
     color: white;
 }
 
 body.dark-mode #cart-container ul {
+    /* Adjusts cart list styling for dark mode */
     background-color: #1e1e1e;
     color: white;
 }
 
 body.dark-mode #cart-container li {
+    /* Adjusts cart list items styling for dark mode */
     background-color: #333;
     color: white;
     border: 1px solid #555;
 }
 
 body.dark-mode #cart-container li strong {
-    color: black; /* Mantener el color negro para los nombres de los productos */
+    /* Maintains black color for product names */
+    color: black;
 }
 
 body.dark-mode #cart-actions button {
+    /* Adjusts cart action buttons styling for dark mode */
     background-color: #444;
     color: white;
 }
 
 body.dark-mode #cart-actions button:hover {
+    /* Adds hover effect to cart action buttons in dark mode */
     background-color: #555;
 }
 
 #user-dropdown {
+    /* Styles the user dropdown menu */
     position: absolute;
     background-color: white;
     color: black;
@@ -449,7 +524,9 @@ body.dark-mode #cart-actions button:hover {
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
 }
 
+/* Modal overlay styling */
 .modal-overlay {
+    /* Styles the modal overlay */
     position: fixed;
     top: 0;
     left: 0;
@@ -463,6 +540,7 @@ body.dark-mode #cart-actions button:hover {
 }
 
 .modal-content {
+    /* Styles the modal content */
     position: relative;
     background-color: white;
     padding: 1rem;
@@ -474,6 +552,7 @@ body.dark-mode #cart-actions button:hover {
 }
 
 .modal-content img {
+    /* Styles images inside modal content */
     max-width: 100%;
     max-height: 100%;
     border-radius: 10px;
@@ -481,6 +560,7 @@ body.dark-mode #cart-actions button:hover {
 }
 
 .close-button {
+    /* Styles the close button in modals */
     position: absolute;
     top: 10px;
     right: 10px;
@@ -495,6 +575,7 @@ body.dark-mode #cart-actions button:hover {
 }
 
 .product-carousel {
+    /* Styles the product carousel */
     margin-top: 1rem;
     display: flex;
     justify-content: center;
@@ -503,6 +584,7 @@ body.dark-mode #cart-actions button:hover {
 }
 
 .carousel-images img {
+    /* Styles images in the carousel */
     width: 100px;
     height: auto;
     border-radius: 5px;
@@ -511,17 +593,20 @@ body.dark-mode #cart-actions button:hover {
 }
 
 .carousel-images img:hover {
+    /* Adds hover effect to carousel images */
     transform: scale(1.1);
 }
 
 /* Dropdown alignment fix */
 .dropdown {
+    /* Aligns dropdown menus with other buttons */
     position: relative;
     display: inline-block;
-    vertical-align: middle; /* Aligns with other buttons */
+    vertical-align: middle;
 }
 
 .dropdown-content {
+    /* Hides dropdown content by default */
     display: none;
     position: absolute;
     background-color: white;
@@ -531,6 +616,7 @@ body.dark-mode #cart-actions button:hover {
 }
 
 .dropdown-content a {
+    /* Styles links inside dropdown content */
     color: black;
     padding: 12px 16px;
     text-decoration: none;
@@ -538,15 +624,18 @@ body.dark-mode #cart-actions button:hover {
 }
 
 .dropdown-content a:hover {
+    /* Adds hover effect to dropdown links */
     background-color: #f1f1f1;
 }
 
 .dropdown.show .dropdown-content {
+    /* Shows dropdown content when active */
     display: block;
 }
 
-/* Botones generales */
+/* General button styling */
 button {
+    /* Styles general buttons */
     padding: 0.5rem 1rem;
     background-color: #8c0000;
     color: white;
@@ -558,11 +647,13 @@ button {
 }
 
 button:hover {
+    /* Adds hover effect to general buttons */
     background-color: #a00000;
 }
 
-/* Botones específicos del carrito */
+/* Specific cart button styling */
 #cart-actions button {
+    /* Styles buttons in the cart actions */
     padding: 0.5rem 1rem;
     background-color: #8c0000;
     color: white;
@@ -573,11 +664,13 @@ button:hover {
 }
 
 #cart-actions button:hover {
+    /* Adds hover effect to cart action buttons */
     background-color: #a00000;
 }
 
-/* Unificar diseño de los botones de eliminar */
+/* Unified styling for remove buttons */
 .remove-btn {
+    /* Styles remove buttons */
     padding: 0.5rem 1rem;
     background-color: #8c0000;
     color: white;
@@ -588,11 +681,13 @@ button:hover {
 }
 
 .remove-btn:hover {
+    /* Adds hover effect to remove buttons */
     background-color: #a00000;
 }
 
 /* User settings form styling */
 .user-settings-form {
+    /* Styles the user settings form */
     max-width: 400px;
     margin: 2rem auto;
     padding: 1rem;
@@ -602,12 +697,14 @@ button:hover {
 }
 
 .user-settings-form label {
+    /* Styles labels in the user settings form */
     display: block;
     margin-bottom: 0.5rem;
     font-weight: bold;
 }
 
 .user-settings-form input {
+    /* Styles inputs in the user settings form */
     width: 100%;
     padding: 0.5rem;
     margin-bottom: 1rem;
@@ -616,6 +713,7 @@ button:hover {
 }
 
 .user-settings-form button {
+    /* Styles buttons in the user settings form */
     width: 100%;
     padding: 0.5rem;
     background-color: #8c0000;
@@ -627,11 +725,13 @@ button:hover {
 }
 
 .user-settings-form button:hover {
+    /* Adds hover effect to user settings form buttons */
     background-color: #a00000;
 }
 
 /* Error and success messages */
 .message {
+    /* Styles general messages */
     margin-bottom: 1rem;
     padding: 0.5rem;
     border-radius: 5px;
@@ -639,16 +739,19 @@ button:hover {
 }
 
 .message.error {
+    /* Styles error messages */
     background-color: #ffcccc;
     color: #a00000;
 }
 
 .message.success {
+    /* Styles success messages */
     background-color: #ccffcc;
     color: #008000;
 }
 
 .cart-container {
+    /* Styles the cart container */
     max-width: 800px;
     margin: 2rem auto;
     padding: 1rem;
@@ -658,43 +761,51 @@ button:hover {
 }
 
 .cart-container h1 {
+    /* Styles the cart title */
     text-align: center;
     color: #8c0000;
     margin-bottom: 1rem;
 }
 
 .cart-table {
+    /* Styles the cart table */
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 1rem;
 }
 
 .cart-table th, .cart-table td {
+    /* Styles table cells */
     border: 1px solid #ddd;
     padding: 0.8rem;
     text-align: center;
 }
 
 .cart-table th {
+    /* Styles table headers */
     background-color: #8c0000;
     color: white;
 }
 
 .cart-table tr:nth-child(even) {
+    /* Adds background color to even rows */
     background-color: #f9f9f9;
 }
 
 .cart-table tr:hover {
+    /* Adds hover effect to table rows */
     background-color: #f1f1f1;
 }
 
 .cart-actions {
+    /* Styles the cart actions section */
     display: flex;
     justify-content: space-between;
     gap: 1rem;
 }
 
 .cart-action-btn {
+    /* Styles cart action buttons */
     padding: 0.8rem 1.5rem;
     background-color: #8c0000;
     color: white;
@@ -706,10 +817,12 @@ button:hover {
 }
 
 .cart-action-btn:hover {
+    /* Adds hover effect to cart action buttons */
     background-color: #a00000;
 }
 
 .remove-btn {
+    /* Styles remove buttons */
     padding: 0.5rem 1rem;
     background-color: #8c0000;
     color: white;
@@ -720,5 +833,6 @@ button:hover {
 }
 
 .remove-btn:hover {
+    /* Adds hover effect to remove buttons */
     background-color: #a00000;
 }
