@@ -1,9 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     const cartContainer = document.getElementById("cart-container");
     const cartItems = document.getElementById("cart-items");
-    const cartActions = document.getElementById("cart-actions");
-    const buyButton = document.getElementById("buy-btn");
-    const clearCartButton = document.getElementById("clear-cart-btn");
 
     // Cargar los elementos del carrito dinámicamente
     function loadCart() {
@@ -20,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         `;
                         cartItems.appendChild(listItem);
                     });
-                    cartActions.style.display = "flex"; // Mostrar los botones
+                    document.getElementById("cart-actions").style.display = "flex"; // Mostrar los botones
                 } else {
                     cartContainer.innerHTML = "<p>Your cart is empty.</p>";
                 }
@@ -28,10 +25,13 @@ document.addEventListener("DOMContentLoaded", () => {
             .catch(error => console.error("Error loading cart:", error));
     }
 
-    // Manejar la eliminación de productos del carrito
+    // Manejar eventos en el contenedor del carrito
     cartContainer.addEventListener("click", (event) => {
-        if (event.target.classList.contains("remove-btn")) {
-            const index = event.target.getAttribute("data-index");
+        const target = event.target;
+
+        // Eliminar un producto del carrito
+        if (target.classList.contains("remove-btn")) {
+            const index = target.getAttribute("data-index");
             fetch(`remove_from_cart.php?index=${index}`, { method: "GET" })
                 .then(response => response.json())
                 .then(data => {
@@ -43,11 +43,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 })
                 .catch(error => console.error("Error:", error));
         }
-    });
 
-    // Manejar la acción de "Buy"
-    if (buyButton) {
-        buyButton.addEventListener("click", () => {
+        // Comprar los productos del carrito
+        if (target.dataset.action === "buy") {
             fetch("generate_pdf.php")
                 .then(response => response.json())
                 .then(data => {
@@ -60,20 +58,18 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 })
                 .catch(error => console.error("Error during checkout:", error));
-        });
-    }
+        }
 
-    // Manejar la acción de "Clear Cart"
-    if (clearCartButton) {
-        clearCartButton.addEventListener("click", () => {
+        // Vaciar el carrito
+        if (target.dataset.action === "clear") {
             fetch("clear_cart.php", { method: "POST" })
                 .then(() => {
                     alert("Cart cleared!");
                     loadCart(); // Recargar el carrito después de vaciarlo
                 })
                 .catch(error => console.error("Error clearing cart:", error));
-        });
-    }
+        }
+    });
 
     // Cargar el carrito al cargar la página
     loadCart();
