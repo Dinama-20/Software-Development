@@ -40,7 +40,10 @@ $pdf->Output('D', 'order-details.pdf');
 
 // Clear the cart after generating the PDF
 unset($_SESSION['cart']);
-
-// Reload the page
-header('Location: cart.php');
+?>
+<script>
+    // Reload the page after the PDF is downloaded
+    window.location.href = 'cart.php';
+</script>
+<?php
 exit;
