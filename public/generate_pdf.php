@@ -22,13 +22,13 @@ $pdf->Ln(10);
 
 $pdf->SetFont('Arial', '', 12);
 foreach ($cart as $item) {
-    $priceWithSymbol = number_format($item['price'], 2) . ' €'; // Asegúrate de incluir un espacio antes del símbolo €
-    $pdf->Cell(0, 10, "Product: {$item['name']} - Price: {$priceWithSymbol}", 0, 1);
+    $priceWithText = number_format($item['price'], 2) . ' euros'; // Cambia el formato del precio
+    $pdf->Cell(0, 10, "Product: {$item['name']} - Price: {$priceWithText}", 0, 1);
 }
 
 $pdf->Ln(10);
-$totalWithSymbol = number_format($total, 2) . ' €'; // Asegúrate de incluir un espacio antes del símbolo €
-$pdf->Cell(0, 10, "Total: {$totalWithSymbol}", 0, 1);
+$totalWithText = number_format($total, 2) . ' euros'; // Cambia el formato del total
+$pdf->Cell(0, 10, "Total: {$totalWithText}", 0, 1);
 $pdf->Cell(0, 10, "Date and Time: " . date('Y-m-d H:i:s'), 0, 1);
 
 // Vacía el carrito después de generar el PDF
