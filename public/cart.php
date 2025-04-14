@@ -20,50 +20,19 @@ session_start();
                 <?php foreach ($_SESSION['cart'] as $index => $item): ?>
                     <li>
                         <?= htmlspecialchars($item['name']) ?> - <?= number_format($item['price'], 2) ?> euros
-                        <button class="remove-btn" onclick="removeFromCart(<?= $index ?>)">Remove</button>
+                        <button class="remove-btn" data-index="<?= $index ?>">Remove</button>
                     </li>
                 <?php endforeach; ?>
             </ul>
             <div id="cart-actions">
-                <button id="buy-btn" onclick="checkout()">Buy</button>
-                <button id="clear-cart-btn" onclick="clearCart()">Clear Cart</button>
+                <button id="buy-btn">Buy</button>
+                <button id="clear-cart-btn">Clear Cart</button>
             </div>
         <?php else: ?>
             <p>Your cart is empty.</p>
         <?php endif; ?>
     </div>
-    <script>
-        function removeFromCart(index) {
-            fetch(`remove_from_cart.php?index=${index}`, { method: 'GET' })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        location.reload(); // Recarga la página para actualizar el carrito
-                    } else {
-                        alert('Failed to remove item from cart.');
-                    }
-                })
-                .catch(error => console.error('Error:', error));
-        }
-
-        function checkout() {
-            fetch('generate_pdf.php')
-                .then(() => {
-                    alert('Order completed! A PDF has been generated.');
-                    location.reload();
-                })
-                .catch(error => console.error('Error during checkout:', error));
-        }
-
-        function clearCart() {
-            fetch('clear_cart.php', { method: 'POST' })
-                .then(() => {
-                    alert('Cart cleared!');
-                    location.reload();
-                })
-                .catch(error => console.error('Error clearing cart:', error));
-        }
-    </script>
+    <script src="../assets/js/cart.js" defer></script>
 </main>
 
 <?php include '../includes/footer.php'; ?>
