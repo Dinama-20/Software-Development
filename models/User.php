@@ -47,7 +47,7 @@ class User {
 
     // Authenticates a user during login
     public function authenticate($username, $password) {
-        $query = "SELECT id, username, password, first_name, last_name FROM {$this->table} WHERE username = :username";
+        $query = "SELECT id, username, email, password, first_name, last_name FROM {$this->table} WHERE username = :username";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':username', $username);
         $stmt->execute();

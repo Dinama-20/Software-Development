@@ -29,6 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['user'] = [
             'id' => $authenticatedUser['id'],
             'username' => $authenticatedUser['username'],
+            'email' => $authenticatedUser['email'], // Ensure email is stored in the session
             'first_name' => $authenticatedUser['first_name'],
             'last_name' => $authenticatedUser['last_name']
         ];
