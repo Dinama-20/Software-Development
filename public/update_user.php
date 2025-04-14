@@ -45,6 +45,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <?php include '../includes/header.php'; ?>
 
+<style>
+    /* Prevent dark mode from changing label text color */
+    .no-dark-mode {
+        color: black !important;
+    }
+</style>
+
 <main id="content">
     <h2>Update Profile</h2>
     <?php if (isset($error)): ?>
@@ -55,11 +62,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php endif; ?>
 
     <form method="POST" action="update_user.php" class="user-settings-form">
-        <label for="username">Username:</label>
+        <label for="username" class="no-dark-mode">Username:</label>
         <input type="text" id="username" name="username" value="<?= htmlspecialchars($_SESSION['user']['username']) ?>" required>
-        <label for="email">Email:</label>
+        <label for="email" class="no-dark-mode">Email:</label>
         <input type="email" id="email" name="email" value="<?= htmlspecialchars($_SESSION['user']['email'] ?? '') ?>" required>
-        <label for="password">Password:</label>
+        <label for="password" class="no-dark-mode">Password:</label>
         <input type="password" id="password" name="password" placeholder="Enter new password">
         <button type="submit">Update</button>
     </form>
