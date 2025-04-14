@@ -357,3 +357,22 @@ if (window.location.pathname.includes('cart.php')) {
     // Funciones generales que no interfieren con el carrito
     console.log('General page detected. Running script.js functionality.');
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const clearCartButton = document.querySelector('button[type="submit"][value="clear_cart"]');
+    const buyButton = document.querySelector('button[type="submit"][value="buy"]');
+
+    if (clearCartButton) {
+        clearCartButton.addEventListener('click', (e) => {
+            if (!confirm('Are you sure you want to clear the cart?')) {
+                e.preventDefault();
+            }
+        });
+    }
+
+    if (buyButton) {
+        buyButton.addEventListener('click', (e) => {
+            alert('Your purchase is being processed. A PDF will be generated.');
+        });
+    }
+});
