@@ -2,6 +2,9 @@
 // Include the header file for consistent page layout
 include '../includes/header.php';
 
+// Include the file that defines the Database class
+require_once '../models/Database.php'; // Asegúrate de que la ruta sea correcta
+
 // Check if a session is already active before starting a new one
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
