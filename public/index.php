@@ -13,13 +13,13 @@ session_start();
     <script src="../assets/js/script.js" defer></script> <!-- Asegúrate de incluir el script correctamente -->
     <script>
         const products = [
-            { name: 'Aquarius Nurburgring', price: 240, category: 'smartwatch', image: 'assets/images/duward-watch1.png', details: 'assets/images/characteristics1.png' },
-            { name: 'Aquastar Race', price: 189, category: 'smartwatch', image: 'assets/images/duward-watch2.png', details: 'assets/images/characteristics2.png' },
-            { name: 'Smartwatch Style', price: 98.90, category: 'smartwatch', image: 'assets/images/duward-watch3.png', details: 'assets/images/characteristics3.png' },
-            { name: 'Lady Woman', price: 89, category: 'woman', image: 'assets/images/duward-watch4.png', details: 'assets/images/characteristics4.png' },
-            { name: 'Lady Babaye', price: 95, category: 'woman', image: 'assets/images/duward-watch5.png', details: 'assets/images/characteristics5.png' },
-            { name: 'Junior Divka', price: 39.90, category: 'junior', image: 'assets/images/duward-watch6.png', details: 'assets/images/characteristics6.png' },
-            { name: 'Junior Dreng', price: 49.90, category: 'junior', image: 'assets/images/duward-watch7.png', details: 'assets/images/characteristics7.png' }
+            { name: 'Aquarius Nurburgring', price: 240, category: 'smartwatch', image: 'assets/images/duward-watch1.png', detailsImage: 'assets/images/characteristics1.png' },
+            { name: 'Aquastar Race', price: 189, category: 'smartwatch', image: 'assets/images/duward-watch2.png', detailsImage: 'assets/images/characteristics2.png' },
+            { name: 'Smartwatch Style', price: 98.90, category: 'smartwatch', image: 'assets/images/duward-watch3.png', detailsImage: 'assets/images/characteristics3.png' },
+            { name: 'Lady Woman', price: 89, category: 'woman', image: 'assets/images/duward-watch4.png', detailsImage: 'assets/images/characteristics4.png' },
+            { name: 'Lady Babaye', price: 95, category: 'woman', image: 'assets/images/duward-watch5.png', detailsImage: 'assets/images/characteristics5.png' },
+            { name: 'Junior Divka', price: 39.90, category: 'junior', image: 'assets/images/duward-watch6.png', detailsImage: 'assets/images/characteristics6.png' },
+            { name: 'Junior Dreng', price: 49.90, category: 'junior', image: 'assets/images/duward-watch7.png', detailsImage: 'assets/images/characteristics7.png' }
         ];
 
         function showModal(detailsImage) {
@@ -93,7 +93,7 @@ session_start();
                 const productDiv = document.createElement("div");
                 productDiv.className = "product";
                 productDiv.innerHTML = `
-                    <img src="${product.image}" alt="${product.name}" class="product-image" onclick="showModal('${product.details}')">
+                    <img src="${product.image}" alt="${product.name}" class="product-image" onclick="showModal('${product.detailsImage}')">
                     <h2>${product.name}</h2>
                     <p>Price: ${product.price}€</p>
                     <button class="add-to-cart-btn" onclick="addToCart('${product.name}', ${product.price})">Add to Cart</button>
