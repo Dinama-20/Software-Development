@@ -19,8 +19,8 @@ if (session_status() === PHP_SESSION_NONE) {
             <?php endif; ?>
         </div>
         <div class="dropdown">
-            <button class="dropbtn">Menu</button>
-            <div class="dropdown-content">
+            <button class="dropbtn" onclick="toggleDropdown()">Menu</button>
+            <div class="dropdown-content" id="dropdownMenu">
                 <a href="index.php">Home</a>
                 <a href="cart.php">Cart</a>
                 <a href="reparations.php">Repairs</a>
