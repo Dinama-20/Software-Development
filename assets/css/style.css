@@ -129,6 +129,20 @@ main {
     background-color: #f0f0f0;
 }
 
+.product-actions button.details-btn {
+    background-color: #8c0000;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.product-actions button.details-btn:hover {
+    background-color: #a00000;
+}
+
 #product-controls {
     display: flex;
     flex-wrap: wrap;
