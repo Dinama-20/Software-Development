@@ -18,7 +18,7 @@ session_start();
             <ul>
                 <?php foreach ($_SESSION['cart'] as $index => $item): ?>
                     <li>
-                        <?= htmlspecialchars($item['name']) ?> - <?= number_format($item['price'], 2) ?> euros
+                        <strong><?= htmlspecialchars($item['name']) ?></strong> - <?= number_format($item['price'], 2) ?> euros
                         <button class="remove-btn" data-index="<?= $index ?>">Remove</button>
                     </li>
                 <?php endforeach; ?>

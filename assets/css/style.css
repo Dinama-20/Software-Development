@@ -251,6 +251,10 @@ body.dark-mode #cart-container li {
     border: 1px solid #555;
 }
 
+body.dark-mode #cart-container li strong {
+    color: black; /* Mantener el color negro para los nombres de los productos */
+}
+
 body.dark-mode #cart-actions button {
     background-color: #444;
     color: white;
@@ -420,6 +424,10 @@ body.dark-mode #cart-container li {
     background-color: #333;
     color: white;
     border: 1px solid #555;
+}
+
+body.dark-mode #cart-container li strong {
+    color: black; /* Mantener el color negro para los nombres de los productos */
 }
 
 body.dark-mode #cart-actions button {
