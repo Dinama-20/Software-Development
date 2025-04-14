@@ -8,7 +8,9 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Oñate Watch and Jewelry</title>
+    <link rel="stylesheet" href="../assets/css/style.css"> <!-- Corrige la ruta del CSS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="../assets/js/script.js" defer></script> <!-- Asegúrate de incluir el script correctamente -->
     <script>
         let products = [
             {name: 'Aquarius Nurburgring', price: 240, category: 'smartwatch', image: 'assets/images/duward-watch1.png', details: 'assets/images/characteristics1.png'},
@@ -29,7 +31,6 @@ session_start();
             document.getElementById("modalOverlay").style.display = "none";
         }
 
-        // ✅ CORREGIDA: Añadir producto al carrito usando fetch y add_to_cart.php
         function addToCart(productName, price) {
             fetch('add_to_cart.php', {
                 method: 'POST',
@@ -84,7 +85,6 @@ session_start();
             });
         }
 
-        // ✅ Ejecutar filtros al cargar la página
         window.onload = applyFilters;
 
         function toggleDarkMode() {
@@ -93,23 +93,7 @@ session_start();
     </script>
 </head>
 <body>
-<header>
-    <h1><a href="index.php" style="text-decoration: none; color: white;">Oñate Watch and Jewelry</a></h1>
-    <nav>
-        <div id="user-menu">
-            <?php if (isset($_SESSION['user'])): ?>
-                <button onclick="window.location.href='logout.php'">Log Out</button>
-            <?php else: ?>
-                <button onclick="window.location.href='login.php'">Login</button>
-                <button onclick="window.location.href='register.php'">Register</button>
-            <?php endif; ?>
-        </div>
-        <button onclick="window.location.href='cart.php'">
-            <img src="assets/images/cart.png" alt="Cart">
-        </button>
-        <button id="dark-mode-toggle" onclick="toggleDarkMode()">Toggle Dark Mode</button>
-    </nav>
-</header>
+<?php include '../includes/header.php'; ?>
 
 <main id="content">
     <?php if (isset($_SESSION['user'])): ?>

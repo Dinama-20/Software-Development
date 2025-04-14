@@ -36,7 +36,7 @@ function registerUser(event) {
 // Add a product to the cart
 function addToCart(productName, price) {
     const product = { name: productName, price: price };
-    fetch('add_to_cart.php', {
+    fetch('../public/add_to_cart.php', { // Asegúrate de que la ruta sea correcta
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(product)
@@ -200,7 +200,7 @@ function toggleDarkMode() {
     const body = document.body;
     body.classList.toggle('dark-mode');
     const isDarkMode = body.classList.contains('dark-mode');
-    localStorage.setItem('darkMode', isDarkMode); // Save preference
+    localStorage.setItem('darkMode', isDarkMode); // Guarda la preferencia
 }
 
 // Initialize dark mode based on saved preference
@@ -215,7 +215,7 @@ function initDarkMode() {
 window.onload = function () {
     verifyLogin();
     displayCart();
-    initDarkMode(); // Ensure dark mode is initialized
+    initDarkMode(); // Asegúrate de inicializar Dark Mode
     loadProductsFromDB();
 };
 
