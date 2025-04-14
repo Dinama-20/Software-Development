@@ -2,14 +2,20 @@
 // Include the header file for consistent page layout
 include '../includes/header.php';
 
-// Start the session to manage user authentication
-session_start();
+// Check if a session is already active before starting a new one
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Check if the user is logged in
 if (!isset($_SESSION['user']['id'])) { // Updated to check the correct session structure
     header("Location: login.php"); // Redirect to login if not authenticated
     exit();
 }
+
+// Establish database connection
+use Models\Database;
+$db = (new Database())->getConnection(); // Ensure $db is initialized before use
 
 // Fetch repair orders associated with the logged-in user
 $user_id = $_SESSION['user']['id']; // Updated to use the correct session key
@@ -18,10 +24,6 @@ $stmt = $db->prepare($query); // Prepare the SQL statement
 $stmt->bind_param('i', $user_id); // Bind the user ID parameter
 $stmt->execute(); // Execute the query
 $result = $stmt->get_result(); // Get the result of the query
-
-// Establish database connection
-use Models\Database;
-$db = (new Database())->getConnection();
 
 // Handle form submission for repair requests
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
