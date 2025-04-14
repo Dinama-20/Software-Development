@@ -12,39 +12,16 @@ session_start();
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script> <!-- Include jsPDF library -->
     <script src="../assets/js/script.js" defer></script> <!-- Include custom JavaScript file -->
     <script>
-        // Array of products with details such as name, price, category, and images
+        // Array of products with details such as name, price, and images
         let products = [
-            { name: 'Aquarius Nurburgring', price: 240, category: 'Men', image: '../assets/images/duward-watch1.png', detailsImage: '../assets/images/characteristics1.png' },
-            { name: 'Aquastar Race', price: 189, category: 'Men', image: '../assets/images/duward-watch2.png', detailsImage: '../assets/images/characteristics2.png' },
-            { name: 'Smartwatch Style', price: 98.90, category: 'smartwatch', image: '../assets/images/duward-watch3.png', detailsImage: '../assets/images/characteristics3.png' },
-            { name: 'Lady Woman', price: 89, category: 'woman', image: '../assets/images/duward-watch4.png', detailsImage: '../assets/images/characteristics4.png' },
-            { name: 'Lady Babaye', price: 95, category: 'woman', image: '../assets/images/duward-watch5.png', detailsImage: '../assets/images/characteristics5.png' },
-            { name: 'Junior Divka', price: 39.90, category: 'junior', image: '../assets/images/duward-watch6.png', detailsImage: '../assets/images/characteristics6.png' },
-            { name: 'Junior Dreng', price: 49.90, category: 'junior', image: '../assets/images/duward-watch7.png', detailsImage: '../assets/images/characteristics7.png' }
+            { name: 'Aquarius Nurburgring', price: 240, image: '../assets/images/duward-watch1.png' },
+            { name: 'Aquastar Race', price: 189, image: '../assets/images/duward-watch2.png' },
+            { name: 'Smartwatch Style', price: 98.90, category: 'smartwatch', image: '../assets/images/duward-watch3.png' },
+            { name: 'Lady Woman', price: 89, category: 'woman', image: '../assets/images/duward-watch4.png' },
+            { name: 'Lady Babaye', price: 95, category: 'woman', image: '../assets/images/duward-watch5.png' },
+            { name: 'Junior Divka', price: 39.90, category: 'junior', image: '../assets/images/duward-watch6.png' },
+            { name: 'Junior Dreng', price: 49.90, category: 'junior', image: '../assets/images/duward-watch7.png' }
         ];
-
-        // Function to show a modal with product details image
-        function showModal(detailsImage) {
-            const modalOverlay = document.getElementById("modalOverlay");
-            const modalImage = document.getElementById("modalImage");
-            const modalCaption = document.getElementById("modalCaption");
-
-            if (modalOverlay && modalImage && modalCaption) {
-                modalImage.src = detailsImage; // Set the image source for the modal
-                modalImage.alt = "Product Details"; // Add alt text for accessibility
-                modalCaption.textContent = "Detailed view of the product"; // Add a caption for the image
-
-                modalOverlay.style.display = "flex"; // Display the modal
-            }
-        }
-
-        // Function to close the modal
-        function closeModal() {
-            const modalOverlay = document.getElementById("modalOverlay");
-            if (modalOverlay) {
-                modalOverlay.style.display = "none"; // Hide the modal
-            }
-        }
 
         // Function to add a product to the cart
         function addToCart(productName, price) {
@@ -100,7 +77,7 @@ session_start();
                 const productDiv = document.createElement("div");
                 productDiv.className = "product";
                 productDiv.innerHTML = `
-                    <img src="${product.image}" alt="${product.name}" class="product-image" loading="lazy" onclick="showModal('${product.detailsImage}')">
+                    <img src="${product.image}" alt="${product.name}" class="product-image" loading="lazy">
                     <h2>${product.name}</h2>
                     <p>Price: ${product.price}€</p>
                     <button class="add-to-cart-btn" onclick="addToCart('${product.name}', ${product.price})">Add to Cart</button>
@@ -136,7 +113,6 @@ session_start();
         <input type="text" id="searchInput" placeholder="Search products by name"> <!-- Input field for searching products -->
         <select id="filterCategory"> <!-- Dropdown for filtering by category -->
             <option value="">All Categories</option>
-            <option value="men">Men</option>
             <option value="smartwatch">Smartwatch</option>
             <option value="woman">Woman</option>
             <option value="junior">Junior</option>
@@ -154,13 +130,7 @@ session_start();
         <!-- Products will be dynamically loaded here -->
     </section>
 
-    <div id="modalOverlay" class="modal-overlay">
-        <div class="modal-content">
-            <img id="modalImage" src="" alt="Product Details"> <!-- Modal image for product details -->
-            <p id="modalCaption" class="modal-caption"></p> <!-- Caption for the modal image -->
-            <button class="close-button" onclick="closeModal()">X</button> <!-- Button to close the modal -->
-        </div>
-    </div>
+    <div id="modalOverlay" class="modal-overlay" style="display: none;"></div> <!-- Remove modal content -->
 </main>
 
 <?php include '../includes/footer.php'; ?>
