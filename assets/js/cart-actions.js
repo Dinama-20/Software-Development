@@ -1,8 +1,32 @@
 document.addEventListener("DOMContentLoaded", () => {
     const cartContainer = document.getElementById("cart-container");
     const cartItems = document.getElementById("cart-items");
+    const cartActions = document.getElementById("cart-actions");
     const buyButton = document.getElementById("buy-btn");
     const clearCartButton = document.getElementById("clear-cart-btn");
+
+    // Cargar los elementos del carrito dinámicamente
+    function loadCart() {
+        fetch("get_cart.php")
+            .then(response => response.json())
+            .then(cart => {
+                cartItems.innerHTML = ""; // Limpiar el contenido actual
+                if (cart.length > 0) {
+                    cart.forEach((item, index) => {
+                        const listItem = document.createElement("li");
+                        listItem.innerHTML = `
+                            <strong>${item.name}</strong> - €${item.price.toFixed(2)}
+                            <button class="remove-btn" data-index="${index}">Remove</button>
+                        `;
+                        cartItems.appendChild(listItem);
+                    });
+                    cartActions.style.display = "flex"; // Mostrar los botones
+                } else {
+                    cartContainer.innerHTML = "<p>Your cart is empty.</p>";
+                }
+            })
+            .catch(error => console.error("Error loading cart:", error));
+    }
 
     // Manejar la eliminación de productos del carrito
     cartContainer.addEventListener("click", (event) => {
@@ -12,10 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        event.target.parentElement.remove(); // Eliminar el producto del DOM
-                        if (!cartItems.children.length) {
-                            cartContainer.innerHTML = "<p>Your cart is empty.</p>";
-                        }
+                        loadCart(); // Recargar el carrito
                     } else {
                         alert("Failed to remove item from cart.");
                     }
@@ -33,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     if (data.success) {
                         alert("Order completed! A PDF has been generated.");
                         window.open(data.pdfPath, '_blank'); // Abre el PDF en una nueva pestaña
-                        location.reload(); // Recargar la página después de la compra
+                        loadCart(); // Recargar el carrito después de la compra
                     } else {
                         alert(data.message || "Failed to complete the order.");
                     }
@@ -48,9 +69,12 @@ document.addEventListener("DOMContentLoaded", () => {
             fetch("clear_cart.php", { method: "POST" })
                 .then(() => {
                     alert("Cart cleared!");
-                    cartContainer.innerHTML = "<p>Your cart is empty.</p>";
+                    loadCart(); // Recargar el carrito después de vaciarlo
                 })
                 .catch(error => console.error("Error clearing cart:", error));
         });
     }
+
+    // Cargar el carrito al cargar la página
+    loadCart();
 });

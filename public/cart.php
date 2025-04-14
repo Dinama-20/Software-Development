@@ -14,22 +14,13 @@ session_start();
 <main id="content">
     <h1>Your Cart</h1>
     <div id="cart-container">
-        <?php if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0): ?>
-            <ul id="cart-items">
-                <?php foreach ($_SESSION['cart'] as $index => $item): ?>
-                    <li>
-                        <strong><?= htmlspecialchars($item['name']) ?></strong> - <?= number_format($item['price'], 2) ?> euros
-                        <button class="remove-btn" data-index="<?= $index ?>">Remove</button>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-            <div id="cart-actions">
-                <button id="buy-btn" class="cart-action-btn">Buy</button>
-                <button id="clear-cart-btn" class="cart-action-btn">Clear Cart</button>
-            </div>
-        <?php else: ?>
-            <p>Your cart is empty.</p>
-        <?php endif; ?>
+        <ul id="cart-items">
+            <!-- Los elementos del carrito se cargarán dinámicamente aquí -->
+        </ul>
+        <div id="cart-actions" style="display: none;">
+            <button id="buy-btn" class="cart-action-btn">Buy</button>
+            <button id="clear-cart-btn" class="cart-action-btn">Clear Cart</button>
+        </div>
     </div>
 </main>
 
