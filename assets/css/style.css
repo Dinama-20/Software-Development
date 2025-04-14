@@ -333,17 +333,17 @@ body.dark-mode button {
     background-color: white;
     padding: 1rem;
     border-radius: 10px;
-    max-width: 80%;
-    max-height: 80%;
+    max-width: 90%;
+    max-height: 90%;
     text-align: center;
-    overflow: hidden; /* Evita que el contenido se desborde */
+    overflow: hidden;
 }
 
 .modal-content img {
     max-width: 100%;
     max-height: 100%;
     border-radius: 10px;
-    object-fit: contain; /* Asegura que la imagen se ajuste dentro del modal */
+    object-fit: contain;
 }
 
 .close-button {

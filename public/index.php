@@ -23,6 +23,7 @@ session_start();
         ];
 
         function showModal(detailsImage) {
+            console.log("Opening modal with image:", detailsImage); // Depuración
             const modalOverlay = document.getElementById("modalOverlay");
             const modalImage = document.getElementById("modalImage");
 
@@ -93,11 +94,6 @@ session_start();
                     <img src="${product.image}" alt="${product.name}" class="product-image" onclick="showModal('${product.details}')">
                     <h2>${product.name}</h2>
                     <p>Price: ${product.price}€</p>
-                    <div class="product-carousel">
-                        <div class="carousel-images">
-                            <img src="${product.details}" alt="Characteristics of ${product.name}">
-                        </div>
-                    </div>
                     <button class="add-to-cart-btn" onclick="addToCart('${product.name}', ${product.price})">Add to Cart</button>
                 `;
                 productsContainer.appendChild(productDiv);
