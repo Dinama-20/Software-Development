@@ -20,11 +20,9 @@ if (!isset($_SESSION['user']['id'])) { // Updated to check the correct session s
 use Models\Database;
 $db = (new Database())->getConnection(); // Ensure $db is initialized before use
 
-// Fetch repair orders associated with the logged-in user
-$user_id = $_SESSION['user']['id']; // Updated to use the correct session key
-$query = "SELECT * FROM repairs WHERE user_id = :user_id"; // Updated to use the 'repairs' table
+// Fetch all repair orders (since the table does not have a user_id column)
+$query = "SELECT * FROM repairs"; // Updated query to fetch all repairs
 $stmt = $db->prepare($query); // Prepare the SQL statement
-$stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT); // Bind the user ID parameter
 $stmt->execute(); // Execute the query
 $result = $stmt->fetchAll(PDO::FETCH_ASSOC); // Fetch all results as an associative array
 
@@ -36,13 +34,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $preferredDate = $_POST['preferred_date']; // Get the preferred date for the repair
 
     // Insert the repair request into the database
-    $query = "INSERT INTO repairs (service_type, details, contact_info, preferred_date, user_id) VALUES (:service, :details, :contact, :preferred_date, :user_id)";
+    $query = "INSERT INTO repairs (service_type, details, contact_info, preferred_date) VALUES (:service, :details, :contact, :preferred_date)";
     $stmt = $db->prepare($query); // Prepare the SQL statement
     $stmt->bindParam(':service', $service); // Bind the service type parameter
     $stmt->bindParam(':details', $details); // Bind the details parameter
     $stmt->bindParam(':contact', $contact); // Bind the contact information parameter
     $stmt->bindParam(':preferred_date', $preferredDate); // Bind the preferred date parameter
-    $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT); // Bind the user ID parameter
 
     // Execute the query and check for success
     if ($stmt->execute()) {
