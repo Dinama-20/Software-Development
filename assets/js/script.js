@@ -319,7 +319,19 @@ function displayProducts(products) {
     });
 }
 
-function showModal(imageUrl) {
-    // Opcional: modal de producto
-    // Implementación pendiente
+function showModal(detailsImage) {
+    const modalOverlay = document.getElementById("modalOverlay");
+    const modalImage = document.getElementById("modalImage");
+
+    if (modalOverlay && modalImage) {
+        modalImage.src = detailsImage; // Carga la imagen de las características
+        modalOverlay.style.display = "flex"; // Muestra el modal
+    }
+}
+
+function closeModal() {
+    const modalOverlay = document.getElementById("modalOverlay");
+    if (modalOverlay) {
+        modalOverlay.style.display = "none"; // Oculta el modal
+    }
 }

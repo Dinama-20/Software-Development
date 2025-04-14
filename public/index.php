@@ -143,15 +143,15 @@ session_start();
         <h1>Available Products</h1>
         <!-- Los productos se cargarán dinámicamente aquí -->
     </section>
+
+    <div id="modalOverlay" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <img id="modalImage" src="" alt="Product Details">
+            <button class="close-button" onclick="closeModal()">X</button>
+        </div>
+    </div>
 </main>
 
 <?php include '../includes/footer.php'; ?>
-
-<div id="modalOverlay" class="modal-overlay" style="display: none;">
-    <div class="modal-content">
-        <img id="modalImage" src="" alt="Product Details">
-        <button class="close-button" onclick="closeModal()">X</button>
-    </div>
-</div>
 </body>
 </html>
