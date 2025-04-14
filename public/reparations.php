@@ -22,11 +22,11 @@ $db = (new Database())->getConnection(); // Ensure $db is initialized before use
 
 // Fetch repair orders associated with the logged-in user
 $user_id = $_SESSION['user']['id']; // Updated to use the correct session key
-$query = "SELECT * FROM reparations WHERE user_id = ?"; // SQL query to fetch reparations
+$query = "SELECT * FROM reparations WHERE user_id = :user_id"; // SQL query to fetch reparations
 $stmt = $db->prepare($query); // Prepare the SQL statement
-$stmt->bind_param('i', $user_id); // Bind the user ID parameter
+$stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT); // Bind the user ID parameter
 $stmt->execute(); // Execute the query
-$result = $stmt->get_result(); // Get the result of the query
+$result = $stmt->fetchAll(PDO::FETCH_ASSOC); // Fetch all results as an associative array
 
 // Handle form submission for repair requests
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
