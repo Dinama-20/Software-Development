@@ -357,3 +357,23 @@ body.dark-mode button {
     font-size: 1rem;
     cursor: pointer;
 }
+
+.product-carousel {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    overflow-x: auto;
+    gap: 1rem;
+}
+
+.carousel-images img {
+    width: 100px;
+    height: auto;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.carousel-images img:hover {
+    transform: scale(1.1);
+}

@@ -93,10 +93,12 @@ session_start();
                     <img src="${product.image}" alt="${product.name}" class="product-image">
                     <h2>${product.name}</h2>
                     <p>Price: ${product.price}€</p>
-                    <div class="product-actions">
-                        <button class="details-btn" onclick="showModal('${product.details}')">Details</button>
-                        <button class="add-to-cart-btn" onclick="addToCart('${product.name}', ${product.price})">Add to Cart</button>
+                    <div class="product-carousel">
+                        <div class="carousel-images">
+                            <img src="${product.details}" alt="Characteristics of ${product.name}">
+                        </div>
                     </div>
+                    <button class="add-to-cart-btn" onclick="addToCart('${product.name}', ${product.price})">Add to Cart</button>
                 `;
                 productsContainer.appendChild(productDiv);
             });
