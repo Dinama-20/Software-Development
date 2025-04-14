@@ -288,7 +288,7 @@ function sortByPrice(order = "asc") {
 function applyFilters() {
     let products = JSON.parse(localStorage.getItem('allProducts')) || [];
     const searchTerm = document.getElementById("searchInput").value.toLowerCase();
-    const category = document.getElementById("filterCategory").value;
+    const category = document.getElementById("filterCategory").value.toLowerCase(); // Ensure lowercase comparison
     const sortOrder = document.getElementById("sortPrice").value;
 
     if (searchTerm) {
@@ -296,7 +296,7 @@ function applyFilters() {
     }
 
     if (category) {
-        products = products.filter(p => p.category.toLowerCase() === category.toLowerCase());
+        products = products.filter(p => p.category.toLowerCase() === category); // Ensure exact match for category
     }
 
     if (sortOrder === "asc") {
