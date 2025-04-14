@@ -199,12 +199,14 @@ function logout() {
 function toggleDarkMode() {
     const body = document.body;
     body.classList.toggle('dark-mode');
-    localStorage.setItem('darkMode', body.classList.contains('dark-mode'));
+    const isDarkMode = body.classList.contains('dark-mode');
+    localStorage.setItem('darkMode', isDarkMode); // Save preference
 }
 
 // Initialize dark mode based on saved preference
 function initDarkMode() {
-    if (localStorage.getItem('darkMode') === 'true') {
+    const isDarkMode = localStorage.getItem('darkMode') === 'true';
+    if (isDarkMode) {
         document.body.classList.add('dark-mode');
     }
 }
@@ -213,7 +215,7 @@ function initDarkMode() {
 window.onload = function () {
     verifyLogin();
     displayCart();
-    initDarkMode();
+    initDarkMode(); // Ensure dark mode is initialized
     loadProductsFromDB();
 };
 
