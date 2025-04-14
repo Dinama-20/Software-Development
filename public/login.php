@@ -3,6 +3,9 @@
 require_once '../models/Database.php';
 require_once '../models/User.php';
 
+// Start the session to store user data
+session_start();
+
 // Create a new database connection
 $database = new Models\Database();
 $db = $database->getConnection();
@@ -22,11 +25,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if the credentials are correct
     if ($authenticatedUser) {
         // Login was successful
-        // You can redirect the user to the main page or display a message
-        echo "Login successful!";
-        // Example of redirection:
-        // header("Location: index.php"); // Redirect to the main page
-        // exit;
+        // Set session variables to store user information
+        $_SESSION['user_id'] = $authenticatedUser['id'];
+        $_SESSION['username'] = $authenticatedUser['username'];
+        $_SESSION['first_name'] = $authenticatedUser['first_name'];
+        $_SESSION['last_name'] = $authenticatedUser['last_name'];
+        
+        // Redirect to the homepage (index.php) after successful login
+        header("Location: index.php");
+        exit; // Ensure no further code is executed after redirect
     } else {
         // Login failed
         echo "Invalid username or password!";
@@ -53,4 +60,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <p>Don't have an account? <a href="register.php">Register here</a></p>
     </div>
 
-    <?php include '../includes/footer.php'; ?>
+<?php include '../includes/footer.php'; ?>
