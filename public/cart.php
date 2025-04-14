@@ -15,7 +15,7 @@ session_start();
     <h1>Your Cart</h1>
     <div id="cart-container">
         <?php if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0): ?>
-            <ul>
+            <ul id="cart-items">
                 <?php foreach ($_SESSION['cart'] as $index => $item): ?>
                     <li>
                         <strong><?= htmlspecialchars($item['name']) ?></strong> - <?= number_format($item['price'], 2) ?> euros
@@ -23,8 +23,7 @@ session_start();
                     </li>
                 <?php endforeach; ?>
             </ul>
-            <!-- Render buttons dynamically -->
-            <div id="cart-actions" style="display: flex; justify-content: center; gap: 1rem; margin-top: 1rem;">
+            <div id="cart-actions">
                 <button id="buy-btn" class="cart-action-btn">Buy</button>
                 <button id="clear-cart-btn" class="cart-action-btn">Clear Cart</button>
             </div>
@@ -35,6 +34,6 @@ session_start();
 </main>
 
 <?php include '../includes/footer.php'; ?>
-<script src="../assets/js/cart-actions.js" defer></script>
+<script src="../assets/js/cart.js" defer></script>
 </body>
 </html>

@@ -1,26 +1,30 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const removeButtons = document.querySelectorAll(".remove-btn");
+    const cartContainer = document.getElementById("cart-container");
+    const cartItems = document.getElementById("cart-items");
     const buyButton = document.getElementById("buy-btn");
     const clearCartButton = document.getElementById("clear-cart-btn");
 
-    // Evento para eliminar productos del carrito
-    removeButtons.forEach(button => {
-        button.addEventListener("click", () => {
-            const index = button.getAttribute("data-index");
+    // Manejar la eliminación de productos del carrito
+    cartContainer.addEventListener("click", (event) => {
+        if (event.target.classList.contains("remove-btn")) {
+            const index = event.target.getAttribute("data-index");
             fetch(`remove_from_cart.php?index=${index}`, { method: "GET" })
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        location.reload(); // Recargar la página para actualizar el carrito
+                        event.target.parentElement.remove(); // Eliminar el producto del DOM
+                        if (!cartItems.children.length) {
+                            cartContainer.innerHTML = "<p>Your cart is empty.</p>";
+                        }
                     } else {
                         alert("Failed to remove item from cart.");
                     }
                 })
                 .catch(error => console.error("Error:", error));
-        });
+        }
     });
 
-    // Evento para el botón "Buy"
+    // Manejar la acción de "Buy"
     if (buyButton) {
         buyButton.addEventListener("click", () => {
             fetch("generate_pdf.php")
@@ -38,13 +42,13 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Evento para el botón "Clear Cart"
+    // Manejar la acción de "Clear Cart"
     if (clearCartButton) {
         clearCartButton.addEventListener("click", () => {
             fetch("clear_cart.php", { method: "POST" })
                 .then(() => {
                     alert("Cart cleared!");
-                    location.reload(); // Recargar la página después de vaciar el carrito
+                    cartContainer.innerHTML = "<p>Your cart is empty.</p>";
                 })
                 .catch(error => console.error("Error clearing cart:", error));
         });
