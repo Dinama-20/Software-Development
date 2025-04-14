@@ -3,9 +3,8 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 ?>
-
-<link rel="stylesheet" href="assets/css/style.css">
-<script src="assets/js/script.js" defer></script>
+<link rel="stylesheet" href="../assets/css/style.css">
+<script src="../assets/js/script.js" defer></script>
 
 <header>
     <h1><a href="index.php" style="text-decoration: none; color: white;">Oñate Watch and Jewelry</a></h1>

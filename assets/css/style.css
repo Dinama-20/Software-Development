@@ -236,7 +236,28 @@ main {
 }
 
 body.dark-mode #cart-container {
-    color: white; /* Texto visible en modo oscuro */
+    background-color: #1e1e1e;
+    color: white;
+}
+
+body.dark-mode #cart-container ul {
+    background-color: #1e1e1e;
+    color: white;
+}
+
+body.dark-mode #cart-container li {
+    background-color: #333;
+    color: white;
+    border: 1px solid #555;
+}
+
+body.dark-mode #cart-actions button {
+    background-color: #444;
+    color: white;
+}
+
+body.dark-mode #cart-actions button:hover {
+    background-color: #555;
 }
 
 #cart-container ul {
