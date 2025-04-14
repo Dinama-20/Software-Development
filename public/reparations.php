@@ -2,15 +2,17 @@
 // Include the header file for consistent page layout
 include '../includes/header.php';
 
-// Start the session to manage user authentication
-session_start();
+// Start the session only if it is not already active
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-// Debugging: Print the current working directory to verify the base path
-// Uncomment the line below to debug
-// echo "Current working directory: " . getcwd();
+// Include the configuration file to get the database connection
+require_once '../config/config.php';
 
-// Include the configuration file for database connection
-require_once '../config/config.php'; // Ensure this path is correct
+// Establish database connection
+use Models\Database;
+$db = (new Database())->getConnection();
 
 // Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
@@ -25,10 +27,6 @@ $stmt = $db->prepare($query); // Prepare the SQL statement
 $stmt->bind_param('i', $user_id); // Bind the user ID parameter
 $stmt->execute(); // Execute the query
 $result = $stmt->get_result(); // Get the result of the query
-
-// Establish database connection
-use Models\Database;
-$db = (new Database())->getConnection();
 
 // Handle form submission for repair requests
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

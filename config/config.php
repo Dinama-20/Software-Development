@@ -1,15 +1,8 @@
 <?php
-// Database configuration
-$host = 'localhost';
-$dbname = 'your_database_name';
-$username = 'your_username';
-$password = 'your_password';
+// Include the Database class
+require_once '../models/database.php';
 
-// Create a new database connection
-$db = new mysqli($host, $username, $password, $dbname);
-
-// Check for connection errors
-if ($db->connect_error) {
-    die("Connection failed: " . $db->connect_error);
-}
+// Create a new database connection using the Database class
+use Models\Database;
+$db = (new Database())->getConnection();
 ?>

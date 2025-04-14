@@ -1,36 +1,27 @@
 <?php
+
 namespace Models;
 
-use PDO;
-use PDOException;
+use mysqli;
 
 class Database {
-    // Database connection details
-    private $host = 'localhost';
-    private $db_name = 'onate_store';
-    private $username = 'root';
-    private $password = '';
-    private $conn;
+    private $host = 'localhost'; // Database host
+    private $dbname = 'onate_store'; // Database name
+    private $username = 'root'; // Default username for XAMPP
+    private $password = ''; // Default password for XAMPP (empty)
+    private $connection;
 
-    // Method to establish and return a database connection
     public function getConnection() {
-        // If there is no existing connection, create one
-        if ($this->conn === null) {
-            try {
-                // Set up the PDO connection
-                $this->conn = new PDO(
-                    "mysql:host={$this->host};dbname={$this->db_name}",
-                    $this->username,
-                    $this->password
-                );
-                // Set PDO attributes for error handling
-                $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            } catch (PDOException $e) {
-                // If there's an error during connection, stop and show the error message
-                die("Connection failed: " . $e->getMessage());
+        if ($this->connection === null) {
+            // Create a new database connection
+            $this->connection = new mysqli($this->host, $this->username, $this->password, $this->dbname);
+
+            // Check for connection errors
+            if ($this->connection->connect_error) {
+                die("Connection failed: " . $this->connection->connect_error);
             }
         }
-        // Return the established connection
-        return $this->conn;
+        return $this->connection;
     }
 }
+?>
