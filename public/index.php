@@ -32,14 +32,7 @@ session_start();
                 modalImage.src = detailsImage; // Set the image source for the modal
                 modalImage.alt = "Product Details"; // Add alt text for accessibility
 
-                // Check if the image exists before displaying the modal
-                modalImage.onload = () => {
-                    modalOverlay.style.display = "flex"; // Display the modal
-                };
-
-                modalImage.onerror = () => {
-                    alert("The image could not be loaded. Please try again later.");
-                };
+                modalOverlay.style.display = "flex"; // Display the modal
             }
         }
 
@@ -159,7 +152,7 @@ session_start();
         <!-- Products will be dynamically loaded here -->
     </section>
 
-    <div id="modalOverlay" class="modal-overlay" style="display: none;">
+    <div id="modalOverlay" class="modal-overlay">
         <div class="modal-content">
             <img id="modalImage" src="" alt="Product Details"> <!-- Modal image for product details -->
             <button class="close-button" onclick="closeModal()">X</button> <!-- Button to close the modal -->
