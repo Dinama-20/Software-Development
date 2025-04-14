@@ -104,4 +104,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </form>
 </main>
 
+<script>
+    document.querySelector("form").addEventListener("submit", function (e) {
+        const fields = ["first_name", "last_name", "username", "email", "password"];
+        let valid = true;
+
+        fields.forEach(field => {
+            const input = document.getElementById(field);
+            if (!input.value.trim()) {
+                valid = false;
+                alert(`${field.replace("_", " ")} is required.`);
+            }
+        });
+
+        if (!valid) e.preventDefault();
+    });
+</script>
+
 <?php include '../includes/footer.php'; ?>

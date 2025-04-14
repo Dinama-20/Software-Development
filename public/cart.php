@@ -24,6 +24,10 @@ session_start();
                     </li>
                 <?php endforeach; ?>
             </ul>
+            <div id="cart-actions">
+                <button onclick="checkout()">Buy</button>
+                <button onclick="clearCart()">Clear Cart</button>
+            </div>
         <?php else: ?>
             <p>Your cart is empty.</p>
         <?php endif; ?>
@@ -37,6 +41,24 @@ session_start();
                         location.reload(); // Recarga la página para actualizar el carrito
                     } else {
                         alert('Failed to remove item from cart.');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        function checkout() {
+            // Implement checkout functionality here
+            alert('Proceeding to checkout...');
+        }
+
+        function clearCart() {
+            fetch('clear_cart.php', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        location.reload(); // Recarga la página para actualizar el carrito
+                    } else {
+                        alert('Failed to clear cart.');
                     }
                 })
                 .catch(error => console.error('Error:', error));

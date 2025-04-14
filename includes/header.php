@@ -18,9 +18,13 @@ if (session_status() === PHP_SESSION_NONE) {
                 <button onclick="window.location.href='register.php'">Register</button>
             <?php endif; ?>
         </div>
-        <button onclick="window.location.href='cart.php'">
-            <img src="assets/images/cart.png" alt="Cart">
-        </button>
-        <button id="dark-mode-toggle" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+        <div class="dropdown">
+            <button class="dropbtn">Menu</button>
+            <div class="dropdown-content">
+                <a href="index.php">Home</a>
+                <a href="cart.php">Cart</a>
+                <a href="reparations.php">Repairs</a>
+            </div>
+        </div>
     </nav>
 </header>
