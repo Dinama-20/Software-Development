@@ -1,19 +1,22 @@
 <?php
 include '../includes/header.php';
 
-// Simulación de productos en el carrito (esto debería venir de la sesión o base de datos)
+// Retrieve the cart from the session or initialize it as an empty array
 $cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
 
+// Handle POST requests for cart actions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['action'])) {
         if ($_POST['action'] === 'clear_cart') {
+            // Clear the cart by resetting the session variable
             $_SESSION['cart'] = [];
-            header('Location: cart.php'); // Recarga la página después de vaciar el carrito
+            header('Location: cart.php'); // Reload the page after clearing the cart
             exit;
         } elseif ($_POST['action'] === 'remove_item' && isset($_POST['product_id'])) {
+            // Remove a specific item from the cart
             $productId = $_POST['product_id'];
             unset($_SESSION['cart'][$productId]);
-            header('Location: cart.php');
+            header('Location: cart.php'); // Reload the page after removing the item
             exit;
         }
     }
@@ -23,8 +26,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="cart-container">
     <h1>Your Cart</h1>
     <?php if (empty($cart)): ?>
+        <!-- Display a message if the cart is empty -->
         <p>Your cart is empty.</p>
     <?php else: ?>
+        <!-- Display the cart items in a table -->
         <table class="cart-table">
             <thead>
                 <tr>
@@ -39,6 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <td><?= htmlspecialchars($item['name']) ?></td>
                         <td>€<?= number_format($item['price'], 2) ?></td>
                         <td>
+                            <!-- Form to remove an item from the cart -->
                             <form method="POST" style="display:inline;">
                                 <input type="hidden" name="action" value="remove_item">
                                 <input type="hidden" name="product_id" value="<?= $id ?>">
@@ -50,10 +56,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </tbody>
         </table>
         <div class="cart-actions">
+            <!-- Form to clear the entire cart -->
             <form method="POST">
                 <input type="hidden" name="action" value="clear_cart">
                 <button type="submit" class="cart-action-btn">Clear Cart</button>
             </form>
+            <!-- Button to proceed to purchase -->
             <form method="GET" action="generate_pdf.php">
                 <button type="submit" class="cart-action-btn">Buy</button>
             </form>
