@@ -43,19 +43,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-<?php if (isset($error)): ?>
-    <p class="message error"><?= htmlspecialchars($error) ?></p>
-<?php endif; ?>
-<?php if (isset($success)): ?>
-    <p class="message success"><?= htmlspecialchars($success) ?></p>
-<?php endif; ?>
+<?php include '../includes/header.php'; ?>
 
+<main id="content">
+    <h2>Update Profile</h2>
+    <?php if (isset($error)): ?>
+        <p class="message error"><?= htmlspecialchars($error) ?></p>
+    <?php endif; ?>
+    <?php if (isset($success)): ?>
+        <p class="message success"><?= htmlspecialchars($success) ?></p>
+    <?php endif; ?>
 
+    <form method="POST" action="update_user.php" class="user-settings-form">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" value="<?= htmlspecialchars($_SESSION['user']['username']) ?>" required>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" value="<?= htmlspecialchars($_SESSION['user']['email'] ?? '') ?>" required>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" placeholder="Enter new password">
+        <button type="submit">Update</button>
+    </form>
+</main>
 
-
-    <input type="text" id="username" name="username" value="<?= htmlspecialchars($_SESSION['user']['username']) ?>" required>    <label for="username">Username:</label><form method="POST" action="update_user.php" class="user-settings-form">    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" value="<?= htmlspecialchars($_SESSION['user']['email'] ?? '') ?>" required>
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" placeholder="Enter new password">
-    <button type="submit">Update</button>
-</form>
+<?php include '../includes/footer.php'; ?>
