@@ -2,11 +2,15 @@
 // Include the header file for consistent page layout
 include '../includes/header.php';
 
-// Include the configuration file for database connection
-require_once '../config/config.php';
-
 // Start the session to manage user authentication
 session_start();
+
+// Debugging: Print the current working directory to verify the base path
+// Uncomment the line below to debug
+// echo "Current working directory: " . getcwd();
+
+// Include the configuration file for database connection
+require_once '../config/config.php'; // Ensure this path is correct
 
 // Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
