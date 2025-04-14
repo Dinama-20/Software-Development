@@ -12,7 +12,13 @@ if (session_status() === PHP_SESSION_NONE) {
     <nav>
         <div id="user-menu">
             <?php if (isset($_SESSION['user'])): ?>
-                <button onclick="window.location.href='logout.php'">Log Out</button>
+                <div class="dropdown">
+                    <button class="dropbtn">User Menu</button>
+                    <div class="dropdown-content">
+                        <a href="update_user.php">Update Profile</a>
+                        <a href="logout.php">Log Out</a>
+                    </div>
+                </div>
             <?php else: ?>
                 <button onclick="window.location.href='login.php'">Login</button>
                 <button onclick="window.location.href='register.php'">Register</button>

@@ -25,8 +25,8 @@ session_start();
                 <?php endforeach; ?>
             </ul>
             <div id="cart-actions">
-                <button onclick="checkout()">Buy</button>
-                <button onclick="clearCart()">Clear Cart</button>
+                <button id="buy-btn" onclick="checkout()">Buy</button>
+                <button id="clear-cart-btn" onclick="clearCart()">Clear Cart</button>
             </div>
         <?php else: ?>
             <p>Your cart is empty.</p>

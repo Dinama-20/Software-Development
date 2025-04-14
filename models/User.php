@@ -98,5 +98,16 @@ class User {
         
         return false; // Authentication failed
     }
+
+    // Method to update user details
+    public function updateUser($id, $username, $email, $password) {
+        $query = "UPDATE {$this->table} SET username = :username, email = :email, password = :password WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':password', $password);
+        $stmt->bindParam(':id', $id);
+        return $stmt->execute();
+    }
 }
 ?>
