@@ -33,17 +33,21 @@ function registerUser(event) {
     window.location.href = "index.html";
 }
 
-function addToCart(productName, productPrice) {
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const product = {
-        id: Date.now(), 
-        name: productName,
-        price: productPrice
-    };
-
-    cart.push(product);
-    localStorage.setItem('cart', JSON.stringify(cart));
-    alert(`${productName} added to cart`);
+function addToCart(productName, price) {
+    fetch('add_to_cart.php', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: `name=${encodeURIComponent(productName)}&price=${encodeURIComponent(price)}`
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            alert(`${productName} added to cart!`);
+        } else {
+            alert("Failed to add to cart");
+        }
+    })
+    .catch(error => console.error("Error:", error));
 }
 
 function displayCart() {
@@ -185,9 +189,16 @@ window.onload = function () {
 };
 
 function toggleDarkMode() {
-    document.body.classList.toggle("dark-mode");
-    localStorage.setItem("darkMode", document.body.classList.contains("dark-mode") ? "true" : "false");
+    document.body.classList.toggle('dark-mode');
+    localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
 }
+
+window.addEventListener('DOMContentLoaded', () => {
+    if (localStorage.getItem('darkMode') === 'true') {
+        document.body.classList.add('dark-mode');
+    }
+});
+
 
 function initDarkMode() {
     if (localStorage.getItem("darkMode") === "true") {

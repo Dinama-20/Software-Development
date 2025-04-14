@@ -166,17 +166,16 @@ footer button:hover {
 
 body.dark-mode {
     background-color: #121212;
-    color: #fff;
+    color: #ffffff;
 }
 
-body.dark-mode .product {
-    background-color: #333;  
-    color: #fff;  
+body.dark-mode header {
+    background-color: #1e1e1e;
 }
 
 body.dark-mode button {
     background-color: #333;
-    color: #fff;
+    color: white;
 }
 
 body.dark-mode footer {
