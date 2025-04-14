@@ -14,26 +14,21 @@ $total = array_reduce($cart, function ($sum, $item) {
 
 $pdf = new FPDF();
 $pdf->AddPage();
-
-// Configura la fuente predeterminada de FPDF (Arial)
 $pdf->SetFont('Arial', 'B', 16);
 $pdf->Cell(40, 10, 'Order Details');
 $pdf->Ln(10);
 
 $pdf->SetFont('Arial', '', 12);
 foreach ($cart as $item) {
-    $priceWithText = number_format($item['price'], 2) . ' euros'; // Cambia el formato del precio
+    $priceWithText = number_format($item['price'], 2) . ' euros';
     $pdf->Cell(0, 10, "Product: {$item['name']} - Price: {$priceWithText}", 0, 1);
 }
 
 $pdf->Ln(10);
-$totalWithText = number_format($total, 2) . ' euros'; // Cambia el formato del total
+$totalWithText = number_format($total, 2) . ' euros';
 $pdf->Cell(0, 10, "Total: {$totalWithText}", 0, 1);
 $pdf->Cell(0, 10, "Date and Time: " . date('Y-m-d H:i:s'), 0, 1);
 
-// Vacía el carrito después de generar el PDF
 unset($_SESSION['cart']);
-
-// Genera el PDF y envíalo al navegador
 $pdf->Output('D', 'order-details.pdf');
 exit;
