@@ -356,7 +356,7 @@ footer button:hover {
     margin-top: 1rem;
 }
 
-#cart-actions button {
+#cart-actions .cart-action-btn {
     padding: 0.5rem 1rem;
     background-color: #8c0000;
     color: white;
@@ -366,7 +366,7 @@ footer button:hover {
     font-size: 1rem;
 }
 
-#cart-actions button:hover {
+#cart-actions .cart-action-btn:hover {
     background-color: #a00000;
 }
 

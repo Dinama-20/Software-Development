@@ -24,8 +24,8 @@ session_start();
                 <?php endforeach; ?>
             </ul>
             <div id="cart-actions">
-                <button id="buy-btn">Buy</button>
-                <button id="clear-cart-btn">Clear Cart</button>
+                <button id="buy-btn" class="cart-action-btn">Buy</button>
+                <button id="clear-cart-btn" class="cart-action-btn">Clear Cart</button>
             </div>
         <?php else: ?>
             <p>Your cart is empty.</p>
@@ -34,6 +34,6 @@ session_start();
 </main>
 
 <?php include '../includes/footer.php'; ?>
-<script src="../assets/js/cart.js" defer></script>
+<script src="../assets/js/cart-actions.js" defer></script>
 </body>
 </html>
