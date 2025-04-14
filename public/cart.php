@@ -7,7 +7,6 @@ session_start();
     <meta charset="UTF-8">
     <title>Your Cart</title>
     <link rel="stylesheet" href="../assets/css/style.css">
-    <script src="../assets/js/cart.js" defer></script>
 </head>
 <body>
 <?php include '../includes/header.php'; ?>
@@ -35,5 +34,6 @@ session_start();
 </main>
 
 <?php include '../includes/footer.php'; ?>
+<script src="../assets/js/cart.js" defer></script>
 </body>
 </html>

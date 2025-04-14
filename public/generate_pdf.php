@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . '/../vendor/setasign/fpdf/fpdf.php'; // Verifica que esta ruta sea correcta
+require_once __DIR__ . '/../vendor/setasign/fpdf/fpdf.php';
 
 if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
     echo json_encode(['success' => false, 'message' => 'Cart is empty.']);

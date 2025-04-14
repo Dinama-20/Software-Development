@@ -5,5 +5,4 @@
     <button onclick="window.open('https://www.instagram.com/relojero1303?igsh=MXFvNXVjbm9kbmY3Mw==')">
         <img src="assets/images/instagram.jpeg" alt="Instagram">
     </button>
-    <button onclick="window.location.href='reparations.php'">Repair Service</button>
 </footer>
