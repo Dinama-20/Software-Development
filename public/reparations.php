@@ -6,7 +6,7 @@
     <h2>Repair Services</h2>
     <p>Choose the type of repair service you need for your watch or jewelry:</p>
 
-    <form action="reparations.php" method="POST">
+    <form action="reparations.php" method="POST" class="reparations-form">
         <div class="form-group">
             <label for="service">Select Service</label>
             <select id="service" name="service" required>
@@ -17,7 +17,7 @@
         </div>
         <div class="form-group">
             <label for="details">Additional Details</label>
-            <textarea id="details" name="details" rows="4"></textarea>
+            <textarea id="details" name="details" rows="4" placeholder="Describe the issue..."></textarea>
         </div>
         <button type="submit">Request Repair</button>
     </form>

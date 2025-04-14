@@ -90,7 +90,7 @@ session_start();
                 const productDiv = document.createElement("div");
                 productDiv.className = "product";
                 productDiv.innerHTML = `
-                    <img src="${product.image}" alt="${product.name}" onclick="showModal('${product.details}')">
+                    <img src="${product.image}" alt="${product.name}" class="product-image" onclick="showModal('${product.details}')">
                     <h2>${product.name}</h2>
                     <p>Price: ${product.price}€</p>
                     <button onclick="event.stopPropagation(); addToCart('${product.name}', ${product.price})">Add to Cart</button>
