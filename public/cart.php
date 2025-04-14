@@ -2,12 +2,12 @@
 session_start();
 ?>
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Tu Carrito</title>
+    <title>Your Cart</title>
     <link rel="stylesheet" href="../assets/css/style.css">
-    <script src="../assets/js/script.js" defer></script>
+    <script src="../assets/js/cart.js" defer></script>
 </head>
 <body>
 <?php include '../includes/header.php'; ?>
@@ -32,7 +32,6 @@ session_start();
             <p>Your cart is empty.</p>
         <?php endif; ?>
     </div>
-    <script src="../assets/js/cart.js" defer></script>
 </main>
 
 <?php include '../includes/footer.php'; ?>

@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const buyButton = document.getElementById("buy-btn");
     const clearCartButton = document.getElementById("clear-cart-btn");
 
-    // Asignar evento para eliminar productos del carrito
+    // Evento para eliminar productos del carrito
     removeButtons.forEach(button => {
         button.addEventListener("click", () => {
             const index = button.getAttribute("data-index");
@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Asignar evento para el botón "Buy"
+    // Evento para el botón "Buy"
     if (buyButton) {
         buyButton.addEventListener("click", () => {
             fetch("generate_pdf.php")
@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Asignar evento para el botón "Clear Cart"
+    // Evento para el botón "Clear Cart"
     if (clearCartButton) {
         clearCartButton.addEventListener("click", () => {
             fetch("clear_cart.php", { method: "POST" })
