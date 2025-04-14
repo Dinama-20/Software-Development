@@ -30,6 +30,8 @@ session_start();
             if (modalOverlay && modalImage) {
                 modalImage.src = detailsImage; // Carga la imagen de las características
                 modalOverlay.style.display = "flex"; // Muestra el modal
+            } else {
+                console.error("Modal elements not found.");
             }
         }
 
