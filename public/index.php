@@ -14,8 +14,8 @@ session_start();
     <script>
         // Array of products with details such as name, price, category, and images
         let products = [
-            { name: 'Aquarius Nurburgring', price: 240, category: 'men', image: '../assets/images/duward-watch1.png', detailsImage: '../assets/images/characteristics1.png' },
-            { name: 'Aquastar Race', price: 189, category: 'men', image: '../assets/images/duward-watch2.png', detailsImage: '../assets/images/characteristics2.png' },
+            { name: 'Aquarius Nurburgring', price: 240, category: 'Men', image: '../assets/images/duward-watch1.png', detailsImage: '../assets/images/characteristics1.png' },
+            { name: 'Aquastar Race', price: 189, category: 'Men', image: '../assets/images/duward-watch2.png', detailsImage: '../assets/images/characteristics2.png' },
             { name: 'Smartwatch Style', price: 98.90, category: 'smartwatch', image: '../assets/images/duward-watch3.png', detailsImage: '../assets/images/characteristics3.png' },
             { name: 'Lady Woman', price: 89, category: 'woman', image: '../assets/images/duward-watch4.png', detailsImage: '../assets/images/characteristics4.png' },
             { name: 'Lady Babaye', price: 95, category: 'woman', image: '../assets/images/duward-watch5.png', detailsImage: '../assets/images/characteristics5.png' },
@@ -27,10 +27,12 @@ session_start();
         function showModal(detailsImage) {
             const modalOverlay = document.getElementById("modalOverlay");
             const modalImage = document.getElementById("modalImage");
+            const modalCaption = document.getElementById("modalCaption");
 
-            if (modalOverlay && modalImage) {
+            if (modalOverlay && modalImage && modalCaption) {
                 modalImage.src = detailsImage; // Set the image source for the modal
                 modalImage.alt = "Product Details"; // Add alt text for accessibility
+                modalCaption.textContent = "Detailed view of the product"; // Add a caption for the image
 
                 modalOverlay.style.display = "flex"; // Display the modal
             }
@@ -155,6 +157,7 @@ session_start();
     <div id="modalOverlay" class="modal-overlay">
         <div class="modal-content">
             <img id="modalImage" src="" alt="Product Details"> <!-- Modal image for product details -->
+            <p id="modalCaption" class="modal-caption"></p> <!-- Caption for the modal image -->
             <button class="close-button" onclick="closeModal()">X</button> <!-- Button to close the modal -->
         </div>
     </div>

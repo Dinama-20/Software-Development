@@ -548,12 +548,21 @@ body.dark-mode #cart-actions button:hover {
     max-height: 90%;
     text-align: center;
     overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .modal-content img {
     max-width: 100%;
-    max-height: 100%;
+    max-height: 80%;
     object-fit: contain;
+    border-radius: 5px;
+}
+
+.modal-caption {
+    /* Styles the caption below the modal image */
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    color: #333;
 }
 
 .close-button {
@@ -569,6 +578,11 @@ body.dark-mode #cart-actions button:hover {
     height: 30px;
     font-size: 1rem;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.close-button:hover {
+    background-color: darkred;
 }
 
 .product-carousel {
