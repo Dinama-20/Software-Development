@@ -1,11 +1,10 @@
 <?php
 session_start();
-require_once '../vendor/autoload.php'; // Usa el autoloader de Composer
-
-use FPDF;
+require_once '../vendor/setasign/fpdf/fpdf.php'; // Asegúrate de que esta ruta sea correcta
 
 if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
-    echo "<script>alert('Your cart is empty.'); window.location.href = 'cart.php';</script>";
+    // Redirige al carrito si está vacío
+    header("Location: cart.php");
     exit;
 }
 
@@ -14,6 +13,7 @@ $total = array_reduce($cart, function ($sum, $item) {
     return $sum + $item['price'];
 }, 0);
 
+// Asegúrate de que no haya salida previa al PDF
 $pdf = new FPDF();
 $pdf->AddPage();
 $pdf->SetFont('Arial', 'B', 16);
