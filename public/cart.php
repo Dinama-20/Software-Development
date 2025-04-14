@@ -30,7 +30,7 @@ session_start();
         <form method="post" action="clear_cart.php">
             <button type="submit" class="custom-btn">Clear Cart</button>
         </form>
-        <button class="custom-btn" onclick="checkout()">Buy</button>
+        <button class="custom-btn" onclick="checkout()">Buy</button> <!-- Llama a la función checkout -->
     </div>
 </main>
 

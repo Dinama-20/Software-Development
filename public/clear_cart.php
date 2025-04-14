@@ -1,5 +1,5 @@
 <?php
 session_start();
 unset($_SESSION['cart']);
-echo json_encode(['success' => true]);
+header("Location: cart.php"); // Redirige de nuevo a la página del carrito
 exit;

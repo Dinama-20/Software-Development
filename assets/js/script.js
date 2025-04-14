@@ -87,9 +87,9 @@ function removeFromCart(index) {
 }
 
 function clearCart() {
-    fetch("clear_cart.php")
+    fetch("clear_cart.php", { method: "POST" })
         .then(() => {
-            displayCart();
+            displayCart(); // Actualiza la vista del carrito
             alert("Cart cleared");
         })
         .catch(error => console.error("Error clearing cart:", error));
@@ -104,8 +104,8 @@ function checkout() {
                 alert("Your cart is empty. Add products before checking out.");
                 return;
             }
-            generarPDF(cart);
-            clearCart();
+            generarPDF(cart); // Genera el PDF con los detalles del pedido
+            clearCart(); // Vacía el carrito después de la compra
             alert("Checkout completed successfully! Your order details have been saved as a PDF.");
         })
         .catch(error => console.error("Error during checkout:", error));
