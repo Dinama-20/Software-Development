@@ -22,13 +22,21 @@ session_start();
             {name: 'Junior Dreng', price: 49.90, category: 'junior', image: 'assets/images/duward-watch7.png', details: 'assets/images/characteristics7.png'}
         ];
 
-        function showModal(imageSrc) {
-            document.getElementById("modalImage").src = imageSrc;
-            document.getElementById("modalOverlay").style.display = "flex";
+        function showModal(detailsImage) {
+            const modalOverlay = document.getElementById("modalOverlay");
+            const modalImage = document.getElementById("modalImage");
+
+            if (modalOverlay && modalImage) {
+                modalImage.src = detailsImage; // Carga la imagen de las características
+                modalOverlay.style.display = "flex"; // Muestra el modal
+            }
         }
 
         function closeModal() {
-            document.getElementById("modalOverlay").style.display = "none";
+            const modalOverlay = document.getElementById("modalOverlay");
+            if (modalOverlay) {
+                modalOverlay.style.display = "none"; // Oculta el modal
+            }
         }
 
         function addToCart(productName, price) {
@@ -82,12 +90,11 @@ session_start();
                 const productDiv = document.createElement("div");
                 productDiv.className = "product";
                 productDiv.innerHTML = `
-                    <img src="${product.image}" alt="${product.name}">
+                    <img src="${product.image}" alt="${product.name}" onclick="showModal('${product.details}')">
                     <h2>${product.name}</h2>
                     <p>Price: ${product.price}€</p>
-                    <button onclick="addToCart('${product.name}', ${product.price})">Add to Cart</button>
+                    <button onclick="event.stopPropagation(); addToCart('${product.name}', ${product.price})">Add to Cart</button>
                 `;
-                productDiv.onclick = () => showModal(product.details); // Muestra los detalles al hacer clic en el producto
                 productsContainer.appendChild(productDiv);
             });
         }
@@ -137,7 +144,7 @@ session_start();
 
 <?php include '../includes/footer.php'; ?>
 
-<div id="modalOverlay" class="modal-overlay">
+<div id="modalOverlay" class="modal-overlay" style="display: none;">
     <div class="modal-content">
         <img id="modalImage" src="" alt="Product Details">
         <button class="close-button" onclick="closeModal()">X</button>
