@@ -1,5 +1,5 @@
 <?php
-include 'header.php';
+include '../includes/header.php';
 
 // Simulación de productos en el carrito (esto debería venir de la sesión o base de datos)
 $cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
@@ -65,4 +65,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php endif; ?>
 </div>
 
-<?php include 'footer.php'; ?>
+<?php include '../includes/footer.php'; ?>
