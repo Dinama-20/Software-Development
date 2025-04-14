@@ -22,8 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['username'] = $user['username'];
 
-        // Redirect to the dashboard
-        header("Location: dashboard.php");
+        // Redirect to the homepage (index.php)
+        header("Location: index.php");
         exit();
     } catch (Exception $e) {
         $error = $e->getMessage(); // Display the error message
