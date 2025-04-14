@@ -31,7 +31,15 @@ session_start();
             if (modalOverlay && modalImage) {
                 modalImage.src = detailsImage; // Set the image source for the modal
                 modalImage.alt = "Product Details"; // Add alt text for accessibility
-                modalOverlay.style.display = "flex"; // Display the modal
+
+                // Check if the image exists before displaying the modal
+                modalImage.onload = () => {
+                    modalOverlay.style.display = "flex"; // Display the modal
+                };
+
+                modalImage.onerror = () => {
+                    alert("The image could not be loaded. Please try again later.");
+                };
             }
         }
 
