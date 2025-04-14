@@ -1,48 +1,61 @@
 <?php
-session_start();
-require_once '../vendor/autoload.php'; // Composer autoloader
+require_once __DIR__ . '/../models/database.php';
+require_once __DIR__ . '/../models/User.php';
 
+use Models\Database;
 use Models\User;
+
+session_start();
+
+// Check if the user is already logged in
+if (isset($_SESSION['user'])) {
+    header("Location: index.php");  // Redirect to the main page if the user is already logged in
+    exit();
+}
 
 // Registration logic
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $user = new User();
-
-    // Collect user input (First Name, Last Name, Email, Password, and optionally Username)
-    $firstName = $_POST['first_name'];
-    $lastName = $_POST['last_name'];
-    $email = $_POST['email'];
+    $firstName = trim($_POST['first_name']);
+    $lastName = trim($_POST['last_name']);
+    $username = trim($_POST['username']);
+    $email = trim($_POST['email']);
     $password = $_POST['password'];
 
-    // Check if a username is provided or generate one automatically
-    $username = isset($_POST['username']) && !empty($_POST['username']) ? $_POST['username'] : strtolower($firstName . '.' . $lastName);
-
-    // Ensure username is unique
-    if (!$user->isUsernameAvailable($username)) {
-        $_SESSION['error_message'] = "The username is already taken. Please choose another one.";
-        header("Location: register.php");
-        exit;
-    }
-
-    // Create a new user object
-    $userData = [
-        'username' => $username,
-        'first_name' => $firstName,
-        'last_name' => $lastName,
-        'email' => $email,
-        'password' => password_hash($password, PASSWORD_BCRYPT) // Password hashing for security
-    ];
-
-    // Register the user (assuming there's a register method in the User class)
-    if ($user->register($userData)) {
-        // Redirect user to login page after successful registration
-        $_SESSION['success_message'] = "Registration successful! Please log in.";
-        header("Location: login.php");
-        exit;
+    // Validate empty fields
+    if (empty($firstName) || empty($lastName) || empty($username) || empty($email) || empty($password)) {
+        $error = "Please fill in all fields.";
     } else {
-        $_SESSION['error_message'] = "An error occurred during registration. Please try again.";
-        header("Location: register.php");
-        exit;
+        // Get the database connection
+        $db = (new Database())->getConnection();
+        $user = new User($db);
+
+        // Check if the username is already taken
+        if (!$user->isUsernameAvailable($username)) {
+            $error = "The username is already taken. Please choose another one.";
+        } else {
+            // Hash the password before storing it in the database
+            $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+
+            // Create an array with user data
+            $userData = [
+                'first_name' => $firstName,
+                'last_name' => $lastName,
+                'username' => $username,
+                'email' => $email,
+                'password' => $hashedPassword
+            ];
+
+            // Try to register the user
+            if ($user->register($userData)) {
+                // Successful registration, redirect to the login page
+                $_SESSION['success_message'] = "Registration successful! Please log in.";
+                header("Location: login.php");
+                exit();
+            } else {
+                // Registration failed
+                $error = "This email is already registered.";
+            }
+        }
     }
 }
 ?>
@@ -52,16 +65,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <main>
     <h2>Register</h2>
 
-    <?php if (isset($_SESSION['error_message'])): ?>
-        <p class="error"><?= $_SESSION['error_message'] ?></p>
-        <?php unset($_SESSION['error_message']); ?>
+    <!-- Show errors if there are any -->
+    <?php if (isset($error)): ?>
+        <p class="error"><?= $error ?></p>
     <?php endif; ?>
 
+    <!-- Show success message if registration is successful -->
     <?php if (isset($_SESSION['success_message'])): ?>
         <p class="success"><?= $_SESSION['success_message'] ?></p>
         <?php unset($_SESSION['success_message']); ?>
     <?php endif; ?>
 
+    <!-- Registration form -->
     <form action="register.php" method="POST">
         <div class="form-group">
             <label for="first_name">First Name</label>
@@ -72,8 +87,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input type="text" id="last_name" name="last_name" required>
         </div>
         <div class="form-group">
-            <label for="username">Username (Optional)</label>
-            <input type="text" id="username" name="username" placeholder="Leave blank for auto-generated username">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
         </div>
         <div class="form-group">
             <label for="email">Email</label>

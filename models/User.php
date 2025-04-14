@@ -1,64 +1,60 @@
 <?php
 namespace Models;
 
-require_once 'Database.php';
+use PDO;
+use PDOException;
 
 class User {
     private $conn;
 
-    // Constructor: connect to the database
-    public function __construct() {
-        $db = new \Database(); // Use global namespace for Database
-        $this->conn = $db->getConnection();
+    public function __construct($db) {
+        $this->conn = $db;
     }
 
-    // Register a new user
-    public function register($name, $email, $password) {
-        // Check if the email is already registered
-        $stmt = $this->conn->prepare("SELECT id FROM users WHERE email = ?");
-        $stmt->execute([$email]);
+    public function register($data) {
+        try {
+            // Verificar si ya existe un usuario con ese correo electrónico
+            $stmt = $this->conn->prepare("SELECT id FROM users WHERE email = ?");
+            $stmt->execute([$data['email']]);
 
-        if ($stmt->rowCount() > 0) {
-            return ['success' => false, 'message' => 'Email already registered'];
-        }
-
-        // Hash the password
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-        // Insert the new user into the database
-        $stmt = $this->conn->prepare("INSERT INTO users (name, email, password) VALUES (?, ?, ?)");
-        $result = $stmt->execute([$name, $email, $hashedPassword]);
-
-        if ($result) {
-            return ['success' => true, 'message' => 'User registered successfully'];
-        } else {
-            return ['success' => false, 'message' => 'Registration failed'];
-        }
-    }
-
-    // Authenticate a user during login
-    public function login($email, $password) {
-        // Retrieve user by email
-        $stmt = $this->conn->prepare("SELECT * FROM users WHERE email = ?");
-        $stmt->execute([$email]);
-
-        if ($stmt->rowCount() > 0) {
-            $user = $stmt->fetch();
-
-            // Verify the hashed password
-            if (password_verify($password, $user['password'])) {
-                return ['success' => true, 'user' => $user];
+            if ($stmt->rowCount() > 0) {
+                return false; // Ya existe
             }
-        }
 
-        return ['success' => false, 'message' => 'Invalid email or password'];
+            // Insertar nuevo usuario
+            $stmt = $this->conn->prepare("
+                INSERT INTO users (first_name, last_name, username, email, password, created_at) 
+                VALUES (?, ?, ?, ?, ?, NOW())
+            ");
+
+            return $stmt->execute([
+                $data['first_name'],
+                $data['last_name'],
+                $data['username'],
+                $data['email'],
+                $data['password']
+            ]);
+        } catch (PDOException $e) {
+            // Opcional: log del error
+            error_log($e->getMessage());
+            return false;
+        }
     }
 
-    // Get a user by their ID
-    public function getUserById($id) {
-        $stmt = $this->conn->prepare("SELECT * FROM users WHERE id = ?");
-        $stmt->execute([$id]);
+    public function login($email, $password) {
+        try {
+            $stmt = $this->conn->prepare("SELECT * FROM users WHERE email = ?");
+            $stmt->execute([$email]);
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        return $stmt->fetch();
+            if ($user && password_verify($password, $user['password'])) {
+                return $user;
+            }
+
+            return false;
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+            return false;
+        }
     }
 }

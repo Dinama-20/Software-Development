@@ -316,3 +316,11 @@ body.dark-mode footer {
     font-weight: bold;
     margin-bottom: 1rem;
 }
+
+.welcome-message {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #8c0000;
+    margin: 1rem 0;
+    text-align: center;
+}
