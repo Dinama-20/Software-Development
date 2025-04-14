@@ -129,10 +129,14 @@ function verifyLogin() {
     const user = JSON.parse(localStorage.getItem("user"));
     const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
 
+    console.log(user, isLoggedIn);  // Agrega este console.log para verificar
+
     if (user && isLoggedIn) {
+        // Ocultar botones de login y register
         document.getElementById("login-btn").style.display = "none";
         document.getElementById("register-btn").style.display = "none";
 
+        // Mostrar el menú de usuario
         const userMenu = document.getElementById("user-menu");
         const usernameBtn = document.createElement("button");
         usernameBtn.textContent = user.name;
@@ -171,7 +175,7 @@ function showUserMenu() {
 function logout() {
     localStorage.removeItem("user");
     localStorage.removeItem("isLoggedIn");
-    window.location.href = "index.html";
+    window.location.href = "index.html"; // Redirigir al index
 }
 
 window.onload = function () {
