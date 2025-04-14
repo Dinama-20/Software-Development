@@ -17,14 +17,31 @@ session_start();
     <div id="cart-container">
         <?php if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0): ?>
             <ul>
-                <?php foreach ($_SESSION['cart'] as $item): ?>
-                    <li><?= htmlspecialchars($item['name']) ?> - <?= number_format($item['price'], 2) ?> euros</li>
+                <?php foreach ($_SESSION['cart'] as $index => $item): ?>
+                    <li>
+                        <?= htmlspecialchars($item['name']) ?> - <?= number_format($item['price'], 2) ?> euros
+                        <button class="remove-btn" onclick="removeFromCart(<?= $index ?>)">Remove</button>
+                    </li>
                 <?php endforeach; ?>
             </ul>
         <?php else: ?>
             <p>Your cart is empty.</p>
         <?php endif; ?>
     </div>
+    <script>
+        function removeFromCart(index) {
+            fetch(`remove_from_cart.php?index=${index}`, { method: 'GET' })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        location.reload(); // Recarga la página para actualizar el carrito
+                    } else {
+                        alert('Failed to remove item from cart.');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
     <div id="cart-actions">
         <form method="post" action="clear_cart.php">
             <button type="submit" class="custom-btn">Clear Cart</button>

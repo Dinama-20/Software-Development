@@ -94,8 +94,8 @@ session_start();
                     <h2>${product.name}</h2>
                     <p>Price: ${product.price}€</p>
                     <div class="product-actions">
-                        <button onclick="showModal('${product.details}')">Details</button>
-                        <button onclick="addToCart('${product.name}', ${product.price})">Add to Cart</button>
+                        <button class="details-btn" onclick="showModal('${product.details}')">Details</button>
+                        <button class="add-to-cart-btn" onclick="addToCart('${product.name}', ${product.price})">Add to Cart</button>
                     </div>
                 `;
                 productsContainer.appendChild(productDiv);
