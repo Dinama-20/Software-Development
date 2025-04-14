@@ -46,7 +46,7 @@ function addToCart(productName, price) {
         if (data.success) {
             alert(`${productName} added to cart!`);
         } else {
-            alert(data.message || "Failed to add to cart");
+            alert(data.message || "Failed to add product to cart.");
         }
     })
     .catch(error => console.error("Error:", error));

@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $_SESSION['cart'][] = $product;
 
-        echo json_encode(['success' => true]);
+        echo json_encode(['success' => true, 'message' => 'Product added to cart']);
         exit;
     }
 }
