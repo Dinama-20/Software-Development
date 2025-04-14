@@ -236,9 +236,9 @@ function initDarkMode() {
 
 // Initialize the page on load
 window.onload = function () {
+    initDarkMode();
     verifyLogin();
     displayCart();
-    initDarkMode(); // Asegúrate de inicializar Dark Mode
     loadProductsFromDB();
 };
 

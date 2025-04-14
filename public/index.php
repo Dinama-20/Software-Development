@@ -69,19 +69,26 @@ session_start();
                 filteredProducts.sort((a, b) => b.price - a.price);
             }
 
-            const productsContainer = document.getElementById('products');
-            productsContainer.innerHTML = '<h1>Available Products</h1>';
+            displayProducts(filteredProducts);
+        }
 
-            filteredProducts.forEach(product => {
-                const productElement = document.createElement('div');
-                productElement.classList.add('product');
-                productElement.innerHTML = `
-                    <img src="${product.image}" alt="${product.name}" onclick="showModal('${product.details}')">
+        function displayProducts(products) {
+            const productsContainer = document.getElementById("products");
+            if (!productsContainer) return;
+
+            productsContainer.innerHTML = ""; // Limpia el contenedor
+
+            products.forEach(product => {
+                const productDiv = document.createElement("div");
+                productDiv.className = "product";
+                productDiv.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
                     <h2>${product.name}</h2>
                     <p>Price: ${product.price}€</p>
                     <button onclick="addToCart('${product.name}', ${product.price})">Add to Cart</button>
                 `;
-                productsContainer.appendChild(productElement);
+                productDiv.onclick = () => showModal(product.details); // Muestra los detalles al hacer clic en el producto
+                productsContainer.appendChild(productDiv);
             });
         }
 
