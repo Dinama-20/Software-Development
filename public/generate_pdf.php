@@ -1,11 +1,11 @@
 <?php
 session_start();
-require_once '../vendor/autoload.php'; // Asegúrate de tener instalada la biblioteca FPDF o TCPDF
+require_once '../vendor/autoload.php'; // Asegúrate de tener instalada la biblioteca FPDF
 
 use FPDF\FPDF;
 
 if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
-    echo json_encode(['success' => false, 'message' => 'Cart is empty']);
+    echo "<script>alert('Your cart is empty.'); window.location.href = 'cart.php';</script>";
     exit;
 }
 
@@ -28,6 +28,9 @@ foreach ($cart as $item) {
 $pdf->Ln(10);
 $pdf->Cell(0, 10, "Total: €" . number_format($total, 2), 0, 1);
 $pdf->Cell(0, 10, "Date and Time: " . date('Y-m-d H:i:s'), 0, 1);
+
+// Vacía el carrito después de generar el PDF
+unset($_SESSION['cart']);
 
 // Genera el PDF y envíalo al navegador
 $pdf->Output('D', 'order-details.pdf');
