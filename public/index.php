@@ -23,15 +23,12 @@ session_start();
         ];
 
         function showModal(detailsImage) {
-            console.log("Opening modal with image:", detailsImage); // Depuración
             const modalOverlay = document.getElementById("modalOverlay");
             const modalImage = document.getElementById("modalImage");
 
             if (modalOverlay && modalImage) {
                 modalImage.src = detailsImage; // Carga la imagen de las características
                 modalOverlay.style.display = "flex"; // Muestra el modal
-            } else {
-                console.error("Modal elements not found.");
             }
         }
 

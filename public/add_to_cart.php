@@ -13,20 +13,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         // Check if the product already exists in the cart
-        $found = false;
         foreach ($_SESSION['cart'] as &$cartItem) {
             if ($cartItem['name'] === $product['name']) {
                 $cartItem['quantity']++;
-                $found = true;
-                break;
+                echo json_encode(['success' => true, 'message' => 'Product quantity updated']);
+                exit;
             }
         }
 
         // If the product is not found, add it as a new item
-        if (!$found) {
-            $product['quantity'] = 1;
-            $_SESSION['cart'][] = $product;
-        }
+        $product['quantity'] = 1;
+        $_SESSION['cart'][] = $product;
 
         echo json_encode(['success' => true, 'message' => 'Product added to cart']);
         exit;
