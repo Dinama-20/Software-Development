@@ -102,6 +102,26 @@ main {
     border-radius: 10px;
 }
 
+.product-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+.product-actions button {
+    padding: 0.5rem 1rem;
+    background-color: white;
+    color: black;
+    border: 2px solid #8c0000;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.product-actions button:hover {
+    background-color: #f0f0f0;
+}
+
 #product-controls {
     display: flex;
     flex-wrap: wrap;
