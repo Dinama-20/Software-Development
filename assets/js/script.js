@@ -220,15 +220,20 @@ window.onload = function () {
 };
 
 function loadProductsFromDB() {
-    fetch("backend/get-products.php")
-        .then(response => response.json())
-        .then(data => {
-            localStorage.setItem("allProducts", JSON.stringify(data));
-            displayProducts(data);
-        })
-        .catch(error => {
-            console.error("Error loading products:", error);
-        });
+    // Simula la carga de productos desde una base de datos o archivo local
+    const products = [
+        { name: 'Aquarius Nurburgring', price: 240, category: 'smartwatch', image: 'assets/images/duward-watch1.png', details: 'assets/images/characteristics1.png' },
+        { name: 'Aquastar Race', price: 189, category: 'smartwatch', image: 'assets/images/duward-watch2.png', details: 'assets/images/characteristics2.png' },
+        { name: 'Smartwatch Style', price: 98.90, category: 'smartwatch', image: 'assets/images/duward-watch3.png', details: 'assets/images/characteristics3.png' },
+        { name: 'Lady Woman', price: 89, category: 'woman', image: 'assets/images/duward-watch4.png', details: 'assets/images/characteristics4.png' },
+        { name: 'Lady Babaye', price: 95, category: 'woman', image: 'assets/images/duward-watch5.png', details: 'assets/images/characteristics5.png' },
+        { name: 'Junior Divka', price: 39.90, category: 'junior', image: 'assets/images/duward-watch6.png', details: 'assets/images/characteristics6.png' },
+        { name: 'Junior Dreng', price: 49.90, category: 'junior', image: 'assets/images/duward-watch7.png', details: 'assets/images/characteristics7.png' }
+    ];
+
+    // Guarda los productos en el almacenamiento local
+    localStorage.setItem('allProducts', JSON.stringify(products));
+    displayProducts(products); // Muestra los productos al cargar
 }
 
 function filterByCategory(category) {
@@ -247,43 +252,45 @@ function sortByPrice(order = "asc") {
 }
 
 function applyFilters() {
-    let products = JSON.parse(localStorage.getItem("allProducts")) || [];
+    let products = JSON.parse(localStorage.getItem('allProducts')) || [];
     const searchTerm = document.getElementById("searchInput").value.toLowerCase();
     const category = document.getElementById("filterCategory").value;
     const sortOrder = document.getElementById("sortPrice").value;
 
+    // Filtra por nombre
     if (searchTerm) {
         products = products.filter(p => p.name.toLowerCase().includes(searchTerm));
     }
 
+    // Filtra por categoría
     if (category) {
         products = products.filter(p => p.category.toLowerCase() === category.toLowerCase());
     }
 
+    // Ordena por precio
     if (sortOrder === "asc") {
         products.sort((a, b) => a.price - b.price);
     } else if (sortOrder === "desc") {
         products.sort((a, b) => b.price - a.price);
     }
 
-    displayProducts(products);
+    displayProducts(products); // Muestra los productos filtrados
 }
 
 function displayProducts(products) {
     const productsContainer = document.getElementById("products");
     if (!productsContainer) return;
 
-    productsContainer.innerHTML = "";
+    productsContainer.innerHTML = ""; // Limpia el contenedor
 
     products.forEach(product => {
         const productDiv = document.createElement("div");
         productDiv.className = "product";
-        productDiv.onclick = () => showModal(product.image);
         productDiv.innerHTML = `
-            <img src="${product.image}" alt="${product.name}">
+            <img src="${product.image}" alt="${product.name}" onclick="showModal('${product.details}')">
             <h2>${product.name}</h2>
             <p>Price: ${product.price}€</p>
-            <button onclick="event.stopPropagation(); addToCart('${product.name}', ${product.price})">Add to Cart</button>
+            <button onclick="addToCart('${product.name}', ${product.price})">Add to Cart</button>
         `;
         productsContainer.appendChild(productDiv);
     });

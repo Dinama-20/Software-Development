@@ -124,7 +124,7 @@ session_start();
 
     <section id="products">
         <h1>Available Products</h1>
-        
+        <!-- Los productos se cargarán dinámicamente aquí -->
     </section>
 </main>
 
