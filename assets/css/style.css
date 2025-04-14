@@ -380,6 +380,7 @@ footer button:hover {
     background-color: #a00000;
 }
 
+/* Modo oscuro general */
 body.dark-mode {
     background-color: #121212;
     color: #ffffff;
@@ -396,6 +397,38 @@ body.dark-mode footer {
 body.dark-mode button {
     background-color: #333;
     color: white;
+}
+
+/* Excluir las letras de los productos del modo oscuro */
+body.dark-mode .product h2,
+body.dark-mode .product p {
+    color: black; /* Mantener el color negro para las letras de los productos */
+}
+
+/* Modo oscuro para el carrito */
+body.dark-mode #cart-container {
+    background-color: #1e1e1e;
+    color: white;
+}
+
+body.dark-mode #cart-container ul {
+    background-color: #1e1e1e;
+    color: white;
+}
+
+body.dark-mode #cart-container li {
+    background-color: #333;
+    color: white;
+    border: 1px solid #555;
+}
+
+body.dark-mode #cart-actions button {
+    background-color: #444;
+    color: white;
+}
+
+body.dark-mode #cart-actions button:hover {
+    background-color: #555;
 }
 
 #user-dropdown {
