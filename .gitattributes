@@ -1,16 +1,25 @@
 # Normalize line endings between operating systems
+# Define line endings for text files to ensure consistency across platforms
 * text=auto
 
 # Treat code files as text for proper diff and merge
+# Treat HTML files as text for diff and merge purposes
 *.html text
+# Treat CSS files as text for diff and merge purposes
 *.css text
+# Treat JavaScript files as text for diff and merge purposes
 *.js text
+# Treat PHP files as text for diff and merge purposes
 *.php text
+# Treat JSON files as text for diff and merge purposes
 *.json text
+# Treat XML files as text for diff and merge purposes
 *.xml text
+# Treat Markdown files as text for diff and merge purposes
 *.md text
 
 # Treat images and other binaries properly
+# Define binary files to prevent Git from attempting to diff them
 *.jpg binary
 *.jpeg binary
 *.png binary
@@ -21,9 +30,16 @@
 *.pdf binary
 
 # Treat font files as binary
+# Define font files as binary to prevent Git from attempting to diff them
 *.ttf binary
 *.woff binary
 *.woff2 binary
 
 # Make sure shell scripts are treated as text
+# Treat shell scripts as text for diff and merge purposes
 *.sh text
+
+# Set export-ignore for files that should not be included in archive exports
+/.env export-ignore
+/vendor/ export-ignore
+/tests/ export-ignore

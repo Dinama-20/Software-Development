@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="vendor/autoload.php">
+<phpunit bootstrap="vendor/autoload.php" colors="true">
+    <!-- Configuration for PHPUnit -->
     <testsuites>
+        <!-- Define the test suite -->
         <testsuite name="Application Test Suite">
-            <directory>./tests</directory>
+            <!-- Specify the directory containing test files -->
+            <directory>tests</directory>
         </testsuite>
     </testsuites>
+
+    <php>
+        <!-- Set environment variables for testing -->
+        <env name="APP_ENV" value="testing"/>
+        <env name="DB_CONNECTION" value="sqlite"/>
+        <env name="DB_DATABASE" value=":memory:"/>
+    </php>
 </phpunit>
