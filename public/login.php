@@ -1,6 +1,8 @@
 <?php
 // Start the session
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Include the configuration file and User model
 require_once '../config/config.php';
@@ -31,35 +33,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-<!-- Include external CSS and JavaScript files -->
-<link rel="stylesheet" href="../assets/css/style.css">
-<script src="../assets/js/script.js" defer></script>
+<!-- HTML form for login -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+    <h2>Login</h2>
 
-<!-- Include the header file -->
-<?php include '../includes/header.php'; ?>
+    <!-- Display error message if login fails -->
+    <?php if (isset($error)): ?>
+        <p style="color: red;"><?= htmlspecialchars($error) ?></p>
+    <?php endif; ?>
 
-    <!-- Login form container -->
-    <div class="login-container">
-        <h2>Login</h2>
-        <!-- Display error message if login fails -->
-        <?php if (isset($error)): ?>
-            <p style="color: red;"><?php echo $error; ?></p>
-        <?php endif; ?>
-        <!-- Login form -->
-        <form method="POST" action="login.php">
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" name="username" id="username" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" name="password" id="password" required>
-            </div>
-            <button type="submit">Login</button>
-        </form>
-        <!-- Link to the registration page -->
-        <p>Don't have an account? <a href="register.php">Register here</a></p>
-    </div>
-
-<!-- Include the footer file -->
-<?php include '../includes/footer.php'; ?>
+    <form action="login.php" method="POST">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <br>
+        <button type="submit">Login</button>
+    </form>
+</body>
+</html>
