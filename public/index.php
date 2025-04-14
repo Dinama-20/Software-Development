@@ -14,8 +14,8 @@ session_start();
     <script>
         // Array of products with details such as name, price, category, and images
         let products = [
-            { name: 'Aquarius Nurburgring', price: 240, category: 'smartwatch', image: '../assets/images/duward-watch1.png', detailsImage: '../assets/images/characteristics1.png' },
-            { name: 'Aquastar Race', price: 189, category: 'smartwatch', image: '../assets/images/duward-watch2.png', detailsImage: '../assets/images/characteristics2.png' },
+            { name: 'Aquarius Nurburgring', price: 240, category: 'men', image: '../assets/images/duward-watch1.png', detailsImage: '../assets/images/characteristics1.png' },
+            { name: 'Aquastar Race', price: 189, category: 'men', image: '../assets/images/duward-watch2.png', detailsImage: '../assets/images/characteristics2.png' },
             { name: 'Smartwatch Style', price: 98.90, category: 'smartwatch', image: '../assets/images/duward-watch3.png', detailsImage: '../assets/images/characteristics3.png' },
             { name: 'Lady Woman', price: 89, category: 'woman', image: '../assets/images/duward-watch4.png', detailsImage: '../assets/images/characteristics4.png' },
             { name: 'Lady Babaye', price: 95, category: 'woman', image: '../assets/images/duward-watch5.png', detailsImage: '../assets/images/characteristics5.png' },
@@ -133,6 +133,7 @@ session_start();
         <input type="text" id="searchInput" placeholder="Search products by name"> <!-- Input field for searching products -->
         <select id="filterCategory"> <!-- Dropdown for filtering by category -->
             <option value="">All Categories</option>
+            <option value="men">Men</option>
             <option value="smartwatch">Smartwatch</option>
             <option value="woman">Woman</option>
             <option value="junior">Junior</option>
