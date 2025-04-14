@@ -1,75 +1,64 @@
 <?php
-// File: models/User.php
+namespace Models;
 
-require_once 'Database.php';
+require_once 'database.php';
 
-class User
-{
-    private $db;
+class User {
+    private $conn;
 
-    public function __construct()
-    {
-        // Create a new database connection
-        $database = new Database();
-        $this->db = $database->getConnection();
+    // Constructor: connect to the database
+    public function __construct() {
+        $db = new \Database(); // Use global namespace for Database
+        $this->conn = $db->getConnection();
     }
 
-    /**
-     * Register a new user
-     * @param array $data User details (username, email, password, etc.)
-     * @return bool True on success, false on failure
-     */
-    public function register($data)
-    {
-        $query = 'INSERT INTO users (username, first_name, last_name, email, password)
-                  VALUES (:username, :first_name, :last_name, :email, :password)';
-
-        $stmt = $this->db->prepare($query);
-
-        // Hash the password before storing it
-        $hashedPassword = password_hash($data['password'], PASSWORD_DEFAULT);
-
-        $stmt->bindParam(':username', $data['username']);
-        $stmt->bindParam(':first_name', $data['first_name']);
-        $stmt->bindParam(':last_name', $data['last_name']);
-        $stmt->bindParam(':email', $data['email']);
-        $stmt->bindParam(':password', $hashedPassword);
-
-        return $stmt->execute();
-    }
-
-    /**
-     * Authenticate user with email and password
-     * @param array $credentials Email and password provided by the user
-     * @return array|false User data if login is successful, false otherwise
-     */
-    public function login($credentials)
-    {
-        $query = 'SELECT id, username, first_name, last_name, email, password
-                  FROM users
-                  WHERE email = :email';
-
-        $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':email', $credentials['email']);
-        $stmt->execute();
+    // Register a new user
+    public function register($name, $email, $password) {
+        // Check if the email is already registered
+        $stmt = $this->conn->prepare("SELECT id FROM users WHERE email = ?");
+        $stmt->execute([$email]);
 
         if ($stmt->rowCount() > 0) {
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            // Debug: log user data
-            error_log("User found: " . json_encode($user));
-
-            // Verify the password using password_verify()
-            if (password_verify($credentials['password'], $user['password'])) {
-                error_log("Password verified.");
-                return $user;
-            } else {
-                error_log("Password does not match.");
-                return false;
-            }
-        } else {
-            error_log("User not found.");
-            return false;
+            return ['success' => false, 'message' => 'Email already registered'];
         }
+
+        // Hash the password
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+        // Insert the new user into the database
+        $stmt = $this->conn->prepare("INSERT INTO users (name, email, password) VALUES (?, ?, ?)");
+        $result = $stmt->execute([$name, $email, $hashedPassword]);
+
+        if ($result) {
+            return ['success' => true, 'message' => 'User registered successfully'];
+        } else {
+            return ['success' => false, 'message' => 'Registration failed'];
+        }
+    }
+
+    // Authenticate a user during login
+    public function login($email, $password) {
+        // Retrieve user by email
+        $stmt = $this->conn->prepare("SELECT * FROM users WHERE email = ?");
+        $stmt->execute([$email]);
+
+        if ($stmt->rowCount() > 0) {
+            $user = $stmt->fetch();
+
+            // Verify the hashed password
+            if (password_verify($password, $user['password'])) {
+                return ['success' => true, 'user' => $user];
+            }
+        }
+
+        return ['success' => false, 'message' => 'Invalid email or password'];
+    }
+
+    // Get a user by their ID
+    public function getUserById($id) {
+        $stmt = $this->conn->prepare("SELECT * FROM users WHERE id = ?");
+        $stmt->execute([$id]);
+
+        return $stmt->fetch();
     }
 }
