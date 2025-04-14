@@ -35,6 +35,9 @@ $pdf->Ln(10);
 $pdf->Cell(0, 10, "Total: " . number_format($total, 2) . " euros", 0, 1);
 $pdf->Cell(0, 10, "Date and Time: " . date('Y-m-d H:i:s'), 0, 1);
 
+// Clear the cart after generating the PDF
+unset($_SESSION['cart']);
+
 // Send the PDF to the browser for download
 $pdf->Output('D', 'order-details.pdf');
 exit;
