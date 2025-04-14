@@ -168,6 +168,12 @@ function showUserMenu() {
     document.body.appendChild(menu);
 }
 
+function logout() {
+    localStorage.removeItem("user");
+    localStorage.removeItem("isLoggedIn");
+    window.location.href = "index.html";
+}
+
 window.onload = function () {
     verifyLogin();
     displayCart();
@@ -258,4 +264,3 @@ function displayProducts(products) {
         productsContainer.appendChild(productDiv);
     });
 }
-

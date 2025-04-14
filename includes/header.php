@@ -1,17 +1,15 @@
-<?php
-echo '<link rel="stylesheet" href="assets/css/style.css">';
-echo '<script src="assets/js/script.js" defer></script>';
-?>
+<link rel="stylesheet" href="assets/css/style.css">
+<script src="assets/js/script.js" defer></script>
 
 <header>
     <h1><a href="index.php" style="text-decoration: none; color: white;">Oñate Watch and Jewelry</a></h1>
     <nav>
         <div id="user-menu">
             <?php if (isset($_SESSION['user'])): ?>
-                <!-- If the user is logged in, show the Log Out button -->
+                <!-- Si el usuario está logueado, mostramos el botón de Cerrar sesión -->
                 <button onclick="window.location.href='logout.php'">Log Out</button>
             <?php else: ?>
-                <!-- If the user is not logged in, show the Login and Register buttons -->
+                <!-- Si el usuario no está logueado, mostramos los botones de Login y Register -->
                 <button onclick="window.location.href='login.php'">Login</button>
                 <button onclick="window.location.href='register.php'">Register</button>
             <?php endif; ?>
