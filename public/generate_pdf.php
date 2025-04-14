@@ -1,6 +1,8 @@
 <?php
 session_start();
-require_once '../vendor/fpdf/fpdf.php'; // Asegúrate de que esta ruta sea correcta
+require_once '../vendor/autoload.php'; // Usa el autoloader de Composer
+
+use FPDF;
 
 if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
     echo "<script>alert('Your cart is empty.'); window.location.href = 'cart.php';</script>";
