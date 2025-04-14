@@ -1,5 +1,5 @@
 <?php
 session_start();
 unset($_SESSION['cart']);
-header("Location: cart.php");
+echo json_encode(['success' => true]);
 exit;

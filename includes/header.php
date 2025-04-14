@@ -21,6 +21,6 @@ if (session_status() === PHP_SESSION_NONE) {
         <button onclick="window.location.href='cart.php'">
             <img src="assets/images/cart.png" alt="Cart">
         </button>
-        <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
+        <button id="dark-mode-toggle" onclick="toggleDarkMode()">Toggle Dark Mode</button>
     </nav>
 </header>
