@@ -46,7 +46,9 @@ session_start();
         <form method="post" action="clear_cart.php">
             <button type="submit" class="custom-btn">Clear Cart</button>
         </form>
-        <button class="custom-btn" onclick="checkout()">Buy</button>
+        <form method="post" action="generate_pdf.php">
+            <button type="submit" class="custom-btn">Buy</button>
+        </form>
     </div>
 </main>
 
