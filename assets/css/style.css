@@ -647,3 +647,78 @@ button:hover {
     background-color: #ccffcc;
     color: #008000;
 }
+
+.cart-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 1rem;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.cart-container h1 {
+    text-align: center;
+    color: #8c0000;
+    margin-bottom: 1rem;
+}
+
+.cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+}
+
+.cart-table th, .cart-table td {
+    border: 1px solid #ddd;
+    padding: 0.8rem;
+    text-align: center;
+}
+
+.cart-table th {
+    background-color: #8c0000;
+    color: white;
+}
+
+.cart-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.cart-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.cart-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.cart-action-btn {
+    padding: 0.8rem 1.5rem;
+    background-color: #8c0000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.cart-action-btn:hover {
+    background-color: #a00000;
+}
+
+.remove-btn {
+    padding: 0.5rem 1rem;
+    background-color: #8c0000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.remove-btn:hover {
+    background-color: #a00000;
+}

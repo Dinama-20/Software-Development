@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['action'])) {
         if ($_POST['action'] === 'clear_cart') {
             $_SESSION['cart'] = [];
-            header('Location: cart.php');
+            header('Location: cart.php'); // Recarga la página después de vaciar el carrito
             exit;
         } elseif ($_POST['action'] === 'remove_item' && isset($_POST['product_id'])) {
             $productId = $_POST['product_id'];
@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php if (empty($cart)): ?>
         <p>Your cart is empty.</p>
     <?php else: ?>
-        <table>
+        <table class="cart-table">
             <thead>
                 <tr>
                     <th>Product</th>
@@ -37,24 +37,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php foreach ($cart as $id => $item): ?>
                     <tr>
                         <td><?= htmlspecialchars($item['name']) ?></td>
-                        <td><?= htmlspecialchars($item['price']) ?></td>
+                        <td>€<?= number_format($item['price'], 2) ?></td>
                         <td>
                             <form method="POST" style="display:inline;">
                                 <input type="hidden" name="action" value="remove_item">
                                 <input type="hidden" name="product_id" value="<?= $id ?>">
-                                <button type="submit">Remove</button>
+                                <button type="submit" class="remove-btn">Remove</button>
                             </form>
                         </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
-        <form method="POST" action="clear_cart.php">
-            <button type="submit">Clear Cart</button>
-        </form>
-        <form method="GET" action="generate_pdf.php">
-            <button type="submit">Buy</button>
-        </form>
+        <div class="cart-actions">
+            <form method="POST">
+                <input type="hidden" name="action" value="clear_cart">
+                <button type="submit" class="cart-action-btn">Clear Cart</button>
+            </form>
+            <form method="GET" action="generate_pdf.php">
+                <button type="submit" class="cart-action-btn">Buy</button>
+            </form>
+        </div>
     <?php endif; ?>
 </div>
 
