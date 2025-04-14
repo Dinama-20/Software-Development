@@ -193,6 +193,13 @@ function logout() {
     window.location.href = "index.php";
 }
 
+window.onload = function () {
+    verifyLogin();
+    displayCart();
+    initDarkMode();
+    loadProductsFromDB();
+};
+
 function toggleDarkMode() {
     document.body.classList.toggle('dark-mode');
     localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
@@ -201,12 +208,6 @@ function toggleDarkMode() {
 function initDarkMode() {
     if (localStorage.getItem("darkMode") === "true") {
         document.body.classList.add("dark-mode");
-    }
-
-    // ✅ Aquí se añade el event listener al botón
-    const darkModeToggleBtn = document.getElementById("darkModeToggle");
-    if (darkModeToggleBtn) {
-        darkModeToggleBtn.addEventListener("click", toggleDarkMode);
     }
 }
 
@@ -284,10 +285,3 @@ function displayProducts(products) {
 function showModal(imageUrl) {
     // Opcional: modal de producto
 }
-
-window.onload = function () {
-    verifyLogin();
-    displayCart();
-    initDarkMode();
-    loadProductsFromDB();
-};

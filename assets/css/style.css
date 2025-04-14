@@ -150,18 +150,12 @@ footer button:hover {
     margin-top: 2rem;
 }
 
-#cart-actions button {
-    padding: 0.5rem 1rem;
-    background-color: #333;
-    color: #fff;
+#dark-mode-toggle {
+    background-color: transparent;
     border: none;
-    border-radius: 5px;
+    color: white;
+    font-size: 1.5rem;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-#cart-actions button:hover {
-    background-color: #555;
 }
 
 body.dark-mode {
@@ -173,153 +167,20 @@ body.dark-mode header {
     background-color: #1e1e1e;
 }
 
+body.dark-mode footer {
+    background-color: #1e1e1e;
+}
+
 body.dark-mode button {
     background-color: #333;
     color: white;
 }
 
-body.dark-mode footer {
-    background-color: #333;
-    color: #fff;
-}
-
-#user-menu {
-    display: flex;
-    gap: 1rem;
-    background-color: #8c0000;
-    padding: 1rem;
-}
-
-#user-menu button {
-    background-color: white;
-    color: black;
-    border: none;
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-#user-menu button:hover {
-    background-color: #f0f0f0;
-}
-
-.product img {
-    display: block; 
-    margin: 0 auto; 
-    max-width: 100%; 
-    height: auto; 
-    object-fit: contain; 
-    box-shadow: none; 
-    background: none; 
-    border: none; 
-}
-
-.product img:hover {
-    transform: scale(1.1); 
-    transition: transform 0.3s ease; 
-    filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.3)); 
-}
-
-.product button, header nav button, footer button {
-    padding: 0.5rem 1rem;
-    background-color: white;
-    color: black;
-    border: 2px solid #8c0000;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: transform 0.3s ease, background-color 0.3s ease; 
-}
-
-.product button:hover, header nav button:hover, footer button:hover {
-    transform: scale(1.05); 
-    background-color: #f0f0f0; 
-}
-
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7); 
-    display: none; 
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-.modal-content {
-    position: relative;
-    background-color: transparent; 
-    border: 5px solid #8c0000; 
-    padding: 0;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); 
-    max-width: 80%;
-    max-height: 80%;
-    overflow: hidden; 
-    border-radius: 10px; 
-}
-
-.modal-content img {
-    display: block;
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain; 
-    border-radius: 5px;
-}
-
-.close-button {
+#user-dropdown {
     position: absolute;
-    bottom: 10px;
-    left: 10px;
-    background-color: #8c0000;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    font-size: 14px;
-    border-radius: 3px;
-    transition: background-color 0.3s ease;
-}
-
-.close-button:hover {
-    background-color: #a10000;
-}
-
-.custom-btn {
-    padding: 0.5rem 1rem;
     background-color: white;
     color: black;
-    border: 2px solid #8c0000;
+    padding: 1rem;
     border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: transform 0.3s ease, background-color 0.3s ease;
-    margin-top: 1rem; 
-}
-
-.custom-btn:hover {
-    background-color: #f0f0f0;
-    transform: scale(1.05);
-}
-
-.success {
-    color: green;
-    font-weight: bold;
-    margin-bottom: 1rem;
-}
-
-.error {
-    color: red;
-    font-weight: bold;
-    margin-bottom: 1rem;
-}
-
-.welcome-message {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #8c0000;
-    margin: 1rem 0;
-    text-align: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
 }
