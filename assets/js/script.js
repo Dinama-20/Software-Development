@@ -65,7 +65,7 @@ function displayCart() {
                 productElement.classList.add('cart-product');
                 productElement.innerHTML = `
                     <p><strong>${product.name}</strong></p>
-                    <p>Price: $${product.price.toFixed(2)}</p>
+                    <p>Price: €${product.price.toFixed(2)}</p>
                     <button class="custom-btn" onclick="removeFromCart(${index})">Remove</button>
                 `;
                 cartContainer.appendChild(productElement);
@@ -74,7 +74,7 @@ function displayCart() {
             if (cart.length > 0) {
                 const totalElement = document.createElement('div');
                 totalElement.classList.add('cart-total');
-                totalElement.innerHTML = `<p>Total: $${totalPrice.toFixed(2)}</p>`;
+                totalElement.innerHTML = `<p>Total: €${totalPrice.toFixed(2)}</p>`;
                 cartContainer.appendChild(totalElement);
             }
         });
