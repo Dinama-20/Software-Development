@@ -43,16 +43,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
+<!-- Include external CSS and JavaScript files -->
 <link rel="stylesheet" href="../assets/css/style.css">
 <script src="../assets/js/script.js" defer></script>
+
+<!-- Include the header file -->
 <?php include '../includes/header.php'; ?>
 
-    <!-- Login form -->
+    <!-- Login form container -->
     <div class="login-container">
         <h2>Login</h2>
+        <!-- Display error message if login fails -->
         <?php if (isset($errorMessage)): ?>
             <p style="color: red;"><?php echo $errorMessage; ?></p>
         <?php endif; ?>
+        <!-- Login form -->
         <form method="POST" action="login.php">
             <div class="form-group">
                 <label for="username">Username</label>
@@ -64,7 +69,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <button type="submit">Login</button>
         </form>
+        <!-- Link to the registration page -->
         <p>Don't have an account? <a href="register.php">Register here</a></p>
     </div>
 
+<!-- Include the footer file -->
 <?php include '../includes/footer.php'; ?>

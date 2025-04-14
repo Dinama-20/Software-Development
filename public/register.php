@@ -1,10 +1,12 @@
 <?php
+// Include the configuration file for database connection
 require_once __DIR__ . '/../models/database.php';
 require_once __DIR__ . '/../models/User.php';
 
 use Models\Database;
 use Models\User;
 
+// Start the session to manage user data
 session_start();
 
 // Check if the user is already logged in
@@ -15,6 +17,7 @@ if (isset($_SESSION['user'])) {
 
 // Registration logic
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Retrieve and sanitize user input
     $firstName = trim($_POST['first_name']);
     $lastName = trim($_POST['last_name']);
     $username = trim($_POST['username']);
@@ -23,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Validate empty fields
     if (empty($firstName) || empty($lastName) || empty($username) || empty($email) || empty($password)) {
-        $error = "Please fill in all fields.";
+        $error = "Please fill in all fields."; // Error message for empty fields
     } else {
         // Get the database connection
         $db = (new Database())->getConnection();
@@ -31,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Check if the username is already taken
         if (!$user->isUsernameAvailable($username)) {
-            $error = "The username is already taken. Please choose another one.";
+            $error = "The username is already taken. Please choose another one."; // Error message for taken username
         } else {
             // Hash the password before storing it in the database
             $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
@@ -53,13 +56,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit();
             } else {
                 // Registration failed
-                $error = "This email is already registered.";
+                $error = "This email is already registered."; // Error message for already registered email
             }
         }
     }
 }
 ?>
 
+<!-- Include external CSS and JavaScript files -->
 <link rel="stylesheet" href="../assets/css/style.css">
 <script src="../assets/js/script.js" defer></script>
 <?php include '../includes/header.php'; ?>
@@ -105,6 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </main>
 
 <script>
+    // Client-side validation for the registration form
     document.querySelector("form").addEventListener("submit", function (e) {
         const fields = ["first_name", "last_name", "username", "email", "password"];
         let valid = true;
@@ -113,12 +118,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             const input = document.getElementById(field);
             if (!input.value.trim()) {
                 valid = false;
-                alert(`${field.replace("_", " ")} is required.`);
+                alert(`${field.replace("_", " ")} is required.`); // Alert for missing fields
             }
         });
 
-        if (!valid) e.preventDefault();
+        if (!valid) e.preventDefault(); // Prevent form submission if validation fails
     });
 </script>
 
+<!-- Include the footer -->
 <?php include '../includes/footer.php'; ?>
