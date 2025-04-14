@@ -2,9 +2,6 @@
 // Include the header file for consistent page layout
 include '../includes/header.php';
 
-// Include the configuration file for database connection
-require_once '../config/config.php';
-
 // Start the session to manage user authentication
 session_start();
 

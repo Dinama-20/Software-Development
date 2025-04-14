@@ -12,6 +12,11 @@ if (!isset($_SESSION['user'])) {
     die('User is not logged in. Please log in to proceed.');
 }
 
+// Check if the user email is set
+if (!isset($_SESSION['user']['email'])) {
+    die('User email is not set. Please log in again.');
+}
+
 // Retrieve cart and user data from the session
 $cart = $_SESSION['cart'];
 $user = $_SESSION['user'];
@@ -44,7 +49,4 @@ unset($_SESSION['cart']);
 
 // Output the PDF to the browser
 $pdf->Output();
-
-// Redirect to the cart page after generating the PDF
-echo '<script>window.location.href = "cart.php";</script>';
-exit;
+exit; // Ensure no further output after the PDF
