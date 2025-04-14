@@ -6,7 +6,7 @@ function login(event) {
     if (user && user.email === email) {
         alert("Login successful");
         localStorage.setItem("isLoggedIn", "true");
-        window.location.href = "index.html";
+        window.location.href = "index.php";
     } else {
         alert("Invalid email or user not registered");
     }
@@ -30,7 +30,7 @@ function registerUser(event) {
     localStorage.setItem("isLoggedIn", "true");
 
     alert("User registered successfully");
-    window.location.href = "index.html";
+    window.location.href = "index.php";
 }
 
 function addToCart(productName, price) {
@@ -52,64 +52,67 @@ function addToCart(productName, price) {
 
 function displayCart() {
     const cartContainer = document.getElementById('cart-container');
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    if (!cartContainer) return;
 
-    cartContainer.innerHTML = cart.length
-        ? ""
-        : "<p>Your cart is empty</p>";
+    fetch("get_cart.php")
+        .then(response => response.json())
+        .then(cart => {
+            cartContainer.innerHTML = cart.length ? "" : "<p>Your cart is empty</p>";
+            let totalPrice = 0;
 
-    let totalPrice = 0;
+            cart.forEach((product, index) => {
+                const productElement = document.createElement('div');
+                productElement.classList.add('cart-product');
+                productElement.innerHTML = `
+                    <p><strong>${product.name}</strong></p>
+                    <p>Price: $${product.price.toFixed(2)}</p>
+                    <button class="custom-btn" onclick="removeFromCart(${index})">Remove</button>
+                `;
+                cartContainer.appendChild(productElement);
+                totalPrice += parseFloat(product.price);
+            });
 
-    cart.forEach(product => {
-        const productElement = document.createElement('div');
-        productElement.classList.add('cart-product');
-        productElement.innerHTML = `
-            <p><strong>${product.name}</strong></p>
-            <p>Price: $${product.price.toFixed(2)}</p>
-            <button class="custom-btn" onclick="removeFromCart(${product.id})">Remove</button>
-        `;
-        cartContainer.appendChild(productElement);
-        totalPrice += product.price;
-    });
-
-    if (cart.length > 0) {
-        const totalElement = document.createElement('div');
-        totalElement.classList.add('cart-total');
-        totalElement.innerHTML = `<p>Total: $${totalPrice.toFixed(2)}</p>`;
-        cartContainer.appendChild(totalElement);
-    }
+            if (cart.length > 0) {
+                const totalElement = document.createElement('div');
+                totalElement.classList.add('cart-total');
+                totalElement.innerHTML = `<p>Total: $${totalPrice.toFixed(2)}</p>`;
+                cartContainer.appendChild(totalElement);
+            }
+        });
 }
 
-function removeFromCart(productId) {
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    cart = cart.filter(product => product.id !== productId);
-    localStorage.setItem('cart', JSON.stringify(cart));
-    displayCart();
+function removeFromCart(index) {
+    fetch(`remove_from_cart.php?index=${index}`)
+        .then(() => displayCart())
+        .catch(error => console.error("Error removing item:", error));
 }
 
 function clearCart() {
-    localStorage.removeItem('cart');
-    displayCart();
-    alert("Cart cleared");
+    fetch("clear_cart.php")
+        .then(() => {
+            displayCart();
+            alert("Cart cleared");
+        })
+        .catch(error => console.error("Error clearing cart:", error));
 }
 
 function checkout() {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-    if (cart.length === 0) {
-        alert("Your cart is empty. Add products before checking out.");
-        return;
-    }
-
-    generarPDF();
-    clearCart();
-    alert("Checkout completed successfully! Your order details have been saved as a PDF.");
+    fetch("get_cart.php")
+        .then(response => response.json())
+        .then(cart => {
+            if (cart.length === 0) {
+                alert("Your cart is empty. Add products before checking out.");
+                return;
+            }
+            generarPDF(cart);
+            clearCart();
+            alert("Checkout completed successfully! Your order details have been saved as a PDF.");
+        });
 }
 
-function generarPDF() {
+function generarPDF(cart) {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
     const total = cart.reduce((sum, item) => sum + item.price, 0);
     const fechaHora = new Date().toLocaleString();
 
@@ -133,24 +136,32 @@ function verifyLogin() {
     const user = JSON.parse(localStorage.getItem("user"));
     const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
 
-    console.log(user, isLoggedIn);  // Agrega este console.log para verificar
-
     if (user && isLoggedIn) {
-        // Ocultar botones de login y register
-        document.getElementById("login-btn").style.display = "none";
-        document.getElementById("register-btn").style.display = "none";
+        const loginBtn = document.getElementById("login-btn");
+        const registerBtn = document.getElementById("register-btn");
+        if (loginBtn) loginBtn.style.display = "none";
+        if (registerBtn) registerBtn.style.display = "none";
 
-        // Mostrar el menú de usuario
         const userMenu = document.getElementById("user-menu");
-        const usernameBtn = document.createElement("button");
-        usernameBtn.textContent = user.name;
-        usernameBtn.onclick = showUserMenu;
-        userMenu.appendChild(usernameBtn);
+        if (userMenu && !document.getElementById("user-menu-btn")) {
+            const usernameBtn = document.createElement("button");
+            usernameBtn.id = "user-menu-btn";
+            usernameBtn.textContent = user.name;
+            usernameBtn.onclick = showUserMenu;
+            userMenu.appendChild(usernameBtn);
+        }
     }
 }
 
 function showUserMenu() {
+    const existing = document.getElementById("user-dropdown");
+    if (existing) {
+        existing.remove();
+        return;
+    }
+
     const menu = document.createElement("div");
+    menu.id = "user-dropdown";
     menu.style.position = "absolute";
     menu.style.top = "50px";
     menu.style.right = "20px";
@@ -179,26 +190,20 @@ function showUserMenu() {
 function logout() {
     localStorage.removeItem("user");
     localStorage.removeItem("isLoggedIn");
-    window.location.href = "index.html"; // Redirigir al index
+    window.location.href = "index.php";
 }
 
 window.onload = function () {
     verifyLogin();
     displayCart();
     initDarkMode();
+    loadProductsFromDB();
 };
 
 function toggleDarkMode() {
     document.body.classList.toggle('dark-mode');
     localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
 }
-
-window.addEventListener('DOMContentLoaded', () => {
-    if (localStorage.getItem('darkMode') === 'true') {
-        document.body.classList.add('dark-mode');
-    }
-});
-
 
 function initDarkMode() {
     if (localStorage.getItem("darkMode") === "true") {
@@ -239,17 +244,14 @@ function applyFilters() {
     const category = document.getElementById("filterCategory").value;
     const sortOrder = document.getElementById("sortPrice").value;
 
-    // Search
     if (searchTerm) {
         products = products.filter(p => p.name.toLowerCase().includes(searchTerm));
     }
 
-    // Filter
     if (category) {
         products = products.filter(p => p.category.toLowerCase() === category.toLowerCase());
     }
 
-    // Sort
     if (sortOrder === "asc") {
         products.sort((a, b) => a.price - b.price);
     } else if (sortOrder === "desc") {
@@ -278,4 +280,8 @@ function displayProducts(products) {
         `;
         productsContainer.appendChild(productDiv);
     });
+}
+
+function showModal(imageUrl) {
+    // Opcional: modal de producto
 }

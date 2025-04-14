@@ -20,44 +20,54 @@ session_start();
             {name: 'Junior Dreng', price: 49.90, category: 'junior', image: 'assets/images/duward-watch7.png', details: 'assets/images/characteristics7.png'}
         ];
 
-        // Function to show the modal with product details
         function showModal(imageSrc) {
             document.getElementById("modalImage").src = imageSrc;
             document.getElementById("modalOverlay").style.display = "flex";
         }
 
-        // Function to close the modal
         function closeModal() {
             document.getElementById("modalOverlay").style.display = "none";
         }
 
-        // Function to add product to the cart
+        // ✅ CORREGIDA: Añadir producto al carrito usando fetch y add_to_cart.php
         function addToCart(productName, price) {
-            alert(`${productName} added to cart! Price: ${price}€`);
+            fetch('add_to_cart.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `name=${encodeURIComponent(productName)}&price=${encodeURIComponent(price)}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    alert(`${productName} added to cart!`);
+                } else {
+                    alert('Error adding product to cart.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
         }
 
-        // Function to apply filters to the product list
         function applyFilters() {
             const searchInput = document.getElementById('searchInput').value.toLowerCase();
             const selectedCategory = document.getElementById('filterCategory').value;
             const selectedPriceSort = document.getElementById('sortPrice').value;
 
-            // Filter products based on the criteria
             let filteredProducts = products.filter(product => {
                 const matchesSearch = product.name.toLowerCase().includes(searchInput);
                 const matchesCategory = selectedCategory ? product.category === selectedCategory : true;
-
                 return matchesSearch && matchesCategory;
             });
 
-            // Sort products by price
             if (selectedPriceSort === 'asc') {
                 filteredProducts.sort((a, b) => a.price - b.price);
             } else if (selectedPriceSort === 'desc') {
                 filteredProducts.sort((a, b) => b.price - a.price);
             }
 
-            // Display the filtered products
             const productsContainer = document.getElementById('products');
             productsContainer.innerHTML = '<h1>Available Products</h1>';
 
@@ -73,6 +83,9 @@ session_start();
                 productsContainer.appendChild(productElement);
             });
         }
+
+        // ✅ Ejecutar filtros al cargar la página
+        window.onload = applyFilters;
     </script>
 </head>
 <body>
@@ -80,18 +93,15 @@ session_start();
 
 <main id="content">
     <?php if (isset($_SESSION['user'])): ?>
-        <!-- If the user is logged in, show their username -->
         <p class="welcome-message">
             Welcome back, <?= htmlspecialchars($_SESSION['user']['username']); ?>!
         </p>
     <?php else: ?>
-        <!-- If the user is not logged in, show the login prompt -->
         <p class="welcome-message">
             Welcome to Oñate Watch and Jewelry! Please <a href="login.php">log in</a> to access your account.
         </p>
     <?php endif; ?>
 
-    <!-- Filters and products section -->
     <section id="product-controls">
         <input type="text" id="searchInput" placeholder="Search products by name">
         <select id="filterCategory">
@@ -110,7 +120,7 @@ session_start();
 
     <section id="products">
         <h1>Available Products</h1>
-        <!-- Products will show here after filter applications -->
+        
     </section>
 </main>
 
