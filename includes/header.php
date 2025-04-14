@@ -30,7 +30,7 @@ if (session_status() === PHP_SESSION_NONE) {
                 <a href="index.php">Home</a>
                 <a href="cart.php">Cart</a>
                 <a href="reparations.php">Repairs</a>
-                <button id="dark-mode-toggle" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+                <button id="dark-mode-toggle" onclick="toggleDarkMode()">Dark Mode</button>
             </div>
         </div>
     </nav>

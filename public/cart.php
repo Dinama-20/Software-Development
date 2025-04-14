@@ -47,21 +47,21 @@ session_start();
         }
 
         function checkout() {
-            // Implement checkout functionality here
-            alert('Proceeding to checkout...');
+            fetch('generate_pdf.php')
+                .then(() => {
+                    alert('Order completed! A PDF has been generated.');
+                    location.reload();
+                })
+                .catch(error => console.error('Error during checkout:', error));
         }
 
         function clearCart() {
             fetch('clear_cart.php', { method: 'POST' })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        location.reload(); // Recarga la página para actualizar el carrito
-                    } else {
-                        alert('Failed to clear cart.');
-                    }
+                .then(() => {
+                    alert('Cart cleared!');
+                    location.reload();
                 })
-                .catch(error => console.error('Error:', error));
+                .catch(error => console.error('Error clearing cart:', error));
         }
     </script>
 </main>

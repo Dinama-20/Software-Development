@@ -224,6 +224,12 @@ function toggleDarkMode() {
     body.classList.toggle('dark-mode');
     const isDarkMode = body.classList.contains('dark-mode');
     localStorage.setItem('darkMode', isDarkMode);
+
+    // Actualiza el texto del botón
+    const darkModeButton = document.getElementById('dark-mode-toggle');
+    if (darkModeButton) {
+        darkModeButton.textContent = isDarkMode ? 'Normal Mode' : 'Dark Mode';
+    }
 }
 
 // Initialize dark mode based on saved preference
@@ -231,6 +237,12 @@ function initDarkMode() {
     const isDarkMode = localStorage.getItem('darkMode') === 'true';
     if (isDarkMode) {
         document.body.classList.add('dark-mode');
+    }
+
+    // Configura el texto inicial del botón
+    const darkModeButton = document.getElementById('dark-mode-toggle');
+    if (darkModeButton) {
+        darkModeButton.textContent = isDarkMode ? 'Normal Mode' : 'Dark Mode';
     }
 }
 
