@@ -81,7 +81,7 @@ session_start();
 
             let filteredProducts = products.filter(product => {
                 const matchesSearch = product.name.toLowerCase().includes(searchInput);
-                const matchesCategory = selectedCategory ? product.category === selectedCategory : true;
+                const matchesCategory = selectedCategory ? product.category === selectedCategory : true; // Ensure exact match for category
                 return matchesSearch && matchesCategory;
             });
 
