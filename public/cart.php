@@ -15,11 +15,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             unset($_SESSION['cart'][$productId]);
             header('Location: cart.php');
             exit;
-        } elseif ($_POST['action'] === 'buy') {
-            // Aquí se generaría el PDF (puedes usar una librería como FPDF o TCPDF)
-            // Por simplicidad, solo redirigimos a una página de confirmación
-            header('Location: confirmation.php');
-            exit;
         }
     }
 }
@@ -54,12 +49,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php endforeach; ?>
             </tbody>
         </table>
-        <form method="POST">
-            <input type="hidden" name="action" value="clear_cart">
+        <form method="POST" action="clear_cart.php">
             <button type="submit">Clear Cart</button>
         </form>
-        <form method="POST">
-            <input type="hidden" name="action" value="buy">
+        <form method="GET" action="generate_pdf.php">
             <button type="submit">Buy</button>
         </form>
     <?php endif; ?>

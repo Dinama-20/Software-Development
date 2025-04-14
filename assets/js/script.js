@@ -360,7 +360,7 @@ if (window.location.pathname.includes('cart.php')) {
 
 document.addEventListener('DOMContentLoaded', () => {
     const clearCartButton = document.querySelector('button[type="submit"][value="clear_cart"]');
-    const buyButton = document.querySelector('button[type="submit"][value="buy"]');
+    const buyButton = document.querySelector('form[action="generate_pdf.php"] button');
 
     if (clearCartButton) {
         clearCartButton.addEventListener('click', (e) => {
@@ -371,9 +371,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (buyButton) {
-        buyButton.addEventListener('click', (e) => {
-            e.preventDefault(); // Evita el envío del formulario
-            window.location.href = 'generate_pdf.php'; // Redirige a la generación del PDF
+        buyButton.addEventListener('click', () => {
+            alert('Your purchase is being processed. A PDF will be generated.');
         });
     }
 });
