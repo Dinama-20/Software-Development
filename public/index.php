@@ -12,14 +12,14 @@ session_start();
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="../assets/js/script.js" defer></script> <!-- Asegúrate de incluir el script correctamente -->
     <script>
-        const products = [
-            { name: 'Aquarius Nurburgring', price: 240, category: 'smartwatch', image: 'assets/images/duward-watch1.png', detailsImage: 'assets/images/characteristics1.png' },
-            { name: 'Aquastar Race', price: 189, category: 'smartwatch', image: 'assets/images/duward-watch2.png', detailsImage: 'assets/images/characteristics2.png' },
-            { name: 'Smartwatch Style', price: 98.90, category: 'smartwatch', image: 'assets/images/duward-watch3.png', detailsImage: 'assets/images/characteristics3.png' },
-            { name: 'Lady Woman', price: 89, category: 'woman', image: 'assets/images/duward-watch4.png', detailsImage: 'assets/images/characteristics4.png' },
-            { name: 'Lady Babaye', price: 95, category: 'woman', image: 'assets/images/duward-watch5.png', detailsImage: 'assets/images/characteristics5.png' },
-            { name: 'Junior Divka', price: 39.90, category: 'junior', image: 'assets/images/duward-watch6.png', detailsImage: 'assets/images/characteristics6.png' },
-            { name: 'Junior Dreng', price: 49.90, category: 'junior', image: 'assets/images/duward-watch7.png', detailsImage: 'assets/images/characteristics7.png' }
+        let products = [
+            { name: 'Aquarius Nurburgring', price: 240, category: 'smartwatch', image: '../assets/images/duward-watch1.png', detailsImage: '../assets/images/characteristics1.png' },
+            { name: 'Aquastar Race', price: 189, category: 'smartwatch', image: '../assets/images/duward-watch2.png', detailsImage: '../assets/images/characteristics2.png' },
+            { name: 'Smartwatch Style', price: 98.90, category: 'smartwatch', image: '../assets/images/duward-watch3.png', detailsImage: '../assets/images/characteristics3.png' },
+            { name: 'Lady Woman', price: 89, category: 'woman', image: '../assets/images/duward-watch4.png', detailsImage: '../assets/images/characteristics4.png' },
+            { name: 'Lady Babaye', price: 95, category: 'woman', image: '../assets/images/duward-watch5.png', detailsImage: '../assets/images/characteristics5.png' },
+            { name: 'Junior Divka', price: 39.90, category: 'junior', image: '../assets/images/duward-watch6.png', detailsImage: '../assets/images/characteristics6.png' },
+            { name: 'Junior Dreng', price: 49.90, category: 'junior', image: '../assets/images/duward-watch7.png', detailsImage: '../assets/images/characteristics7.png' }
         ];
 
         function showModal(detailsImage) {
