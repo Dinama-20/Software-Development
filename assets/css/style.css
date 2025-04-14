@@ -178,6 +178,11 @@ main {
 
 #cart-container {
     margin-top: 2rem;
+    color: black; /* Texto visible en modo claro */
+}
+
+body.dark-mode #cart-container {
+    color: white; /* Texto visible en modo oscuro */
 }
 
 .cart-product {
