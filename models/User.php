@@ -1,7 +1,7 @@
 <?php
 namespace Models;
 
-require_once 'database.php';
+require_once 'Database.php';
 
 class User {
     private $conn;
