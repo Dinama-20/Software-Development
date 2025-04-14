@@ -100,6 +100,7 @@ function checkout() {
     console.log("Checkout process started..."); // Depuración
     fetch("get_cart.php")
         .then(response => {
+            console.log("Fetching cart data..."); // Depuración
             if (!response.ok) {
                 throw new Error("Failed to fetch cart data");
             }
