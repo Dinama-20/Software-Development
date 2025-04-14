@@ -2,59 +2,88 @@
 namespace Models;
 
 use PDO;
-use PDOException;
 
 class User {
     private $conn;
+    private $table = 'users';
 
+    // Constructor to initialize the database connection
     public function __construct($db) {
         $this->conn = $db;
     }
 
+    // Method to register a new user
     public function register($data) {
-        try {
-            // Verificar si ya existe un usuario con ese correo electrónico
-            $stmt = $this->conn->prepare("SELECT id FROM users WHERE email = ?");
-            $stmt->execute([$data['email']]);
+        $query = "INSERT INTO {$this->table} (first_name, last_name, username, email, password, created_at)
+                  VALUES (:first_name, :last_name, :username, :email, :password, NOW())";
 
-            if ($stmt->rowCount() > 0) {
-                return false; // Ya existe
-            }
+        $stmt = $this->conn->prepare($query);
 
-            // Insertar nuevo usuario
-            $stmt = $this->conn->prepare("
-                INSERT INTO users (first_name, last_name, username, email, password, created_at) 
-                VALUES (?, ?, ?, ?, ?, NOW())
-            ");
+        // Bind the data to the statement
+        $stmt->bindParam(':first_name', $data['first_name']);
+        $stmt->bindParam(':last_name', $data['last_name']);
+        $stmt->bindParam(':username', $data['username']);
+        $stmt->bindParam(':email', $data['email']);
+        $stmt->bindParam(':password', $data['password']);
 
-            return $stmt->execute([
-                $data['first_name'],
-                $data['last_name'],
-                $data['username'],
-                $data['email'],
-                $data['password']
-            ]);
-        } catch (PDOException $e) {
-            // Opcional: log del error
-            error_log($e->getMessage());
-            return false;
+        // Execute the statement and return true if successful, false otherwise
+        if ($stmt->execute()) {
+            return true;
         }
+
+        return false;
     }
 
-    public function login($email, $password) {
-        try {
-            $stmt = $this->conn->prepare("SELECT * FROM users WHERE email = ?");
-            $stmt->execute([$email]);
+    // Method to check if the username already exists in the database
+    public function isUsernameAvailable($username) {
+        $query = "SELECT id FROM {$this->table} WHERE username = :username";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':username', $username);
+        $stmt->execute();
+
+        // If there is a result, the username already exists
+        if ($stmt->rowCount() > 0) {
+            return false;  // Username is taken
+        }
+
+        return true;  // Username is available
+    }
+
+    // Method to check if the email already exists in the database
+    public function isEmailAvailable($email) {
+        $query = "SELECT id FROM {$this->table} WHERE email = :email";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+
+        // If there is a result, the email already exists
+        if ($stmt->rowCount() > 0) {
+            return false;  // Email is taken
+        }
+
+        return true;  // Email is available
+    }
+
+    // Method to authenticate the user during login
+    public function authenticate($username, $password) {
+        $query = "SELECT id, username, password FROM {$this->table} WHERE username = :username";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':username', $username);
+        $stmt->execute();
+
+        // If the user exists, check if the password matches
+        if ($stmt->rowCount() > 0) {
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if ($user && password_verify($password, $user['password'])) {
-                return $user;
+            // Verify password
+            if (password_verify($password, $user['password'])) {
+                return $user;  // User is authenticated
             }
-
-            return false;
-        } catch (PDOException $e) {
-            error_log($e->getMessage());
-            return false;
         }
+
+        return false;  // Authentication failed
     }
 }
