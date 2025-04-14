@@ -1,8 +1,6 @@
 <?php
 session_start();
-require_once '../vendor/autoload.php'; // Asegúrate de tener instalada la biblioteca FPDF
-
-use FPDF\FPDF;
+require_once '../vendor/fpdf/fpdf.php'; // Asegúrate de que esta ruta sea correcta
 
 if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
     echo "<script>alert('Your cart is empty.'); window.location.href = 'cart.php';</script>";
