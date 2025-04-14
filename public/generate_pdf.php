@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once '../vendor/setasign/fpdf/fpdf.php'; // Asegúrate de que esta ruta sea correcta
+require_once __DIR__ . '/../vendor/setasign/fpdf/fpdf.php'; // Asegúrate de que esta ruta sea correcta
 
 if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
     header("Location: cart.php");
