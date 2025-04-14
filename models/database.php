@@ -5,12 +5,14 @@ use PDO;
 use PDOException;
 
 class Database {
+    // Database connection details
     private $host = 'localhost';
     private $db_name = 'onate_store';
     private $username = 'root';
     private $password = '';
     private $conn;
 
+    // Method to establish and return a database connection
     public function getConnection() {
         // If there is no existing connection, create one
         if ($this->conn === null) {

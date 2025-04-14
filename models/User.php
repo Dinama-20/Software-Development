@@ -12,94 +12,56 @@ class User {
         $this->conn = $db;
     }
 
-    // Method to register a new user
+    // Registers a new user in the database
     public function register($data) {
         $query = "INSERT INTO {$this->table} (first_name, last_name, username, email, password, created_at)
                   VALUES (:first_name, :last_name, :username, :email, :password, NOW())";
-
         $stmt = $this->conn->prepare($query);
-
         // Bind the data to the statement
         $stmt->bindParam(':first_name', $data['first_name']);
         $stmt->bindParam(':last_name', $data['last_name']);
         $stmt->bindParam(':username', $data['username']);
         $stmt->bindParam(':email', $data['email']);
         $stmt->bindParam(':password', $data['password']);
-
         // Execute the statement and return true if successful, false otherwise
-        if ($stmt->execute()) {
-            return true;
-        }
-
-        return false;
+        return $stmt->execute();
     }
 
-    // Method to check if the username already exists in the database
+    // Checks if a username is available
     public function isUsernameAvailable($username) {
         $query = "SELECT id FROM {$this->table} WHERE username = :username";
-
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':username', $username);
         $stmt->execute();
-
-        // If there is a result, the username already exists
-        if ($stmt->rowCount() > 0) {
-            return false;  // Username is taken
-        }
-
-        return true;  // Username is available
+        return $stmt->rowCount() === 0; // Returns true if no rows are found
     }
 
-    // Method to check if the email already exists in the database
+    // Checks if an email is available
     public function isEmailAvailable($email) {
         $query = "SELECT id FROM {$this->table} WHERE email = :email";
-
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':email', $email);
         $stmt->execute();
-
-        // If there is a result, the email already exists
-        if ($stmt->rowCount() > 0) {
-            return false;  // Email is taken
-        }
-
-        return true;  // Email is available
+        return $stmt->rowCount() === 0; // Returns true if no rows are found
     }
 
-    // Method to authenticate the user during login
+    // Authenticates a user during login
     public function authenticate($username, $password) {
-        // Prepare query to get user details based on username
         $query = "SELECT id, username, password, first_name, last_name FROM {$this->table} WHERE username = :username";
-        
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':username', $username);
         $stmt->execute();
-        
-        // If the user exists, check if the password matches
         if ($stmt->rowCount() > 0) {
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
-            
-            // Debugging: Output the fetched user data to check if username is correct
-            error_log("Fetched user: " . print_r($user, true));
-            
-            // Verify the password with the stored hashed password
+            // Verifies the password with the stored hash
             if (password_verify($password, $user['password'])) {
-                // Debugging: If password verification is successful, log this
-                error_log("Password is correct. User authenticated.");
-                return $user; // Authentication successful
-            } else {
-                // Debugging: If password verification fails
-                error_log("Password mismatch for username: $username");
+                return $user; // Returns user data if authentication is successful
             }
-        } else {
-            // Debugging: If the username does not exist
-            error_log("No user found with username: $username");
         }
-        
-        return false; // Authentication failed
+        return false; // Returns false if authentication fails
     }
 
-    // Method to update user details
+    // Updates user details in the database
     public function updateUser($id, $username, $email, $password) {
         $query = "UPDATE {$this->table} SET username = :username, email = :email, password = :password WHERE id = :id";
         $stmt = $this->conn->prepare($query);
@@ -110,7 +72,7 @@ class User {
         return $stmt->execute();
     }
 
-    // Method to check if the email is taken by another user
+    // Checks if an email is taken by another user
     public function isEmailTaken($email, $userId) {
         $query = "SELECT id FROM {$this->table} WHERE email = :email AND id != :id";
         $stmt = $this->conn->prepare($query);
@@ -120,7 +82,7 @@ class User {
         return $stmt->rowCount() > 0;
     }
 
-    // Method to check if the username is taken by another user
+    // Checks if a username is taken by another user
     public function isUsernameTaken($username, $userId) {
         $query = "SELECT id FROM {$this->table} WHERE username = :username AND id != :id";
         $stmt = $this->conn->prepare($query);
