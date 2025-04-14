@@ -18,19 +18,19 @@ $pdf->AddPage();
 
 // Configura la fuente predeterminada de FPDF (Arial)
 $pdf->SetFont('Arial', 'B', 16);
-$pdf->Cell(40, 10, 'Order Details');
+$pdf->Cell(40, 10, utf8_decode('Order Details')); // Convierte a ISO-8859-1
 $pdf->Ln(10);
 
 $pdf->SetFont('Arial', '', 12);
 foreach ($cart as $item) {
-    $priceWithSymbol = number_format($item['price'], 2) . '€'; // Formatea el precio con el símbolo €
-    $pdf->Cell(0, 10, "Product: {$item['name']} - Price: {$priceWithSymbol}", 0, 1);
+    $priceWithSymbol = number_format($item['price'], 2) . utf8_decode('€'); // Convierte el símbolo €
+    $pdf->Cell(0, 10, utf8_decode("Product: {$item['name']} - Price: {$priceWithSymbol}"), 0, 1); // Convierte a ISO-8859-1
 }
 
 $pdf->Ln(10);
-$totalWithSymbol = number_format($total, 2) . '€'; // Formatea el total con el símbolo €
-$pdf->Cell(0, 10, "Total: {$totalWithSymbol}", 0, 1);
-$pdf->Cell(0, 10, "Date and Time: " . date('Y-m-d H:i:s'), 0, 1);
+$totalWithSymbol = number_format($total, 2) . utf8_decode('€'); // Convierte el símbolo €
+$pdf->Cell(0, 10, utf8_decode("Total: {$totalWithSymbol}"), 0, 1);
+$pdf->Cell(0, 10, utf8_decode("Date and Time: " . date('Y-m-d H:i:s')), 0, 1);
 
 // Vacía el carrito después de generar el PDF
 unset($_SESSION['cart']);
