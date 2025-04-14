@@ -9,7 +9,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $user_id = $_SESSION['user_id'];
-$query = "SELECT * FROM reparations WHERE user_id = ?";
+$query = "SELECT * FROM repairs WHERE user_id = ?";
 $stmt = $db->prepare($query);
 $stmt->bind_param('i', $user_id);
 $stmt->execute();
