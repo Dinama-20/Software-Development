@@ -372,7 +372,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (buyButton) {
         buyButton.addEventListener('click', (e) => {
-            alert('Your purchase is being processed. A PDF will be generated.');
+            e.preventDefault(); // Evita el envío del formulario
+            window.location.href = 'generate_pdf.php'; // Redirige a la generación del PDF
         });
     }
 });
