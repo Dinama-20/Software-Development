@@ -34,6 +34,6 @@ session_start();
 </main>
 
 <?php include '../includes/footer.php'; ?>
-<script src="../assets/js/cart.js" defer></script>
+<script src="../assets/js/cart-actions.js" defer></script>
 </body>
 </html>
