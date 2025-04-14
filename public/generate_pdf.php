@@ -16,10 +16,7 @@ $total = array_reduce($cart, function ($sum, $item) {
 $pdf = new FPDF();
 $pdf->AddPage();
 
-// Configura la fuente para soportar el símbolo €
-$pdf->SetFont('Arial', '', 12);
-$pdf->AddFont('Arial', '', 'arial.php'); // Asegúrate de que la fuente Arial esté disponible
-
+// Configura la fuente predeterminada de FPDF (Arial)
 $pdf->SetFont('Arial', 'B', 16);
 $pdf->Cell(40, 10, 'Order Details');
 $pdf->Ln(10);
