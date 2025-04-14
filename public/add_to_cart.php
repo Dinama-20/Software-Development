@@ -12,7 +12,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['cart'] = [];
         }
 
-        $_SESSION['cart'][] = $product;
+        // Check if the product already exists in the cart
+        $found = false;
+        foreach ($_SESSION['cart'] as &$cartItem) {
+            if ($cartItem['name'] === $product['name']) {
+                $cartItem['quantity']++;
+                $found = true;
+                break;
+            }
+        }
+
+        // If the product is not found, add it as a new item
+        if (!$found) {
+            $product['quantity'] = 1;
+            $_SESSION['cart'][] = $product;
+        }
 
         echo json_encode(['success' => true, 'message' => 'Product added to cart']);
         exit;

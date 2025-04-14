@@ -19,7 +19,8 @@ session_start();
             <ul>
                 <?php foreach ($_SESSION['cart'] as $index => $item): ?>
                     <li>
-                        <?= htmlspecialchars($item['name']) ?> - <?= number_format($item['price'], 2) ?> euros
+                        <?= htmlspecialchars($item['name']) ?> - <?= number_format($item['price'], 2) ?> euros 
+                        (<?= $item['quantity'] ?> x <?= number_format($item['price'] * $item['quantity'], 2) ?> euros)
                         <button class="remove-btn" onclick="removeFromCart(<?= $index ?>)">Remove</button>
                     </li>
                 <?php endforeach; ?>
