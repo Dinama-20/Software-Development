@@ -26,10 +26,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($authenticatedUser) {
         // Login was successful
         // Set session variables to store user information
-        $_SESSION['user_id'] = $authenticatedUser['id'];
-        $_SESSION['username'] = $authenticatedUser['username'];
-        $_SESSION['first_name'] = $authenticatedUser['first_name'];
-        $_SESSION['last_name'] = $authenticatedUser['last_name'];
+        $_SESSION['user'] = [
+            'id' => $authenticatedUser['id'],
+            'username' => $authenticatedUser['username'],
+            'first_name' => $authenticatedUser['first_name'],
+            'last_name' => $authenticatedUser['last_name']
+        ];
         
         // Redirect to the homepage (index.php) after successful login
         header("Location: index.php");
