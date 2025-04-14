@@ -13,7 +13,7 @@ if (session_status() === PHP_SESSION_NONE) {
         <div id="user-menu">
             <?php if (isset($_SESSION['user'])): ?>
                 <div class="dropdown">
-                    <button class="dropbtn">User Menu</button>
+                    <button class="dropbtn" onclick="toggleDropdown(event)">User Menu</button>
                     <div class="dropdown-content">
                         <a href="update_user.php">Update Profile</a>
                         <a href="logout.php">Log Out</a>

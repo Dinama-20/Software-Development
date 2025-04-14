@@ -109,5 +109,25 @@ class User {
         $stmt->bindParam(':id', $id);
         return $stmt->execute();
     }
+
+    // Method to check if the email is taken by another user
+    public function isEmailTaken($email, $userId) {
+        $query = "SELECT id FROM {$this->table} WHERE email = :email AND id != :id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':id', $userId);
+        $stmt->execute();
+        return $stmt->rowCount() > 0;
+    }
+
+    // Method to check if the username is taken by another user
+    public function isUsernameTaken($username, $userId) {
+        $query = "SELECT id FROM {$this->table} WHERE username = :username AND id != :id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(':id', $userId);
+        $stmt->execute();
+        return $stmt->rowCount() > 0;
+    }
 }
 ?>

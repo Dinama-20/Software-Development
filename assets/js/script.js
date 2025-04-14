@@ -336,19 +336,13 @@ function closeModal() {
     }
 }
 
-function toggleDropdown() {
-    const dropdown = document.querySelector('.dropdown');
+function toggleDropdown(event) {
+    event.stopPropagation();
+    const dropdown = event.target.closest('.dropdown');
     dropdown.classList.toggle('show');
 }
 
-window.onclick = function (event) {
-    if (!event.target.matches('.dropbtn')) {
-        const dropdowns = document.getElementsByClassName('dropdown-content');
-        for (let i = 0; i < dropdowns.length; i++) {
-            const openDropdown = dropdowns[i];
-            if (openDropdown.style.display === 'block') {
-                openDropdown.style.display = 'none';
-            }
-        }
-    }
+window.onclick = function () {
+    const dropdowns = document.querySelectorAll('.dropdown');
+    dropdowns.forEach(dropdown => dropdown.classList.remove('show'));
 };
