@@ -6,13 +6,13 @@ include '../includes/header.php';
 session_start();
 
 // Check if the user is logged in
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['user']['id'])) { // Updated to check the correct session structure
     header("Location: login.php"); // Redirect to login if not authenticated
     exit();
 }
 
 // Fetch repair orders associated with the logged-in user
-$user_id = $_SESSION['user_id']; // Get the logged-in user's ID
+$user_id = $_SESSION['user']['id']; // Updated to use the correct session key
 $query = "SELECT * FROM reparations WHERE user_id = ?"; // SQL query to fetch reparations
 $stmt = $db->prepare($query); // Prepare the SQL statement
 $stmt->bind_param('i', $user_id); // Bind the user ID parameter
