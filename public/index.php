@@ -76,7 +76,7 @@ session_start();
         // Function to apply filters based on search input, category, and price sorting
         function applyFilters() {
             const searchInput = document.getElementById('searchInput').value.toLowerCase();
-            const selectedCategory = document.getElementById('filterCategory').value;
+            const selectedCategory = document.getElementById('filterCategory').value.toLowerCase(); // Ensure lowercase comparison
             const selectedPriceSort = document.getElementById('sortPrice').value;
 
             let filteredProducts = products.filter(product => {
