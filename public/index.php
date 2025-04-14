@@ -27,7 +27,7 @@ session_start();
             const modalImage = document.getElementById("modalImage");
 
             if (modalOverlay && modalImage) {
-                modalImage.src = detailsImage; // Carga la imagen de las características
+                modalImage.src = detailsImage; // Usa directamente la ruta de la imagen
                 modalOverlay.style.display = "flex"; // Muestra el modal
             }
         }
@@ -90,7 +90,7 @@ session_start();
                 const productDiv = document.createElement("div");
                 productDiv.className = "product";
                 productDiv.innerHTML = `
-                    <img src="${product.image}" alt="${product.name}" class="product-image" onclick="showModal('assets/images/characteristics${product.image.match(/(\d+)\.png$/)[1]}.png')">
+                    <img src="${product.image}" alt="${product.name}" class="product-image" onclick="showModal('${product.detailsImage}')">
                     <h2>${product.name}</h2>
                     <p>Price: ${product.price}€</p>
                     <button class="add-to-cart-btn" onclick="addToCart('${product.name}', ${product.price})">Add to Cart</button>
