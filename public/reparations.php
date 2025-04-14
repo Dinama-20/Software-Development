@@ -1,64 +1,45 @@
 <?php
-// Include the header file for consistent page layout
 include '../includes/header.php';
-
-// Start the session only if it is not already active
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-// Include the configuration file to get the database connection
+session_start();
 require_once '../config/config.php';
 
-// Establish database connection
-use Models\Database;
-$db = (new Database())->getConnection();
-
-// Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php"); // Redirect to login if not authenticated
+    header("Location: login.php");
     exit();
 }
 
-// Fetch repair orders associated with the logged-in user
-$user_id = $_SESSION['user_id']; // Get the logged-in user's ID
-$query = "SELECT * FROM reparations WHERE user_id = ?"; // SQL query to fetch reparations
-$stmt = $db->prepare($query); // Prepare the SQL statement
-$stmt->bind_param('i', $user_id); // Bind the user ID parameter
-$stmt->execute(); // Execute the query
-$result = $stmt->get_result(); // Get the result of the query
+$user_id = $_SESSION['user_id'];
+$query = "SELECT * FROM reparations WHERE user_id = ?";
+$stmt = $db->prepare($query);
+$stmt->bind_param('i', $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
 
-// Handle form submission for repair requests
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $service = trim($_POST['service']); // Get the selected service type
-    $details = trim($_POST['details']); // Get additional details about the repair
-    $contact = trim($_POST['contact']); // Get contact information
-    $preferredDate = $_POST['preferred_date']; // Get the preferred date for the repair
+    $service = trim($_POST['service']);
+    $details = trim($_POST['details']);
+    $contact = trim($_POST['contact']);
+    $preferredDate = $_POST['preferred_date'];
 
-    // Insert the repair request into the database
     $query = "INSERT INTO repairs (service_type, details, contact_info, preferred_date) VALUES (?, ?, ?, ?)";
-    $stmt = $db->prepare($query); // Prepare the SQL statement
-    $stmt->bind_param('ssss', $service, $details, $contact, $preferredDate); // Bind parameters
+    $stmt = $db->prepare($query);
+    $stmt->bind_param('ssss', $service, $details, $contact, $preferredDate);
 
-    // Execute the query and check for success
     if ($stmt->execute()) {
-        $successMessage = "Your repair request has been submitted successfully!";
+        $successMessage = "¡Tu solicitud de reparación ha sido enviada con éxito!";
     } else {
-        $errorMessage = "Failed to submit your repair request. Please try again.";
+        $errorMessage = "No se pudo enviar tu solicitud de reparación. Por favor, inténtalo de nuevo.";
     }
 }
 ?>
 
-<!-- Include external CSS and JavaScript files -->
 <link rel="stylesheet" href="../assets/css/style.css">
 <script src="../assets/js/script.js" defer></script>
 
 <main>
-    <!-- Page heading -->
-    <h2>Repair Services</h2>
-    <p>Choose the type of repair service you need for your watch or jewelry:</p>
+    <h2>Servicios de Reparación</h2>
+    <p>Elige el tipo de servicio de reparación que necesitas para tu reloj o joyería:</p>
 
-    <!-- Display success or error messages -->
     <?php if (isset($successMessage)): ?>
         <div class="confirmation-message">
             <p><?= htmlspecialchars($successMessage) ?></p>
@@ -69,31 +50,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     <?php endif; ?>
 
-    <!-- Form for submitting repair requests -->
     <form action="reparations.php" method="POST" class="reparations-form">
         <div class="form-group">
-            <label for="service">Select Service</label>
+            <label for="service">Seleccionar Servicio</label>
             <select id="service" name="service" required>
-                <option value="watch-repair">Watch Repair</option>
-                <option value="jewelry-repair">Jewelry Repair</option>
-                <option value="battery-replacement">Battery Replacement</option>
+                <option value="watch-repair">Reparación de Reloj</option>
+                <option value="jewelry-repair">Reparación de Joyería</option>
+                <option value="battery-replacement">Cambio de Batería</option>
             </select>
         </div>
         <div class="form-group">
-            <label for="details">Additional Details</label>
-            <textarea id="details" name="details" rows="4" placeholder="Describe the issue..." required></textarea>
+            <label for="details">Detalles Adicionales</label>
+            <textarea id="details" name="details" rows="4" placeholder="Describe el problema..." required></textarea>
         </div>
         <div class="form-group">
-            <label for="contact">Contact Information</label>
-            <input type="text" id="contact" name="contact" placeholder="Enter your phone or email" required>
+            <label for="contact">Información de Contacto</label>
+            <input type="text" id="contact" name="contact" placeholder="Ingresa tu teléfono o correo" required>
         </div>
         <div class="form-group">
-            <label for="preferred_date">Preferred Date</label>
+            <label for="preferred_date">Fecha Preferida</label>
             <input type="date" id="preferred_date" name="preferred_date" required>
         </div>
-        <button type="submit">Request Repair</button>
+        <button type="submit">Solicitar Reparación</button>
     </form>
 </main>
 
-<!-- Include the footer file for consistent page layout -->
 <?php include '../includes/footer.php'; ?>
