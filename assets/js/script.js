@@ -358,3 +358,12 @@ window.onclick = function () {
     const dropdowns = document.querySelectorAll('.dropdown');
     dropdowns.forEach(dropdown => dropdown.classList.remove('show'));
 };
+
+// Verificar si estamos en la página del carrito y delegar la funcionalidad al archivo cart.js
+if (window.location.pathname.includes('cart.php')) {
+    console.log('Cart page detected. Delegating functionality to cart.js.');
+    // No duplicar funciones relacionadas con el carrito aquí
+} else {
+    // Funciones generales que no interfieren con el carrito
+    console.log('General page detected. Running script.js functionality.');
+}

@@ -24,9 +24,15 @@ document.addEventListener("DOMContentLoaded", () => {
     if (buyButton) {
         buyButton.addEventListener("click", () => {
             fetch("generate_pdf.php")
-                .then(() => {
-                    alert("Order completed! A PDF has been generated.");
-                    location.reload(); // Recargar la página después de la compra
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert("Order completed! A PDF has been generated.");
+                        window.open(data.pdfPath, '_blank'); // Abre el PDF en una nueva pestaña
+                        location.reload(); // Recargar la página después de la compra
+                    } else {
+                        alert(data.message || "Failed to complete the order.");
+                    }
                 })
                 .catch(error => console.error("Error during checkout:", error));
         });

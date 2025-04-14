@@ -3,7 +3,7 @@ session_start();
 require_once __DIR__ . '/../vendor/setasign/fpdf/fpdf.php'; // Verifica que esta ruta sea correcta
 
 if (!isset($_SESSION['cart']) || empty($_SESSION['cart'])) {
-    header("Location: cart.php"); // Redirige si el carrito está vacío
+    echo json_encode(['success' => false, 'message' => 'Cart is empty.']);
     exit;
 }
 
@@ -25,6 +25,8 @@ $pdf->Ln(10);
 $pdf->Cell(0, 10, "Total: " . number_format($total, 2) . " euros", 0, 1);
 $pdf->Cell(0, 10, "Date and Time: " . date('Y-m-d H:i:s'), 0, 1);
 
-unset($_SESSION['cart']); // Vacía el carrito después de generar el PDF
-$pdf->Output('D', 'order-details.pdf');
+$pdfFilePath = __DIR__ . '/order-details.pdf';
+$pdf->Output('F', $pdfFilePath); // Guarda el PDF en el servidor
+
+echo json_encode(['success' => true, 'pdfPath' => 'order-details.pdf']);
 exit;

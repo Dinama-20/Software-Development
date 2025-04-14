@@ -482,6 +482,52 @@ body.dark-mode button {
     display: block;
 }
 
+/* Botones generales */
+button {
+    padding: 0.5rem 1rem;
+    background-color: #8c0000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #a00000;
+}
+
+/* Botones específicos del carrito */
+#cart-actions button {
+    padding: 0.5rem 1rem;
+    background-color: #8c0000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+#cart-actions button:hover {
+    background-color: #a00000;
+}
+
+/* Unificar diseño de los botones de eliminar */
+.remove-btn {
+    padding: 0.5rem 1rem;
+    background-color: #8c0000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.remove-btn:hover {
+    background-color: #a00000;
+}
+
 /* User settings form styling */
 .user-settings-form {
     max-width: 400px;
