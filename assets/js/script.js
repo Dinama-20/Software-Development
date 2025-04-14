@@ -97,9 +97,16 @@ function clearCart() {
 
 // Checkout functionality to generate a PDF
 function checkout() {
+    console.log("Checkout process started..."); // Depuración
     fetch("get_cart.php")
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Failed to fetch cart data");
+            }
+            return response.json();
+        })
         .then(cart => {
+            console.log("Cart data fetched:", cart); // Depuración
             if (cart.length === 0) {
                 alert("Your cart is empty. Add products before checking out.");
                 return;
@@ -111,16 +118,24 @@ function checkout() {
             // Vacía el carrito después de la compra
             fetch("clear_cart.php", { method: "POST" })
                 .then(() => {
+                    console.log("Cart cleared successfully."); // Depuración
                     displayCart(); // Actualiza la vista del carrito
                     alert("Checkout completed successfully! Your order details have been saved as a PDF.");
                 })
-                .catch(error => console.error("Error clearing cart:", error));
+                .catch(error => {
+                    console.error("Error clearing cart:", error);
+                    alert("Failed to clear the cart. Please try again.");
+                });
         })
-        .catch(error => console.error("Error during checkout:", error));
+        .catch(error => {
+            console.error("Error during checkout:", error);
+            alert("Failed to complete the checkout process. Please try again.");
+        });
 }
 
 // Generate a PDF with order details
 function generarPDF(cart) {
+    console.log("Generating PDF..."); // Depuración
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
     const total = cart.reduce((sum, item) => sum + item.price, 0);
@@ -140,6 +155,7 @@ function generarPDF(cart) {
     doc.text(`Date and Time: ${fechaHora}`, 20, yOffset + 20);
 
     doc.save("order-details.pdf");
+    console.log("PDF generated successfully."); // Depuración
 }
 
 function verifyLogin() {
