@@ -1,10 +1,6 @@
 <?php include '../includes/header.php'; ?>
 <link rel="stylesheet" href="../assets/css/style.css">
 <script src="../assets/js/script.js" defer></script>
-<header>
-    <h1>Reparations</h1>
-    <button id="dark-mode-toggle" onclick="toggleDarkMode()">Toggle Dark Mode</button>
-</header>
 
 <main>
     <h2>Repair Services</h2>

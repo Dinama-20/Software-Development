@@ -1,14 +1,13 @@
 <?php
 session_start();
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>Tu Carrito</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-    <script src="assets/js/script.js" defer></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <script src="../assets/js/script.js" defer></script>
 </head>
 <body>
 <?php include '../includes/header.php'; ?>
@@ -19,7 +18,7 @@ session_start();
         <?php if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0): ?>
             <ul>
                 <?php foreach ($_SESSION['cart'] as $item): ?>
-                    <li><?= htmlspecialchars($item['name']) ?> - <?= number_format($item['price'], 2) ?>€</li>
+                    <li><?= htmlspecialchars($item['name']) ?> - <?= number_format($item['price'], 2) ?> euros</li>
                 <?php endforeach; ?>
             </ul>
         <?php else: ?>
@@ -30,12 +29,9 @@ session_start();
         <form method="post" action="clear_cart.php">
             <button type="submit" class="custom-btn">Clear Cart</button>
         </form>
-        <form method="post" action="generate_pdf.php"> <!-- Redirige al archivo PHP -->
-            <button type="submit" class="custom-btn">Buy</button>
-        </form>
+        <button class="custom-btn" onclick="checkout()">Buy</button>
     </div>
 </main>
-
 
 <?php include '../includes/footer.php'; ?>
 </body>
