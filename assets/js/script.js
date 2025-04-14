@@ -104,9 +104,17 @@ function checkout() {
                 alert("Your cart is empty. Add products before checking out.");
                 return;
             }
-            generarPDF(cart); // Genera el PDF con los detalles del pedido
-            clearCart(); // Vacía el carrito después de la compra
-            alert("Checkout completed successfully! Your order details have been saved as a PDF.");
+
+            // Genera el PDF con los detalles del pedido
+            generarPDF(cart);
+
+            // Vacía el carrito después de la compra
+            fetch("clear_cart.php", { method: "POST" })
+                .then(() => {
+                    displayCart(); // Actualiza la vista del carrito
+                    alert("Checkout completed successfully! Your order details have been saved as a PDF.");
+                })
+                .catch(error => console.error("Error clearing cart:", error));
         })
         .catch(error => console.error("Error during checkout:", error));
 }
@@ -124,11 +132,11 @@ function generarPDF(cart) {
     doc.setFontSize(12);
     let yOffset = 30;
     cart.forEach(product => {
-        doc.text(`Product: ${product.name} - Price: $${product.price.toFixed(2)}`, 20, yOffset);
+        doc.text(`Product: ${product.name} - Price: €${product.price.toFixed(2)}`, 20, yOffset);
         yOffset += 10;
     });
 
-    doc.text(`Total: $${total.toFixed(2)}`, 20, yOffset + 10);
+    doc.text(`Total: €${total.toFixed(2)}`, 20, yOffset + 10);
     doc.text(`Date and Time: ${fechaHora}`, 20, yOffset + 20);
 
     doc.save("order-details.pdf");

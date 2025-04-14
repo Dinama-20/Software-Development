@@ -2,6 +2,7 @@
 session_start();
 header('Content-Type: application/json');
 
+// Devuelve el carrito como JSON
 if (isset($_SESSION['cart'])) {
     echo json_encode($_SESSION['cart']);
 } else {
