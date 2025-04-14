@@ -13,7 +13,7 @@ if (session_status() === PHP_SESSION_NONE) {
         <div id="user-menu">
             <?php if (isset($_SESSION['user'])): ?>
                 <div class="dropdown">
-                    <button class="dropbtn" onclick="toggleDropdown(event)">User Menu</button>
+                    <button class="dropbtn" onclick="toggleDropdown(event)"><?= htmlspecialchars($_SESSION['user']['username']) ?></button>
                     <div class="dropdown-content">
                         <a href="update_user.php">Update Profile</a>
                         <a href="logout.php">Log Out</a>
@@ -25,8 +25,8 @@ if (session_status() === PHP_SESSION_NONE) {
             <?php endif; ?>
         </div>
         <div class="dropdown">
-            <button class="dropbtn" onclick="toggleDropdown()">Menu</button>
-            <div class="dropdown-content" id="dropdownMenu">
+            <button class="dropbtn" onclick="toggleDropdown(event)">Menu</button>
+            <div class="dropdown-content">
                 <a href="index.php">Home</a>
                 <a href="cart.php">Cart</a>
                 <a href="reparations.php">Repairs</a>
