@@ -30,6 +30,7 @@ session_start();
 
             if (modalOverlay && modalImage) {
                 modalImage.src = detailsImage; // Set the image source for the modal
+                modalImage.alt = "Product Details"; // Add alt text for accessibility
                 modalOverlay.style.display = "flex"; // Display the modal
             }
         }
