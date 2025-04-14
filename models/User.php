@@ -14,6 +14,9 @@ class User {
 
     // Method to register a new user
     public function register($data) {
+        // Hash the password before storing it
+        $hashedPassword = password_hash($data['password'], PASSWORD_DEFAULT);
+
         $query = "INSERT INTO {$this->table} (first_name, last_name, username, email, password, created_at)
                   VALUES (:first_name, :last_name, :username, :email, :password, NOW())";
 
@@ -24,7 +27,7 @@ class User {
         $stmt->bindParam(':last_name', $data['last_name']);
         $stmt->bindParam(':username', $data['username']);
         $stmt->bindParam(':email', $data['email']);
-        $stmt->bindParam(':password', $data['password']);
+        $stmt->bindParam(':password', $hashedPassword);  // Use the hashed password
 
         // Execute the statement and return true if successful, false otherwise
         if ($stmt->execute()) {
@@ -34,7 +37,7 @@ class User {
         return false;
     }
 
-    // Method to check if the username already exists in the database
+    // Method to check if the username is already taken in the database
     public function isUsernameAvailable($username) {
         $query = "SELECT id FROM {$this->table} WHERE username = :username";
 
@@ -42,7 +45,7 @@ class User {
         $stmt->bindParam(':username', $username);
         $stmt->execute();
 
-        // If there is a result, the username already exists
+        // If a result is found, the username is already taken
         if ($stmt->rowCount() > 0) {
             return false;  // Username is taken
         }
@@ -50,7 +53,7 @@ class User {
         return true;  // Username is available
     }
 
-    // Method to check if the email already exists in the database
+    // Method to check if the email is already used in the database
     public function isEmailAvailable($email) {
         $query = "SELECT id FROM {$this->table} WHERE email = :email";
 
@@ -58,7 +61,7 @@ class User {
         $stmt->bindParam(':email', $email);
         $stmt->execute();
 
-        // If there is a result, the email already exists
+        // If a result is found, the email is already used
         if ($stmt->rowCount() > 0) {
             return false;  // Email is taken
         }
@@ -68,17 +71,17 @@ class User {
 
     // Method to authenticate the user during login
     public function authenticate($username, $password) {
-        $query = "SELECT id, username, password FROM {$this->table} WHERE username = :username";
+        $query = "SELECT id, username, password, first_name, last_name FROM {$this->table} WHERE username = :username";
 
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':username', $username);
         $stmt->execute();
 
-        // If the user exists, check if the password matches
+        // If the user exists, verify if the password matches
         if ($stmt->rowCount() > 0) {
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            // Verify password
+            // Verify the password
             if (password_verify($password, $user['password'])) {
                 return $user;  // User is authenticated
             }

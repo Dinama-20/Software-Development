@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit; // Ensure no further code is executed after redirect
     } else {
         // Login failed
-        echo "Invalid username or password!";
+        $errorMessage = "Invalid username or password!";
     }
 }
 ?>
@@ -46,6 +46,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- Login form -->
     <div class="login-container">
         <h2>Login</h2>
+        <?php if (isset($errorMessage)): ?>
+            <p style="color: red;"><?php echo $errorMessage; ?></p>
+        <?php endif; ?>
         <form method="POST" action="login.php">
             <div class="form-group">
                 <label for="username">Username</label>
