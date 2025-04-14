@@ -35,15 +35,12 @@ $pdf->Ln(10);
 $pdf->Cell(0, 10, "Total: " . number_format($total, 2) . " euros", 0, 1);
 $pdf->Cell(0, 10, "Date and Time: " . date('Y-m-d H:i:s'), 0, 1);
 
-// Send the PDF to the browser for download
-$pdf->Output('D', 'order-details.pdf');
-
 // Clear the cart after generating the PDF
 unset($_SESSION['cart']);
-?>
-<script>
-    // Reload the page after the PDF is downloaded
-    window.location.href = 'cart.php';
-</script>
-<?php
+
+// Output the PDF
+$pdf->Output();
+
+// Add JavaScript to reload the page
+echo '<script>window.location.href = "cart.php";</script>';
 exit;
