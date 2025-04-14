@@ -17,10 +17,24 @@
         </div>
         <div class="form-group">
             <label for="details">Additional Details</label>
-            <textarea id="details" name="details" rows="4" placeholder="Describe the issue..."></textarea>
+            <textarea id="details" name="details" rows="4" placeholder="Describe the issue..." required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="contact">Contact Information</label>
+            <input type="text" id="contact" name="contact" placeholder="Enter your phone or email" required>
+        </div>
+        <div class="form-group">
+            <label for="preferred_date">Preferred Date</label>
+            <input type="date" id="preferred_date" name="preferred_date" required>
         </div>
         <button type="submit">Request Repair</button>
     </form>
+
+    <?php if ($_SERVER['REQUEST_METHOD'] === 'POST'): ?>
+        <div class="confirmation-message">
+            <p>Thank you for your request! We will contact you soon to confirm the details.</p>
+        </div>
+    <?php endif; ?>
 </main>
 
 <?php include '../includes/footer.php'; ?>
