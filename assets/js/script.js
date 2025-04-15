@@ -36,19 +36,29 @@ function registerUser(event) {
 }
 
 // Adds a product to the cart by sending a POST request to the server
-function addToCart(productName, price) {
-    const product = { name: productName, price: price };
-    fetch('../public/add_to_cart.php', { // Ensure the path is correct
+function addToCart(productId) {
+    const product = products.find(p => p.id === productId); // Busca el producto por ID en la lista de productos
+
+    if (!product) {
+        alert("Product not found.");
+        return;
+    }
+
+    fetch('add_to_cart.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(product)
+        body: JSON.stringify({
+            id: product.id,
+            name: product.name,
+            price: product.price
+        })
     })
-    .then(res => res.json())
+    .then(response => response.json())
     .then(data => {
         if (data.success) {
-            alert(`${productName} added to cart!`);
+            alert('Product added to cart!');
         } else {
-            alert(data.message || "Failed to add product to cart.");
+            alert(data.message || 'Failed to add product to cart.');
         }
     })
     .catch(error => console.error("Error:", error));
@@ -253,13 +263,13 @@ window.onload = function () {
 // Loads product data from a simulated database or local storage
 function loadProductsFromDB() {
     const products = [
-        { name: 'Aquarius Nurburgring', price: 240, category: 'smartwatch', image: 'assets/images/duward-watch1.png', details: 'assets/images/characteristics1.png' },
-        { name: 'Aquastar Race', price: 189, category: 'smartwatch', image: 'assets/images/duward-watch2.png', details: 'assets/images/characteristics2.png' },
-        { name: 'Smartwatch Style', price: 98.90, category: 'smartwatch', image: 'assets/images/duward-watch3.png', details: 'assets/images/characteristics3.png' },
-        { name: 'Lady Woman', price: 89, category: 'woman', image: 'assets/images/duward-watch4.png', details: 'assets/images/characteristics4.png' },
-        { name: 'Lady Babaye', price: 95, category: 'woman', image: 'assets/images/duward-watch5.png', details: 'assets/images/characteristics5.png' },
-        { name: 'Junior Divka', price: 39.90, category: 'junior', image: 'assets/images/duward-watch6.png', details: 'assets/images/characteristics6.png' },
-        { name: 'Junior Dreng', price: 49.90, category: 'junior', image: 'assets/images/duward-watch7.png', details: 'assets/images/characteristics7.png' }
+        { id: 1, name: 'Aquarius Nurburgring', price: 240, category: 'smartwatch', image: 'assets/images/duward-watch1.png', details: 'assets/images/characteristics1.png' },
+        { id: 2, name: 'Aquastar Race', price: 189, category: 'smartwatch', image: 'assets/images/duward-watch2.png', details: 'assets/images/characteristics2.png' },
+        { id: 3, name: 'Smartwatch Style', price: 98.90, category: 'smartwatch', image: 'assets/images/duward-watch3.png', details: 'assets/images/characteristics3.png' },
+        { id: 4, name: 'Lady Woman', price: 89, category: 'woman', image: 'assets/images/duward-watch4.png', details: 'assets/images/characteristics4.png' },
+        { id: 5, name: 'Lady Babaye', price: 95, category: 'woman', image: 'assets/images/duward-watch5.png', details: 'assets/images/characteristics5.png' },
+        { id: 6, name: 'Junior Divka', price: 39.90, category: 'junior', image: 'assets/images/duward-watch6.png', details: 'assets/images/characteristics6.png' },
+        { id: 7, name: 'Junior Dreng', price: 49.90, category: 'junior', image: 'assets/images/duward-watch7.png', details: 'assets/images/characteristics7.png' }
     ];
 
     localStorage.setItem('allProducts', JSON.stringify(products));
@@ -322,7 +332,7 @@ function displayProducts(products) {
             <img src="${product.image}" alt="${product.name}" onclick="showModal('${product.details}')">
             <h2>${product.name}</h2>
             <p>Price: ${product.price}€</p>
-            <button onclick="addToCart('${product.name}', ${product.price})">Add to Cart</button>
+            <button onclick="addToCart(${product.id})">Add to Cart</button>
         `;
         productsContainer.appendChild(productDiv);
     });
