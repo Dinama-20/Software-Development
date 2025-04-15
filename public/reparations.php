@@ -33,13 +33,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $contact = trim($_POST['contact']); // Get contact information
     $preferredDate = $_POST['preferred_date']; // Get the preferred date for the repair
 
+    // Handle image upload
+    $imagePath = null;
+    if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+        $uploadDir = '../uploads/';
+        $imagePath = $uploadDir . basename($_FILES['image']['name']);
+        if (!move_uploaded_file($_FILES['image']['tmp_name'], $imagePath)) {
+            $errorMessage = "Failed to upload the image. Please try again.";
+        }
+    }
+
     // Insert the repair request into the database
-    $query = "INSERT INTO repairs (service_type, details, contact_info, preferred_date) VALUES (:service, :details, :contact, :preferred_date)";
+    $query = "INSERT INTO repairs (service_type, details, contact_info, preferred_date, image_path) VALUES (:service, :details, :contact, :preferred_date, :image_path)";
     $stmt = $db->prepare($query); // Prepare the SQL statement
     $stmt->bindParam(':service', $service); // Bind the service type parameter
     $stmt->bindParam(':details', $details); // Bind the details parameter
     $stmt->bindParam(':contact', $contact); // Bind the contact information parameter
     $stmt->bindParam(':preferred_date', $preferredDate); // Bind the preferred date parameter
+    $stmt->bindParam(':image_path', $imagePath); // Bind the image path parameter
 
     // Execute the query and check for success
     if ($stmt->execute()) {
@@ -71,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php endif; ?>
 
     <!-- Form for submitting repair requests -->
-    <form action="reparations.php" method="POST" class="reparations-form">
+    <form action="reparations.php" method="POST" class="reparations-form" enctype="multipart/form-data">
         <div class="form-group">
             <label for="service">Select Service</label>
             <select id="service" name="service" required>
@@ -91,6 +102,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="form-group">
             <label for="preferred_date">Preferred Date</label>
             <input type="date" id="preferred_date" name="preferred_date" required>
+        </div>
+        <div class="form-group">
+            <label for="image">Upload Image</label>
+            <input type="file" id="image" name="image" accept="image/*">
         </div>
         <button type="submit">Request Repair</button>
     </form>
