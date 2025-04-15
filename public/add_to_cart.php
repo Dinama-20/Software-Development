@@ -7,29 +7,30 @@ header('Content-Type: application/json');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $product = json_decode(file_get_contents('php://input'), true);
 
-    if ($product && isset($product['id'])) {
-        $db = (new \Models\Database())->getConnection();
+    if ($product && isset($product['id'], $product['name'], $product['price'])) {
+        $productId = $product['id'];
+        $productName = $product['name'];
+        $productPrice = $product['price'];
 
-        // Verificar si el producto ya está en el carrito
-        $stmt = $db->prepare("SELECT id FROM cart WHERE product_id = :product_id");
-        $stmt->bindParam(':product_id', $product['id']);
-        $stmt->execute();
-
-        if ($stmt->rowCount() > 0) {
-            // Incrementar la cantidad si ya existe
-            $stmt = $db->prepare("UPDATE cart SET quantity = quantity + 1 WHERE product_id = :product_id");
-            $stmt->bindParam(':product_id', $product['id']);
-        } else {
-            // Insertar nuevo producto en el carrito
-            $stmt = $db->prepare("INSERT INTO cart (product_id) VALUES (:product_id)");
-            $stmt->bindParam(':product_id', $product['id']);
+        // Initialize the cart if it doesn't exist
+        if (!isset($_SESSION['cart'])) {
+            $_SESSION['cart'] = [];
         }
 
-        if ($stmt->execute()) {
-            echo json_encode(['success' => true, 'message' => 'Product added to cart']);
+        // Check if the product is already in the cart
+        if (isset($_SESSION['cart'][$productId])) {
+            // Increment the quantity if the product already exists
+            $_SESSION['cart'][$productId]['quantity'] += 1;
         } else {
-            echo json_encode(['success' => false, 'message' => 'Failed to add product to cart']);
+            // Add the product to the cart
+            $_SESSION['cart'][$productId] = [
+                'name' => $productName,
+                'price' => $productPrice,
+                'quantity' => 1
+            ];
         }
+
+        echo json_encode(['success' => true, 'message' => 'Product added to cart']);
     } else {
         echo json_encode(['success' => false, 'message' => 'Invalid product data']);
     }
