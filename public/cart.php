@@ -1,11 +1,6 @@
 <?php
 include '../includes/header.php';
 
-// Start the session to access cart data
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
 // Retrieve the cart from the session or initialize it as an empty array
 $cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
 
@@ -20,9 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } elseif ($_POST['action'] === 'remove_item' && isset($_POST['product_id'])) {
             // Remove a specific item from the cart
             $productId = $_POST['product_id'];
-            if (isset($_SESSION['cart'][$productId])) {
-                unset($_SESSION['cart'][$productId]);
-            }
+            unset($_SESSION['cart'][$productId]);
             header('Location: cart.php'); // Reload the page after removing the item
             exit;
         }
@@ -42,7 +35,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <tr>
                     <th>Product</th>
                     <th>Price</th>
-                    <th>Quantity</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -51,7 +43,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <tr>
                         <td><?= htmlspecialchars($item['name']) ?></td>
                         <td>€<?= number_format($item['price'], 2) ?></td>
-                        <td><?= htmlspecialchars($item['quantity']) ?></td>
                         <td>
                             <!-- Form to remove an item from the cart -->
                             <form method="POST" style="display:inline;">

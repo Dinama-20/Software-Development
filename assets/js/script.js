@@ -37,30 +37,13 @@ function registerUser(event) {
 
 // Adds a product to the cart by sending a POST request to the server
 function addToCart(productId) {
-    const product = products.find(p => p.id === productId); // Busca el producto por ID en la lista de productos
-
-    if (!product) {
-        alert("Product not found.");
-        return;
-    }
-
-    // Debugging: Log the product being sent
-    console.log("Sending product to server:", product);
-
     fetch('add_to_cart.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            id: product.id,
-            name: product.name,
-            price: product.price
-        })
+        body: JSON.stringify({ id: productId })
     })
     .then(response => response.json())
     .then(data => {
-        // Debugging: Log the server response
-        console.log("Server response:", data);
-
         if (data.success) {
             alert('Product added to cart!');
         } else {
