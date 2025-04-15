@@ -58,6 +58,7 @@ function addToCart(productId) {
         if (data.success) {
             alert('Product added to cart!');
         } else {
+            console.error("Server response:", data);
             alert(data.message || 'Failed to add product to cart.');
         }
     })

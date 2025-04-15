@@ -5,7 +5,8 @@ require_once __DIR__ . '/../models/database.php';
 header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $product = json_decode(file_get_contents('php://input'), true);
+    $input = file_get_contents('php://input');
+    $product = json_decode($input, true);
 
     if ($product && isset($product['id'], $product['name'], $product['price'])) {
         $productId = $product['id'];
@@ -19,10 +20,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Check if the product is already in the cart
         if (isset($_SESSION['cart'][$productId])) {
-            // Increment the quantity if the product already exists
             $_SESSION['cart'][$productId]['quantity'] += 1;
         } else {
-            // Add the product to the cart
             $_SESSION['cart'][$productId] = [
                 'name' => $productName,
                 'price' => $productPrice,
@@ -32,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         echo json_encode(['success' => true, 'message' => 'Product added to cart']);
     } else {
-        echo json_encode(['success' => false, 'message' => 'Invalid product data']);
+        echo json_encode(['success' => false, 'message' => 'Invalid product data', 'received' => $product]);
     }
     exit;
 }
