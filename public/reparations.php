@@ -37,6 +37,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $imagePath = null;
     if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
         $uploadDir = '../uploads/';
+
+        // Ensure the upload directory exists
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0777, true); // Create the directory with proper permissions
+        }
+
         $imagePath = $uploadDir . basename($_FILES['image']['name']);
 
         // Attempt to move the uploaded file
