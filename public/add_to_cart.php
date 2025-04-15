@@ -8,6 +8,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $input = file_get_contents('php://input');
     $product = json_decode($input, true);
 
+    // Debugging: Log the received input
+    error_log("Received input: " . $input);
+
     if ($product && isset($product['id'], $product['name'], $product['price'])) {
         $productId = $product['id'];
         $productName = $product['name'];
@@ -31,6 +34,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         echo json_encode(['success' => true, 'message' => 'Product added to cart']);
     } else {
+        // Debugging: Log the invalid product data
+        error_log("Invalid product data: " . print_r($product, true));
         echo json_encode(['success' => false, 'message' => 'Invalid product data', 'received' => $product]);
     }
     exit;

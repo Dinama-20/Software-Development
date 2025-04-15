@@ -44,6 +44,9 @@ function addToCart(productId) {
         return;
     }
 
+    // Debugging: Log the product being sent
+    console.log("Sending product to server:", product);
+
     fetch('add_to_cart.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -55,10 +58,12 @@ function addToCart(productId) {
     })
     .then(response => response.json())
     .then(data => {
+        // Debugging: Log the server response
+        console.log("Server response:", data);
+
         if (data.success) {
             alert('Product added to cart!');
         } else {
-            console.error("Server response:", data);
             alert(data.message || 'Failed to add product to cart.');
         }
     })
