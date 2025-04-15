@@ -38,8 +38,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
         $uploadDir = '../uploads/';
         $imagePath = $uploadDir . basename($_FILES['image']['name']);
-        if (!move_uploaded_file($_FILES['image']['tmp_name'], $imagePath)) {
-            $errorMessage = "Failed to upload the image. Please try again.";
+
+        // Attempt to move the uploaded file
+        if (move_uploaded_file($_FILES['image']['tmp_name'], $imagePath)) {
+            // File uploaded successfully
+        } else {
+            // Handle the error gracefully
+            error_log("Failed to move uploaded file: " . $_FILES['image']['tmp_name'] . " to " . $imagePath);
+            $errorMessage = "There was an error uploading your file. Please try again.";
         }
     }
 
