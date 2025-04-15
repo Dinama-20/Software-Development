@@ -1,5 +1,12 @@
 <?php
 session_start();
+require_once __DIR__ . '/../models/database.php';
+
+$db = (new \Models\Database())->getConnection();
+
+$stmt = $db->prepare("SELECT * FROM products");
+$stmt->execute();
+$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -12,87 +19,42 @@ session_start();
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script> <!-- Include jsPDF library -->
     <script src="../assets/js/script.js" defer></script> <!-- Include custom JavaScript file -->
     <script>
-        // Array of products with details such as name, price, and images
-        let products = [
-            { name: 'Aquarius Nurburgring', price: 240, image: '../assets/images/duward-watch1.png' },
-            { name: 'Aquastar Race', price: 189, image: '../assets/images/duward-watch2.png' },
-            { name: 'Smartwatch Style', price: 98.90, category: 'smartwatch', image: '../assets/images/duward-watch3.png' },
-            { name: 'Lady Woman', price: 89, category: 'woman', image: '../assets/images/duward-watch4.png' },
-            { name: 'Lady Babaye', price: 95, category: 'woman', image: '../assets/images/duward-watch5.png' },
-            { name: 'Junior Divka', price: 39.90, category: 'junior', image: '../assets/images/duward-watch6.png' },
-            { name: 'Junior Dreng', price: 49.90, category: 'junior', image: '../assets/images/duward-watch7.png' }
-        ];
+        let products = <?= json_encode($products); ?>;
 
-        // Function to add a product to the cart
-        function addToCart(productName, price) {
+        function addToCart(productId) {
             fetch('add_to_cart.php', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: `name=${encodeURIComponent(productName)}&price=${encodeURIComponent(price)}`
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: productId })
             })
             .then(response => response.json())
             .then(data => {
-                if (data.status === 'success') {
-                    alert(`${productName} added to cart!`);
+                if (data.success) {
+                    alert('Product added to cart!');
                 } else {
-                    alert('Error adding product to cart.');
+                    alert(data.message || 'Failed to add product to cart.');
                 }
-            })
-            .catch(error => {
-                console.error('Error:', error);
             });
         }
 
-        // Function to apply filters based on search input, category, and price sorting
-        function applyFilters() {
-            const searchInput = document.getElementById('searchInput').value.toLowerCase();
-            const selectedCategory = document.getElementById('filterCategory').value.toLowerCase(); // Ensure lowercase comparison
-            const selectedPriceSort = document.getElementById('sortPrice').value;
-
-            let filteredProducts = products.filter(product => {
-                const matchesSearch = product.name.toLowerCase().includes(searchInput);
-                const matchesCategory = selectedCategory ? product.category === selectedCategory : true; 
-                return matchesSearch && matchesCategory;
-            });
-
-            if (selectedPriceSort === 'asc') {
-                filteredProducts.sort((a, b) => a.price - b.price);
-            } else if (selectedPriceSort === 'desc') {
-                filteredProducts.sort((a, b) => b.price - a.price);
-            }
-
-            displayProducts(filteredProducts);
-        }
-
-        // Function to display products dynamically on the webpage
         function displayProducts(products) {
             const productsContainer = document.getElementById("products");
-            if (!productsContainer) return;
-
-            productsContainer.innerHTML = ""; // Clear the container
+            productsContainer.innerHTML = "";
 
             products.forEach(product => {
                 const productDiv = document.createElement("div");
                 productDiv.className = "product";
                 productDiv.innerHTML = `
-                    <img src="${product.image}" alt="${product.name}" class="product-image" loading="lazy">
+                    <img src="${product.image}" alt="${product.name}" class="product-image">
                     <h2>${product.name}</h2>
                     <p>Price: ${product.price}€</p>
-                    <button class="add-to-cart-btn" onclick="addToCart('${product.name}', ${product.price})">Add to Cart</button>
+                    <button onclick="addToCart(${product.id})">Add to Cart</button>
                 `;
                 productsContainer.appendChild(productDiv);
             });
         }
 
-        // Apply filters when the page loads
-        window.onload = applyFilters;
-
-        // Function to toggle dark mode for the webpage
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
-        }
+        window.onload = () => displayProducts(products);
     </script>
 </head>
 <body>
