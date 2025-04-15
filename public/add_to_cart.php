@@ -1,37 +1,30 @@
 <?php
 session_start();
-require_once __DIR__ . '/../models/database.php';
 
+// Set the response content type to JSON
 header('Content-Type: application/json');
 
+// Check if the request method is POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Decode the JSON payload from the request body
     $product = json_decode(file_get_contents('php://input'), true);
 
-    if ($product && isset($product['id'])) {
-        $db = (new \Models\Database())->getConnection();
-
-        // Verificar si el producto ya está en el carrito
-        $stmt = $db->prepare("SELECT id FROM cart WHERE product_id = :product_id");
-        $stmt->bindParam(':product_id', $product['id']);
-        $stmt->execute();
-
-        if ($stmt->rowCount() > 0) {
-            // Incrementar la cantidad si ya existe
-            $stmt = $db->prepare("UPDATE cart SET quantity = quantity + 1 WHERE product_id = :product_id");
-            $stmt->bindParam(':product_id', $product['id']);
-        } else {
-            // Insertar un nuevo producto en el carrito
-            $stmt = $db->prepare("INSERT INTO cart (product_id, quantity) VALUES (:product_id, 1)");
-            $stmt->bindParam(':product_id', $product['id']);
+    // Validate the product data
+    if ($product && isset($product['name'], $product['price'])) {
+        // Initialize the cart in the session if it doesn't exist
+        if (!isset($_SESSION['cart'])) {
+            $_SESSION['cart'] = [];
         }
 
-        if ($stmt->execute()) {
-            echo json_encode(['success' => true, 'message' => 'Product added to cart']);
-        } else {
-            echo json_encode(['success' => false, 'message' => 'Failed to add product to cart']);
-        }
-    } else {
-        echo json_encode(['success' => false, 'message' => 'Invalid product data']);
+        // Add the product to the cart
+        $_SESSION['cart'][] = $product;
+
+        // Send a success response
+        echo json_encode(['success' => true, 'message' => 'Product added to cart']);
+        exit;
     }
 }
+
+// Send an error response if the product data is invalid
+echo json_encode(['success' => false, 'message' => 'Invalid product data']);
 exit;
